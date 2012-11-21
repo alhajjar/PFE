@@ -1,9 +1,9 @@
 #include <iostream>
-#include <fstream>      // fstream
+#include <fstream>      
 #include <vector>
 #include <string>
-#include <algorithm>    // copy
-#include <iterator>     // ostream_operator
+#include <algorithm>   
+#include <iterator>     
 #include <vector>
 #include <boost/tokenizer.hpp>
 #include <boost/algorithm/string/trim.hpp>
