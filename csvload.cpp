@@ -14,21 +14,25 @@ int name_address_sport_parser()
     using namespace std;
     using namespace boost;
     using std::vector;
+/*// charger le fichier csv//*/
     string data("/home/alhajjar/Bureau/pfe/Simulations_diffaphids/Data/donnees_temp_min_2000_2011_1.csv");
 
     ifstream in(data.c_str());
     if (!in.is_open()) return 1;
+/*//----------------------------//*/
 
     typedef tokenizer< escaped_list_separator<char> > Tokenizer;
 
     escaped_list_separator<char> sep('\\',';', '\"');
-
+/*// creation vecteur vec c'est le vecteur ligne du fichier csv//*/
     vector< string > vec;
-    vector < string > * recup = NULL;
+/*// vecteur iterateur //*/
     vector<string>::iterator it;
+    vector< string>::iterator iter_jj;
+/*//-----------------------------//*/
+/*// creation d'une matrice dans laquelle on stock nos vecteur//*/
     vector< vector<string> > vI2Matrix;
     vector< vector<string> >::iterator iter_ii;
-    vector< string>::iterator iter_jj;
 
     string line;
     string buffer;
@@ -68,13 +72,6 @@ int name_address_sport_parser()
 
         line.clear(); // clear here, next check could fail
 
-//on faist un parse 3 elements par 3
-    /*    if (vec.size() < 3) continue;
-
-        copy(vec.begin(), vec.end(),ostream_iterator<string>(cout, "\n"));
-
-        cout << "\n----------------------" << endl;*/
-      //  if (vec.size() < 3) continue;
   for ( it=vec.begin() ; it < vec.end(); it++ ){
     //cout << "   " << *it;
     //vec.push_back(*it);
@@ -99,12 +96,8 @@ cout << "\n----------------------" << endl;
    // s'il ya des espace entre les nombres ou les parsers on les enleves
    trim(vec[0]);
 trim(vec[1]);
- /* for (unsigned i=0; i<vec.size(); i++){
-    cout << "\n " << vec.at(i);
-    }*/
 
     }
-
 
     in.close();
 
