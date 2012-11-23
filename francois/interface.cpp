@@ -20,15 +20,6 @@ int main(int argc, char** argv)
 {
 /* Initialisation de GTK (obligatoire) */
 	Gtk::Main app(argc, argv);
-
-	// Gtk::FileChooserDialog* pFileChoose = 0;
-
-	//builder->get_widget("filechooserdialog1", pFileChoose);
-	//builder->get_widget("button5", pButton);
-	
-
-	/*pMenuOuvrir->signal_activate().connect(sigc::ptr_fun (&on_menu_ouvrir));
-	pButton->signal_clicked().connect(sigc::ptr_fun (&on_menu_clic));*/
 	
 	ControleurAffichage ca("gui.glade");
 	

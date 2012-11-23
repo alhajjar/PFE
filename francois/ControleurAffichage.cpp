@@ -129,9 +129,7 @@ void ControleurAffichage::on_menu_ouvrir_accepter(){
  */
 void ControleurAffichage::on_menu_sauvegarder(){
 	pChoixFichierSauvegarderAptere->show();
-	//gtk_widget_move(pChoixFichierSauvegarderAptere,0,0);
 	pChoixFichierSauvegarderAile->show();
-	//gtk_widget_move(pChoixFichierSauvegarderAptere,0,0);
 }
 
 /**
