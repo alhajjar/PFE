@@ -1,0 +1,1 @@
+g++ -DBOOST_THREAD_USE_LIB t1.cpp -o t1 -I"C:\Boost" -L"C:\Boost\lib" -lboost_system-mgw46-mt-d-1_51 -lpthread -lboost_thread-mgw46-mt-d-1_51 -lboost_date_time-mgw46-mt-d-1_51 -lboost_chrono-mgw46-mt-d-1_51
