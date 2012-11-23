@@ -13,7 +13,7 @@ using namespace std;
 
 void on_menu_clic(){
 	pFileChoose->hide();
-	cout << pFileChoose->get_filename() <<endl;
+	cout << pFileChoose->get_filename() <<endl; 
 }*/
 
 int main(int argc, char** argv)
