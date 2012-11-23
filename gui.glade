@@ -1304,6 +1304,7 @@
     <property name="border_width">5</property>
     <property name="title" translatable="yes">Enregistrer Carte Ail&#xE9;s</property>
     <property name="type_hint">normal</property>
+    <property name="gravity">north-east</property>
     <property name="action">save</property>
     <child internal-child="vbox">
       <object class="GtkVBox" id="dialog-vbox3">
