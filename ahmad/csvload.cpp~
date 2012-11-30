@@ -1,9 +1,9 @@
 #include <iostream>
-#include <fstream>
+#include <fstream>      
 #include <vector>
 #include <string>
-#include <algorithm>
-#include <iterator>
+#include <algorithm>   
+#include <iterator>     
 #include <vector>
 #include <boost/tokenizer.hpp>
 #include <boost/algorithm/string/trim.hpp>
@@ -15,7 +15,7 @@ int name_address_sport_parser()
     using namespace boost;
     using std::vector;
 /*// charger le fichier csv//*/
-    string data("/home/ahmad/Desktop/Simulations_diffaphids/Data/donnees_temp_min_2000_2011_1.csv");
+    string data("/home/alhajjar/Bureau/pfe/Simulations_diffaphids/Data/donnees_temp_min_2000_2011_1.csv");
 
     ifstream in(data.c_str());
     if (!in.is_open()) return 1;
@@ -66,10 +66,6 @@ int name_address_sport_parser()
 
         vec.assign(tok.begin(),tok.end());
 
-    /*if (recup == NULL)
-      recup = new vector<string> (vec.size());*/
-
-
         line.clear(); // clear here, next check could fail
 
   for ( it=vec.begin() ; it < vec.end(); it++ ){
@@ -78,7 +74,7 @@ int name_address_sport_parser()
     }
     vI2Matrix.push_back(vec);
     // pas besoin
-for(iter_ii=vI2Matrix.begin(); iter_ii!=vI2Matrix.end(); iter_ii++)
+/*for(iter_ii=vI2Matrix.begin(); iter_ii!=vI2Matrix.end(); iter_ii++)
 
    {
 
@@ -90,7 +86,7 @@ for(iter_ii=vI2Matrix.begin(); iter_ii!=vI2Matrix.end(); iter_ii++)
 
       }
 cout << "\n----------------------" << endl;
-   }
+   }*/
 
 
    // s'il ya des espace entre les nombres ou les parsers on les enleves

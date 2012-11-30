@@ -40,6 +40,7 @@ public:
   friend float* Matrice_en_VecteurA(const Matrice &);
   friend float* Matrice_en_VecteurB(const Matrice &);
   friend float* Matrice_en_VecteurC(const Matrice &);
+  friend float* Calcul_diag_sup_U(const Matrice &);
 };
 
 

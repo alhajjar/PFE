@@ -1,0 +1,14 @@
+git pull origin master
+
+entre dans le répertoire PFE
+git status
+
+git add .
+git commit . -m "le message qu'est ce que j'ai fais de nouveau"
+
+upload au serveur
+git push origin master
+
+
+download du seveur pour mettre à jour la copie locale 
+git pull origin master

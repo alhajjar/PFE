@@ -1,22 +1,16 @@
 #include "Matrice.h"
 #include <assert.h>
 
-
 /** \fonction indice
- *  \brief Retourne l'indice de la position dans un tableau 1D a partir d'indice de tableau 2D
- *  \param [in] i et j position dans un tableau 2D 
- *  \return l'indice position dans un tableau 1D 
+ *  \brief Retourne l'indice de la position dans un tableau 1D a partir d'indice de tableau 2D 
  *  \note il est plus facile de travailler avec une simple allocation dynamique
  */
 int Matrice::indice(int i, int j) const {
   return (j*nbLigne) + i;
 }
 
-
 /** \Constructeur matrice
  *  \brief Constructeur et initialisation de la matrice
- *  \param [in] i et j longueur de la matrice
- *  \return une matrire remplie de zero
  *  \note nbLigne et nbColonne permet de recuperer le nombre de ligne et de colonne d'une matrice
  *  on cree un tableau possedant le meme nombre de valeur que la matrice
  *  on initialise le tableau avec des zeros
@@ -28,13 +22,10 @@ Matrice::Matrice(int i, int j){
   for(int k=0; k<i; k++)
     for(int l=0; l<j; l++)
       mat[indice(k,l)] = 0;
-
 }
 
 /** \copie de constructeur
  *  \brief Copie une matrice dans une nouvelle matrice
- *  \param [in] m matrice a copier
- *  \return une matrire ailllant les meme valeur que la premiere
  *  \note on construit une nouvelle matrice de meme dimension et possedant les meme valeurs
  *  const permet a m de ne pas etre modifier lors de l'appelle de la fonction
  */
@@ -53,10 +44,9 @@ Matrice::Matrice(const Matrice &m){
 Matrice::~Matrice(){
   delete(mat);
 }
+
 /** \Fonction setValue
  *  \brief modifie une valeur qui se trouve dans la matrice a la position i,j
- *  \param [in] i et j position dans un tableau 2D, v la valeur a placer dans la matrice
- *  \return la matrice avec une nouvelle valeur(v) a la position i ,j
  *  \note assert permet de verifier les condition ne non debordement de la matrice
  */
 void Matrice::setValue(int i, int j, float v){
@@ -66,8 +56,6 @@ void Matrice::setValue(int i, int j, float v){
 }
 /** \Fonction getValue
  *  \brief renvoie la valeur se trouvant a la position i,j
- *  \param [in] i et j position dans un tableau 2D
- *  \return la valeur a la position i,j
  *  \note assert permet de verifier les condition ne non debordement de la matrice
  */
 float Matrice::getValue(int i, int j) const{
@@ -88,12 +76,9 @@ void Matrice::affiche() const {
   }
 }
 
-
 /** \Fonction operator<<
  *  \brief affichage par <<
- *  \param [in] la matrice a afficher
- *  \return ostream qqch
- *  \note la surcharge d'opérateur(modifie le comportement du << )afin d'afficher une matrice directement a l'appelle de <<
+ *  \note utilisation du flux de donnée afin d'afficher une matrice directement a l'appelle de <<
  */
 ostream& operator<<(ostream& out, const Matrice& m){
   for(int k=0; k<m.nbLigne; k++){
@@ -107,8 +92,6 @@ ostream& operator<<(ostream& out, const Matrice& m){
 
 /** \Fonction operator=
  *  \brief permet de remplacer une matrice par une autre 
- *  \param [in] m matrice a copier
- *  \return une matrire ailllant les memes valeurs que la premiere
  */
 Matrice& Matrice::operator=(const Matrice&m){
   delete(mat);
@@ -120,9 +103,6 @@ Matrice& Matrice::operator=(const Matrice&m){
       mat[indice(k,l)] = m.mat[indice(k,l)];
 }
 
-/** \Fonction operator*
- *  \brief permet de multiplier une matrice par une autre 
- */
 Matrice Matrice::operator*(const Matrice& m) {
   assert((m.nbLigne==nbLigne) && (m.nbColonne==nbColonne));
   Matrice result(nbLigne, nbColonne);
@@ -140,11 +120,8 @@ Matrice Matrice::operator*(const Matrice& m) {
 
 /** \multiplie deux matrice entre elle 
  *  \brief multiplie deux matrice en elle
- *  \param [in] m et n les matrices a multiplier
- *  \return mat une matrice resultat du produit de deux matrices 
  *  \note 
  */
-
 void Matrice::multiplier(const Matrice &m,const Matrice &n){
   assert((m.nbLigne==n.nbLigne) && (m.nbColonne==n.nbColonne));
   nbLigne = m.nbLigne;
@@ -160,12 +137,7 @@ void Matrice::multiplier(const Matrice &m,const Matrice &n){
   }    
 }
 
-
-/** \Fonction Calcul de la matrice supérieure<<
- *  \brief permet de calculer la matrice U
- *  \param [in] matrice ou se trouve les données
- *  \return U
-*/
+/** \Calcul de la matrice supérieure U */
 
 Matrice Matrice::matriceSuperieure() const {
   Matrice U(nbLigne,nbColonne);
@@ -185,11 +157,7 @@ Matrice Matrice::matriceSuperieure() const {
   return U;
 }
 
-/** \Fonction Calcul de la matrice inférieure<<
- *  \brief permet de calculer la matrice L
- *  \param [in] matrice ou se trouve les données
- *  \return L
-*/
+/** \Calcul de la matrice inférieure L*/
 
 Matrice Matrice::matriceInferieure() const {
   Matrice L(nbLigne,nbColonne);
@@ -209,11 +177,7 @@ Matrice Matrice::matriceInferieure() const {
 }
 
 
-/** \Fonction Calcul Inverse de la matrice Uinv<<
- *  \brief permet de calculer la matrice inverse de U
- *  \param [in] matrice U 
- *  \return Uinverse
-*/
+/** \Calcul de l'inverse de la matrice Uinv*/
 
 
 Matrice Matrice::matriceInverseU() const {
@@ -238,11 +202,8 @@ Matrice Matrice::matriceInverseU() const {
   return Uinv;
 }
 
-/** \Fonction Calcul Inverse de la matrice Linv<<
- *  \brief permet de calculer la matrice inverse de L
- *  \param [in] matrice L 
- *  \return Linverse
-*/
+
+/** \Calcul de l'inverse de la matrice Linv*/
 
 
 Matrice Matrice::matriceInverseL() const {
@@ -259,9 +220,7 @@ Matrice Matrice::matriceInverseL() const {
 
 	for(l=c;l<nbLigne-1;l++){
 
- 	 Linv.mat[indice(l+1,c)] = -(mat[indice(l+1,l)]*Linv.mat[indice
-
- (l,c)]/mat[indice(l+1,l+1)]);
+ 	 Linv.mat[indice(l+1,c)] = -(mat[indice(l+1,l)]*Linv.mat[indice(l,c)]/mat[indice(l+1,l+1)]);
 
  
  	 }
@@ -270,55 +229,16 @@ Matrice Matrice::matriceInverseL() const {
 }
 
 
-/** \Fonction Matrice en Vecteur <<
- *  \brief permet d'extraire la diagonale inférieure d'une matrice
- *  \param [in] matrice ou se trouve les données 
- *  \return la diagonale inférieure 
- */
-float* Matrice_en_VecteurA(const Matrice &m){
-
-    float* matA = new float[m.nbColonne];
 
 
-     for(int l=2; l<m.nbLigne+1; l++){
-	
-	matA[l-1] = m.getValue(l-1,l-2);
 
-      }	
 
-return matA;
-}
 
-/** \Fonction Matrice en Vecteur <<
- *  \brief permet d'extraire la diagonale principale d'une matrice
- *  \param [in] matrice ou se trouve les données 
- *  \return la diagonale principale 
- */
 
-float* Matrice_en_VecteurB(const Matrice &m){
 
-float *matB = new float[m.nbColonne];
-   for(int l=0; l<m.nbLigne; l++)
-	
-	matB[l] = m.getValue(l,l);
 
-return matB;
 
-}
 
-/** \Fonction Matrice en Vecteur <<
- *  \brief permet d'extraire la diagonale supérieure d'une matrice
- *  \param [in] matrice ou se trouve les données 
- *  \return la diagonale supérieure 
- */
-float* Matrice_en_VecteurC(const Matrice &m){
-
-float *matC = new float[m.nbColonne];
-for(int l=1; l<m.nbLigne; l++)
-	
-	matC[l-1] = m.getValue(l-1,l);
- return matC;
-}
 
 
 
