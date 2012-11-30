@@ -13,7 +13,7 @@ int main()
     using namespace std;
     using namespace boost;
 
-    string data("coord.csv");
+    string data("mat_eta.csv");
 
     ifstream in(data.c_str());
     if (!in.is_open()) return 1;
@@ -39,13 +39,15 @@ int main()
     split(splitArray, vec.at(0), is_any_of(";"));
  //for (unsigned int j = 0; j < splitArray.size(); ++j)
     // { // prints all the vector elements
-cout << splitArray.at(0)<<splitArray.at(1);
+
           //cout << splitArray[2] ;
      //}
      //cout << vec.at(0)<<"\n----------------------" << endl;
      matrice.push_back(splitArray);
 }
-
+//cout << splitArray.at(0)<<splitArray.at(1);
+/*// on efface la premiere ligne (les titres)//*/
+    matrice.erase(matrice.begin());
 
 for(iter_ii=matrice.begin(); iter_ii!=matrice.end(); iter_ii++)
 
