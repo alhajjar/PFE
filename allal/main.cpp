@@ -1,15 +1,19 @@
 #include "Matrice.h"
+#include "MatriceN.h"
+#include "MatriceU.h"
+#include "MatriceL.h"
 #include <cstdlib>
 #include <iostream>
 #include <time.h>
 
-#define taille 4
+#define TAILLE 4
 using namespace std;
 
 int main(int argc, char *argv[]){
 
-
-  Matrice m(taille,taille);
+/** \Exemple de matrice N1 de TAILLE TAILLE */
+ 
+  Matrice m(TAILLE,TAILLE);
   m.setValue(0,0,1);
   m.setValue(0,1,4);
   m.setValue(0,2,0);
@@ -24,6 +28,7 @@ int main(int argc, char *argv[]){
   m.setValue(2,1,2);
   m.setValue(2,2,3);
   m.setValue(2,3,4);
+     
 
   m.setValue(3,0,0);
   m.setValue(3,1,0);
@@ -31,109 +36,136 @@ int main(int argc, char *argv[]){
   m.setValue(3,3,3);
 
 
-
-
-
   cout<<"m matrice 4 4\n";
   std::cout << m ;
   cout<<"\n";
+/*Matrice inverse de N*/
+
 
 /*
-  Matrice U(taille,taille);
+  Matrice U(TAILLE,TAILLE);
   U = m.matriceSuperieure();
   cout<<"matrice supérieure U\n";
   U.affiche();
   cout<<"\n";
 
-  Matrice L(taille,taille);
+  Matrice L(TAILLE,TAILLE);
   L = m.matriceInferieure();
   cout<<"matrice inférieure L\n";
   L.affiche();
   cout<<"\n";
 
 
-  Matrice Uinv(taille,taille);
+  Matrice Uinv(TAILLE,TAILLE);
   Uinv= U.matriceInverseU();
   cout<<"matrice inverse U \n";
   Uinv.affiche();
   cout<<"\n";
 
 
-  Matrice Linv(taille,taille);
+  Matrice Linv(TAILLE,TAILLE);
   Linv= L.matriceInverseL();
   cout<<"matrice inverse L \n";
   Linv.affiche();
-  cout<<"\n";
+  cout<<"\n";*/
 
-  Matrice N1(taille,taille);
+  /*Matrice N1(TAILLE,TAILLE);
   N1.multiplier(L,U);
   //N1 = L*U;
   cout<<"matrice N1 \n";
   N1.affiche();
   cout<<"\n";
 
-  Matrice N1inv(taille,taille);
+  Matrice N1inv(TAILLE,TAILLE);
   N1inv.multiplier(Uinv,Linv);
   cout<<"matrice N1inv \n";
   N1inv.affiche();
   cout<<"\n";
 
-  Matrice Identite(taille,taille);
+  Matrice Identite(TAILLE,TAILLE);
   Identite.multiplier(N1,N1inv);
   cout<<"matrice Identite \n";
   Identite.affiche();
-  cout<<"\n";
+  cout<<"\n";*/
 
 
-*/
+/*affichage des trois tableaux*/
 
 
-float* vectorA=new float[taille];
+MatriceN Tableaux1(TAILLE);
+MatriceN Tableaux2(TAILLE);
+MatriceN Tableaux3(TAILLE);
+cout<<"TabA\n";
 
-  vectorA = Matrice_en_VecteurA(m);
+Tableaux1.Matrice_en_tabA(m);
+Tableaux2.Matrice_en_tabA(m);
+Tableaux1.afficheA();
 
-  cout<<"Vecteur A\n";
+cout<<"TabB\n";
+Tableaux1.Matrice_en_tabB(m);
+Tableaux2.Matrice_en_tabB(m);
+Tableaux1.afficheB();
+
+cout<<"TabC\n";
+Tableaux1.Matrice_en_tabC(m);
+Tableaux2.Matrice_en_tabC(m);
+Tableaux1.afficheC();
+
+/*Affichage des tableaux représentant les matrices L et U*/
+
+/*Matrice U*/
+cout<<"Ck*\n";
+MatriceU Cketoil(Tableaux1);
+Cketoil.afficheU();
+
+/*Matrice L*/
+cout<<"Bk*\n";
+MatriceL Bketoil(Tableaux2);
+Bketoil.afficheL();
+
+/*Matrice Linv*/
+cout<<"Linv\n";
+float * * ResLinv;
+ ResLinv=Bketoil.matriceInverseL(Tableaux2);
+
+ for(int i=0;i< TAILLE;i++){
+	std::cout << "[";
+         for(int j=0;j<TAILLE-i-1;j++){
+            cout<<ResLinv[i][j]<<",";
+            }
+	    cout<<ResLinv[i][TAILLE-i-1];
+            cout<<"]\n";
+ }        
+cout<<"\n";
+
+/*Matrice Uinv*/  
+cout<<"Uinv\n";
+float * * ResUinv;
+
+ ResUinv=Cketoil.matriceInverseU(Tableaux1);
+
+for(int i=0;i< TAILLE;i++){
+	cout << "[";
+         for(int j=0;j<TAILLE-i-1;j++){
+            cout<<ResUinv[i][j]<<",";
+            }
+	    cout<<ResUinv[i][TAILLE-i-1];
+            cout<<"]\n";
+ } 
+cout<<"\n";
+
+/*Matrice Ninv*/
+cout<<"Ninv\n";
+
+Matrice Ninv(TAILLE,TAILLE);
 
 
-  std::cout << "[";
-  for(int l=0; l<taille-1; l++)
 
-         std::cout << vectorA[l] << ",";
-	 std::cout << vectorA[taille-1];
-    	 std::cout << "] \n" << std::endl;
-
-
-float* vectorB=new float[taille];
-
-  vectorB = Matrice_en_VecteurB(m);
-
-  cout<<"Vecteur B\n";
-
-
-  std::cout << "[";
-  for(int l=0; l<taille-1; l++)
-
-         std::cout << vectorB[l] << ",";
-	 std::cout << vectorB[taille-1];
-    	 std::cout << "] \n" << std::endl;
-
-float* vectorC=new float[taille];
-
-  vectorC = Matrice_en_VecteurC(m);
-
-  cout<<"Vecteur C\n";
-
-
-  std::cout << "[";
-  for(int l=0; l<taille-1; l++)
-
-         std::cout << vectorC[l] << ",";
-	 std::cout << vectorC[taille-1];
-    	 std::cout << "] \n" << std::endl;
-
-
+Ninv = Tableaux3.matriceInverseN(ResUinv,ResLinv);
+Ninv.affiche();
+cout<<"\n";
   //  system("PAUSE");
-  return EXIT_SUCCESS;
+ // return EXIT_SUCCESS;
   
 }
 
