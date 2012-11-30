@@ -13,7 +13,7 @@ int main()
     using namespace std;
     using namespace boost;
 
-    string data("mat_p_France_2009.csv");
+    string data("coord.csv");
 
     ifstream in(data.c_str());
     if (!in.is_open()) return 1;
@@ -39,7 +39,7 @@ int main()
     split(splitArray, vec.at(0), is_any_of(";"));
  //for (unsigned int j = 0; j < splitArray.size(); ++j)
     // { // prints all the vector elements
-
+cout << splitArray.at(0)<<splitArray.at(1);
           //cout << splitArray[2] ;
      //}
      //cout << vec.at(0)<<"\n----------------------" << endl;
