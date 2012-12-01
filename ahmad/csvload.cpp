@@ -13,7 +13,7 @@ int main()
     using namespace std;
     using namespace boost;
 
-    string data("mat_eta.csv");
+    string data("coord.csv");
 
     ifstream in(data.c_str());
     if (!in.is_open()) return 1;
