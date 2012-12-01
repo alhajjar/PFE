@@ -30,7 +30,7 @@ int main()
     typedef Matrix<float, 196, 194> Matrice1;
     /* ************************************************************* */
     vector< string > vec;
-     vector< float > vecf;
+    vector< float > vecf;
     vector<string> splitArray;
     vector<float> splitArrayd;
     vector< vector<string> > matrice;
