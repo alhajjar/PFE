@@ -50,6 +50,7 @@ int main()
     /*// decomposition du vecteur obtenu et on le met dans un autre vecteur//*/
         split(splitArray, vec.at(0), is_any_of(";"));
    //cout<<splitArray.size()<<"\n";
+    /*//conversion de la matrice en float//*/
         int TempNumOne=splitArray.size();
     for (int a=0;a<TempNumOne;a++){
     //splitArrayd.push_back(lexical_cast<float>(splitArray[a]));
@@ -63,32 +64,26 @@ int main()
         }
 
     /* ************************************************************* */
-    /*//conversion de la matrice en float//*/
-        /*string tmp;
-        for ( it = splitArray.begin();it != splitArray.end();it++ ){
-            tmp=*it;
-            cout<<tmp<<"\n";
-            float  flo = strtof(tmp.c_str(), NULL);
-            cout<<flo<<"\t";
-            splitArrayd.push_back(flo);
-        }*/
 
         matrice.push_back(splitArray);
         matricef.push_back(splitArrayd);
     }
-        cout<<splitArray.size()<<"\n";
-        cout<<splitArrayd.size()<<"\n";
-
+    /*//suprimer la premiere ligne (ligne des titres)//*/
         matrice.erase(matrice.begin());
         matricef.erase(matricef.begin());
 
-        cout<<matrice.size()<<"\n" ;
-        cout<<matricef.size()<<"\n";
+        cout<<"dimension matrice string:"<<"\n";
+        cout<<matrice.size()<<"X"<<splitArray.size();
+        cout << "\n----------------------" << endl;
 
+        cout<<"dimension matrice float:"<<"\n";
+        cout<<matricef.size()<<"X"<<splitArrayd.size();
+        cout<<"\n----------------------" << endl;
 
        /* ************************************************************* */
     /*//Affichage de la matrice//*/
- /*  for(iter_ii=matrice.begin(); iter_ii!=matrice.end()-(matrice.size()-1); iter_ii++){
+        cout<<"premiere ligne matrice string"<<"\n";
+    for(iter_ii=matrice.begin(); iter_ii!=matrice.end()-(matrice.size()-1); iter_ii++){
 
           for(iter_jj=(*iter_ii).begin(); iter_jj!=(*iter_ii).end(); iter_jj++){
 
@@ -97,7 +92,7 @@ int main()
            }
         cout << "\n----------------------" << endl;
         }
-
+        cout<<"premiere ligne matrice float:"<<"\n";
        for(iter_iif=matricef.begin(); iter_iif!=matricef.end()-(matricef.size()-1); iter_iif++){
 
           for(iter_jjf=(*iter_iif).begin(); iter_jjf!=(*iter_iif).end(); iter_jjf++){
@@ -106,7 +101,7 @@ int main()
 
            }
         cout << "\n----------------------" << endl;
-        }*/
+        }
 
         }
     /*
