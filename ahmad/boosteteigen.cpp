@@ -60,7 +60,7 @@ int main()
             catch(bad_lexical_cast &){
             splitArrayd.push_back(0);
             }
-    //cout<< splitArrayd[a];
+    //cout<< splitArrayd[a] ;
         }
 
     /* ************************************************************* */
