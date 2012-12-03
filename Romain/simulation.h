@@ -10,7 +10,7 @@
 #define __projet_pfe__simulation__
 
 #include <iostream>
-#include "matrice.h"
+#include "Matrice.h"
 
 using namespace std;
 
