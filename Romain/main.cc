@@ -3,6 +3,8 @@
 #include <cstdlib>
 #include <iostream>
 #include <math.h>
+#include <ctime>
+#include "boostcsvfinal.h"
 #define TAILLE_LIGNE 196
 #define TAILLE_COLONNE 194
 
@@ -10,45 +12,68 @@ using namespace std;
 
 
 int main(int argc, char *argv[]){
+  time_t depart, arrivee;
+  time(&depart);
+  Matrice p(TAILLE_LIGNE,TAILLE_COLONNE);
   Matrice eta(TAILLE_LIGNE,TAILLE_COLONNE);
   Matrice theta(TAILLE_LIGNE,TAILLE_COLONNE);
   Matrice stades(TAILLE_LIGNE,TAILLE_COLONNE);
-  for(int i=0;i<TAILLE_LIGNE;i++)
-          for(int j=0;j<TAILLE_COLONNE;j++)
-           stades.setValue(i,j,rand()%100);
-  Matrice result(TAILLE_LIGNE,TAILLE_COLONNE);
-  for(int i=0;i<TAILLE_LIGNE;i++)
-          for(int j=0;j<TAILLE_COLONNE;j++)
-           eta.setValue(i,j,(rand()%2)*2-1);
+  Matrice coeffdepot1(TAILLE_LIGNE,TAILLE_COLONNE);
+  Matrice coeffdepot2(TAILLE_LIGNE,TAILLE_COLONNE);
+  Matrice coeffdepot3(TAILLE_LIGNE,TAILLE_COLONNE);
+  Matrice coeffdepot4(TAILLE_LIGNE,TAILLE_COLONNE);
+  Matrice coeffdepot5(TAILLE_LIGNE,TAILLE_COLONNE);
+  Matrice coeffenvol(TAILLE_LIGNE,TAILLE_COLONNE);
+  
+  Matrice tauxaccroissement(TAILLE_LIGNE,TAILLE_COLONNE);
+  p=importation("mat_p_France_2009.csv"); 
+  eta=importation("mat_eta_France_2009.csv");
 
-  /*
-  result=taux_accroissement(theta,stades);
-  std::cout << result ;
-  cout<<"\n";
   
-  result=coeff_depot1(0.5,eta);
-  std::cout << result ;
-  cout<<"\n";
+  for(int i=0;i<TAILLE_LIGNE;i++)
+          for(int j=0;j<TAILLE_COLONNE;j++)
+           theta.setValue(i,j,7);
+
+    for(int i=0;i<TAILLE_LIGNE;i++)
+          for(int j=0;j<TAILLE_COLONNE;j++)
+           stades.setValue(i,j,rand()%100); 
+           
+  tauxaccroissement=taux_accroissement(theta,stades);
+  //std::cout << tauxaccroissement ;
+  //cout<<"\n";
+
+
+  coeffdepot1=coeff_depot1(p,eta);
+  //std::cout << coeffdepot1 ;
+  //cout<<"\n";
   
-  result=coeff_depot2(0.6,eta);
-  std::cout << result ;
-  cout<<"\n";
+  coeffdepot2=coeff_depot2(p,eta);
+  //std::cout << coeffdepot2 ;
+  //cout<<"\n";
   
-  result=coeff_depot3(0.6,eta);
-  std::cout << result ;
-  cout<<"\n";
+  coeffdepot3=coeff_depot3(p,eta);
+  //std::cout << coeffdepot3 ;
+  //cout<<"\n";
   
-  result=coeff_depot4(0.4,eta);
-  std::cout << result ;
-  cout<<"\n";
+  coeffdepot4=coeff_depot4(p,eta);
+  //std::cout << coeffdepot4 ;
+  //cout<<"\n";
   
-  result=coeff_depot5(0.4,eta);
-  std::cout << result ;
-  cout<<"\n";
+  coeffdepot5=coeff_depot5(p,eta);
+  //std::cout << coeffdepot5 ;
+  //cout<<"\n";
   
-  result=coeff_envol(50,theta,eta);
-  std::cout << result ;
-  cout<<"\n";*/
+  coeffenvol=coeff_envol(50,theta,eta);
+  //std::cout << coeffenvol ;
+  //cout<<"\n";
+  //time(&arrivee);
+  //cout<< "temps:" <<(((float)arrivee-(float)depart)/1000000.0F)*1000<<"\n";
+  for (int i=0;i<195;i++){
+      for (int j=0;j<193;j++){
+          cout << theta.getValue(i,j) << "\t" << stades.getValue(i,j) << "\t" << tauxaccroissement.getValue(i,j)<<"\n";
+          }
+}
+  
   /*
   cout<<taux_accroissement(m,n);
   m.setValue(0,0,1);
@@ -116,8 +141,8 @@ int main(int argc, char *argv[]){
   cout<<"matrice Identite \n";
   Identite.affiche();
   cout<<"\n";
-*/
 
+*/
   system("PAUSE");
   return EXIT_SUCCESS;
   

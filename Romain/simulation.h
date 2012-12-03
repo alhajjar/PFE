@@ -15,11 +15,11 @@
 using namespace std;
 
 Matrice taux_accroissement(Matrice theta, Matrice stades);
-Matrice coeff_depot1(float, Matrice);
-Matrice coeff_depot2(float, Matrice);
-Matrice coeff_depot3(float, Matrice);
-Matrice coeff_depot4(float, Matrice);
-Matrice coeff_depot5(float, Matrice);
+Matrice coeff_depot1(Matrice, Matrice);
+Matrice coeff_depot2(Matrice, Matrice);
+Matrice coeff_depot3(Matrice, Matrice);
+Matrice coeff_depot4(Matrice, Matrice);
+Matrice coeff_depot5(Matrice, Matrice);
 Matrice coeff_envol(int, Matrice, Matrice);
 
 #endif /* defined(__projet_pfe__simulation__) */
