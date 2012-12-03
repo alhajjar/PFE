@@ -24,20 +24,20 @@ int main(int argc, char *argv[]){
   Matrice coeffdepot4(TAILLE_LIGNE,TAILLE_COLONNE);
   Matrice coeffdepot5(TAILLE_LIGNE,TAILLE_COLONNE);
   Matrice coeffenvol(TAILLE_LIGNE,TAILLE_COLONNE);
-  
-  Matrice tauxaccroissement(TAILLE_LIGNE,TAILLE_COLONNE);
-  p=importation("mat_p_France_2009.csv"); 
-  eta=importation("mat_eta_France_2009.csv");
 
-  
+  Matrice tauxaccroissement(TAILLE_LIGNE,TAILLE_COLONNE);
+  p=importation("mat_p.csv");
+  eta=importation("mat_eta.csv");
+
+
   for(int i=0;i<TAILLE_LIGNE;i++)
           for(int j=0;j<TAILLE_COLONNE;j++)
            theta.setValue(i,j,7);
 
     for(int i=0;i<TAILLE_LIGNE;i++)
           for(int j=0;j<TAILLE_COLONNE;j++)
-           stades.setValue(i,j,rand()%100); 
-           
+           stades.setValue(i,j,rand()%100);
+
   tauxaccroissement=taux_accroissement(theta,stades);
   //std::cout << tauxaccroissement ;
   //cout<<"\n";
@@ -46,34 +46,34 @@ int main(int argc, char *argv[]){
   coeffdepot1=coeff_depot1(p,eta);
   //std::cout << coeffdepot1 ;
   //cout<<"\n";
-  
+
   coeffdepot2=coeff_depot2(p,eta);
   //std::cout << coeffdepot2 ;
   //cout<<"\n";
-  
+
   coeffdepot3=coeff_depot3(p,eta);
   //std::cout << coeffdepot3 ;
   //cout<<"\n";
-  
+
   coeffdepot4=coeff_depot4(p,eta);
   //std::cout << coeffdepot4 ;
   //cout<<"\n";
-  
+
   coeffdepot5=coeff_depot5(p,eta);
   //std::cout << coeffdepot5 ;
   //cout<<"\n";
-  
+
   coeffenvol=coeff_envol(50,theta,eta);
   //std::cout << coeffenvol ;
   //cout<<"\n";
   //time(&arrivee);
   //cout<< "temps:" <<(((float)arrivee-(float)depart)/1000000.0F)*1000<<"\n";
-  for (int i=0;i<195;i++){
+ /* for (int i=0;i<195;i++){
       for (int j=0;j<193;j++){
           cout << theta.getValue(i,j) << "\t" << stades.getValue(i,j) << "\t" << tauxaccroissement.getValue(i,j)<<"\n";
           }
-}
-  
+}*/
+
   /*
   cout<<taux_accroissement(m,n);
   m.setValue(0,0,1);
@@ -96,7 +96,7 @@ int main(int argc, char *argv[]){
   std::cout << m ;
   cout<<"\n";
 
-  
+
   Matrice U(4,4);
   U = m.matriceSuperieure();
   cout<<"matrice supérieure U\n";
@@ -145,6 +145,6 @@ int main(int argc, char *argv[]){
 */
   system("PAUSE");
   return EXIT_SUCCESS;
-  
+
 }
 

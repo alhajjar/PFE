@@ -8,21 +8,20 @@
 
 #include <iostream>     // cout, endl
 #include <fstream>      // fstream
-#include "C:\Users\ArcTan\Desktop\Boost\boost\tokenizer.hpp"
-#include "C:\Users\ArcTan\Desktop\Boost\boost\lexical_cast.hpp"
-#include "C:\Users\ArcTan\Desktop\Boost\boost\algorithm\string.hpp"
-//#include "C:\Users\ArcTan\Desktop\eigen2\Eigen\LU"// provides LU decomposition
-//#include "C:\Users\ArcTan\Desktop\eigen2\Eigen\Core"// provides random matrices
-//#include "C:\Users\ArcTan\Desktop\eigen2\Eigen\src\Core\Matrix.h"
-#include <C:\Users\ArcTan\Desktop\eigen2\Eigen\Dense>
+#include <boost/tokenizer.hpp>
+#include <boost/lexical_cast.hpp>
+#include <boost/algorithm/string.hpp>
+#include "/usr/include/eigen2/Eigen/LU"// provides LU decomposition
+#include "/usr/include/eigen2/Eigen/Core"// provides random matrices
+#include "/usr/include/eigen2/Eigen/Dense"// provides random matrices
 #include "Matrice.h"
+#include "boostcsvfinal.h"
 using namespace std;
 
 Matrice importation(string fichier)
 {
-    
+
     Matrice mat(196,194);
-    using namespace std;
     using namespace boost;
     //using namespace Eigen;
     /* ************************************************************* */
@@ -88,7 +87,7 @@ Matrice importation(string fichier)
       /*//Copie des valeurs dans une matrice de la classe Matrice//*/
        int i=0;
        int j=0;
-       int k=0;
+      // int k=0;
        for(iter_iif=matricef.begin(); iter_iif!=matricef.end(); iter_iif++){
            for(iter_jjf=(*iter_iif).begin(); iter_jjf!=(*iter_iif).end(); iter_jjf++){
              mat.setValue(i,j,*iter_jjf);
@@ -97,7 +96,7 @@ Matrice importation(string fichier)
            }
         i++;
         }
-        return mat;    
+        return mat;
        /* ************************************************************* */
     /*//Affichage de la matrice//*/
     /*   cout<<"premiere ligne matrice string"<<"\n";
