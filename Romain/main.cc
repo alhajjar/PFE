@@ -28,15 +28,16 @@ int main(int argc, char *argv[]){
   Matrice tauxaccroissement(TAILLE_LIGNE,TAILLE_COLONNE);
   p=importation("mat_p.csv");
   eta=importation("mat_eta.csv");
+  stades = eta;
+  theta = eta;
 
-
-  for(int i=0;i<TAILLE_LIGNE;i++)
+ /* for(int i=0;i<TAILLE_LIGNE;i++)
           for(int j=0;j<TAILLE_COLONNE;j++)
            theta.setValue(i,j,7);
 
     for(int i=0;i<TAILLE_LIGNE;i++)
           for(int j=0;j<TAILLE_COLONNE;j++)
-           stades.setValue(i,j,rand()%100);
+           stades.setValue(i,j,rand()%100);*/
 
   tauxaccroissement=taux_accroissement(theta,stades);
   //std::cout << tauxaccroissement ;
@@ -64,12 +65,21 @@ int main(int argc, char *argv[]){
   //cout<<"\n";
 
   coeffenvol=coeff_envol(50,theta,eta);
+     cout<<"tauxaccroissement(1,1)  = "<<tauxaccroissement.getValue(1,1)
+         <<"\n"<<"coeff_depot1(1,1) = "<<coeffdepot1.getValue(1,1)
+         <<"\n"<<"coeff_depot2(1,1) = "<<coeffdepot2.getValue(1,1)
+         <<"\n"<<"coeff_depot3(1,1) = "<<coeffdepot3.getValue(1,1)
+         <<"\n"<<"coeff_depot4(1,1) = "<<coeffdepot4.getValue(1,1)
+         <<"\n"<<"coeff_depot5(1,1) = "<<coeffdepot5.getValue(1,1)
+         <<"\n"<<"coeff_envol(1,1)  = "<<coeffenvol.getValue(1,1);
+
+
   //std::cout << coeffenvol ;
   //cout<<"\n";
   //time(&arrivee);
   //cout<< "temps:" <<(((float)arrivee-(float)depart)/1000000.0F)*1000<<"\n";
- /* for (int i=0;i<195;i++){
-      for (int j=0;j<193;j++){
+ /* for (int i=0;i<196;i++){
+      for (int j=0;j<194;j++){
           cout << theta.getValue(i,j) << "\t" << stades.getValue(i,j) << "\t" << tauxaccroissement.getValue(i,j)<<"\n";
           }
 }*/
@@ -143,7 +153,7 @@ int main(int argc, char *argv[]){
   cout<<"\n";
 
 */
-  system("PAUSE");
+  //system("PAUSE");
   return EXIT_SUCCESS;
 
 }
