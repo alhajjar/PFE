@@ -37,7 +37,8 @@ public:
   void Matrice_en_tabB(const Matrice &);
   void Matrice_en_tabC(const Matrice &);
 
-   Matrice matriceInverseN(float ** &,float ** &) const;
+  Matrice matriceInverseN(float ** &,float ** &) const;
+
    
 };
 

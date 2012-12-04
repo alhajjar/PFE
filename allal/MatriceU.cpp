@@ -18,7 +18,6 @@ MatriceU::MatriceU(MatriceN N){
 }
 
 
-
 /** \Destructeur tableau U
  *  \brief Destructeur
  */
@@ -56,19 +55,14 @@ float MatriceU::getUValue(int i) const{
 void MatriceU::afficheU() const {
  
 
-   std::cout << "[";
+  std::cout << "[";
   for(int i=0; i<taille-1; i++)
-         std::cout << Cketoile[i] << ",";
-  
-	 std::cout << Cketoile[taille-1];
-    	 std::cout << "] \n" << std::endl;
+   std::cout << Cketoile[i] << ",";
+   std::cout << Cketoile[taille-1];
+   std::cout << "] \n" << std::endl;
 
 }
 
-/*les méthodes et constructeurs pour construire le tableau des Ck*
-
-
-/
 
 /** \Fonction Calcul de la matrice supérieure des Ck*<<
  *  \brief permet de calculer le tableau des ck*
@@ -83,12 +77,10 @@ void MatriceU::matriceSuperieure_Cketoile(const MatriceN &N) const {
   Cketoile[0]= N.getCValue(0)/N.getBValue(0);
 
   // calcul des Ck*:
-  for(int i=1;i<taille;i++)
-	 Cketoile[i]= N.getCValue(i)/(N.getBValue(i)-(N.getAValue(i)*Cketoile[i-1]));
-
-
-
+ 	 for(int i=1;i<taille;i++)
+           Cketoile[i]= N.getCValue(i)/(N.getBValue(i)-(N.getAValue(i)*Cketoile[i-1]));
 }
+
 
 //** \Fonction Calcul Inverse de la matrice Uinv<<
  /*  \brief permet de calculer la matrice inverse de U
@@ -96,26 +88,23 @@ void MatriceU::matriceSuperieure_Cketoile(const MatriceN &N) const {
  *  \return Uinverse*/
 
 float * * MatriceU::matriceInverseU(const MatriceN &N) const {
-    
    
     float * * Uinv;
     Uinv = new float* [taille];
-    for(int i=0; i<taille;i++)
+   	 for(int i=0; i<taille;i++)
             Uinv[i]=new float[taille-i];
             
-    for(int j=0;j< taille;j++){
-            Uinv[0][j]=1;
-    }
+    		for(int j=0;j< taille;j++){
+                  Uinv[0][j]=1;
+                }
 
-   for(int j=1;j< taille;j++){
-    for(int i=0;i<taille-j;i++){
-      Uinv[j][i] = -Cketoile[i]*Uinv[j-1][i+1];
-    
+   	 for(int j=1;j< taille;j++){
+    		for(int i=0;i<taille-j;i++){
+      		  Uinv[j][i] = -Cketoile[i]*Uinv[j-1][i+1];
       
+		}
 
-}
-
-}
+	}
     return Uinv;
 }
 
