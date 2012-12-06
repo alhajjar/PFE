@@ -14,9 +14,6 @@ MatriceL::MatriceL(MatriceN N){
 	taille = N.getTaille();
 	Bketoile=new float[taille];
 	matriceSuperieure_Bketoile(N);
-//        matriceInverseL(N);
-
-    
 }
 
 
@@ -57,20 +54,14 @@ float MatriceL::getLValue(int i) const{
  */
 void MatriceL::afficheL() const {
  
-
-   std::cout << "[";
+  std::cout << "[";
   for(int i=0; i<taille-1; i++)
-         std::cout << Bketoile[i] << ",";
-  
-	 std::cout << Bketoile[taille-1];
-    	 std::cout << "] \n" << std::endl;
+     std::cout << Bketoile[i] << ",";
+     std::cout << Bketoile[taille-1];
+     std::cout << "] \n" << std::endl;
 
 }
 
-/*les méthodes et constructeurs pour construire le tableau des bk*
-
-
-/
 
 /** \Fonction Calcul de la matrice supérieure des bk*<<
  *  \brief permet de calculer le tableau des bk*
@@ -79,18 +70,16 @@ void MatriceL::afficheL() const {
 */
 
 void MatriceL::matriceSuperieure_Bketoile(const MatriceN &N) const {
-  
-
+ 
 // calcul de B1*:
   Bketoile[0]= N.getBValue(0);
 
 // calcul de bk*
 
   for(int i=1;i<taille;i++){
-   Bketoile[i]= N.getBValue(i)- N.getAValue(i)* (N.getCValue(i-1)/Bketoile[i-1]);
+    Bketoile[i]= N.getBValue(i)- N.getAValue(i)* (N.getCValue(i-1)/Bketoile[i-1]);
 
-   }
-
+  }
 }
 
 
@@ -101,25 +90,22 @@ void MatriceL::matriceSuperieure_Bketoile(const MatriceN &N) const {
 
 float * * MatriceL::matriceInverseL(const MatriceN &N) const {
     
-   
-    float * * Linv = 0;
-    Linv = new float* [taille];
-    for(int i=0; i<taille;i++)
-            Linv[i]=new float[taille-i];
+   float * * Linv = 0;
+   Linv = new float* [taille];
+   for(int i=0; i<taille;i++)
+      Linv[i]=new float[taille-i];
             
-    for(int i=0;i< taille;i++){
-            Linv[0][i]=1/Bketoile[i];
+   for(int i=0;i< taille;i++){
+      Linv[0][i]=1/Bketoile[i];
     }
 
    for(int j=0;j< taille-1;j++){
     for(int i=1;i< taille-j;i++){
-	    Linv[i][j] = - N.getAValue(i+j) *  Linv[i-1][j] / Bketoile[i+j];
+      Linv[i][j] = - N.getAValue(i+j) *  Linv[i-1][j] / Bketoile[i+j];
 
-}
-
-
-}
-    return Linv;
+    }  
+   }
+ return Linv;
 }
 
 
