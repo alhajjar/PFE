@@ -89,41 +89,41 @@ int main(int argc, char *argv[]){
   cout<<"\n";*/
 
 
-/*affichage des trois tableaux*/
-
+/*création de trois instances de la matriceN*/
 
 MatriceN Tableaux1(TAILLE);
 MatriceN Tableaux2(TAILLE);
 MatriceN Tableaux3(TAILLE);
-cout<<"TabA\n";
 
+/*extraction des coeffs de la diagonale inférieure tabA*/
+cout<<"TabA\n";
 Tableaux1.Matrice_en_tabA(m);
 Tableaux2.Matrice_en_tabA(m);
 Tableaux1.afficheA();
 
+/*extraction des coeffs de la diagonale principale tabB*/
 cout<<"TabB\n";
 Tableaux1.Matrice_en_tabB(m);
 Tableaux2.Matrice_en_tabB(m);
 Tableaux1.afficheB();
 
+/*extraction des coeffs de la diagonale supérieure tabC*/
 cout<<"TabC\n";
 Tableaux1.Matrice_en_tabC(m);
 Tableaux2.Matrice_en_tabC(m);
 Tableaux1.afficheC();
 
-/*Affichage des tableaux représentant les matrices L et U*/
-
-/*Matrice U*/
+/*Affichage des coeffs ck* de la matrice U*/
 cout<<"Ck*\n";
 MatriceU Cketoil(Tableaux1);
 Cketoil.afficheU();
 
-/*Matrice L*/
+/*Affichage des coeffs bk* de la matrice L*/
 cout<<"Bk*\n";
 MatriceL Bketoil(Tableaux2);
 Bketoil.afficheL();
 
-/*Matrice Linv*/
+/*Affichage des différentes diagonales non nulles de la matrice Linv*/
 cout<<"Linv\n";
 float * * ResLinv;
  ResLinv=Bketoil.matriceInverseL(Tableaux2);
@@ -138,7 +138,8 @@ float * * ResLinv;
  }        
 cout<<"\n";
 
-/*Matrice Uinv*/  
+
+/*Affichage des différentes diagonales non nulles de la matrice Uinv*/
 cout<<"Uinv\n";
 float * * ResUinv;
 
@@ -154,13 +155,10 @@ for(int i=0;i< TAILLE;i++){
  } 
 cout<<"\n";
 
-/*Matrice Ninv*/
+
+/*Affichage de la Ninv*/
 cout<<"Ninv\n";
-
 Matrice Ninv(TAILLE,TAILLE);
-
-
-
 Ninv = Tableaux3.matriceInverseN(ResUinv,ResLinv);
 Ninv.affiche();
 cout<<"\n";

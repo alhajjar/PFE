@@ -2,9 +2,6 @@
 
 #include <assert.h>
 
-
-
-
 /** \Constructeur matrice
  *  \brief Constructeur et initialisation des 3 tableaux
  *  \param [in] i la taille des tableaux
@@ -17,12 +14,6 @@ MatriceN::MatriceN(int i){
   tabB = new float[i];
   tabC = new float[i];
 
-  for(int j=0; j<i; j++){
-	tabA[j]= 0;
-	tabB[j]= 0;
-	tabC[j]= 0;
-
-    }
 }
 
 
@@ -55,6 +46,7 @@ float MatriceN::getAValue(int i) const{
   assert((0<=i) && (i<taille));
   return tabA[i];
 }
+
 
 
 /** \Fonction setBValue
@@ -105,43 +97,35 @@ float MatriceN::getCValue(int i) const{
  */
 void MatriceN::afficheA() const {
  
-
-   std::cout << "[";
+  std::cout << "[";
   for(int i=0; i<taille-1; i++)
-
-         std::cout << tabA[i] << ",";
-	 std::cout << tabA[taille-1];
-    	 std::cout << "] \n" << std::endl;
-
-
+    std::cout << tabA[i] << ",";
+    std::cout << tabA[taille-1];
+    std::cout << "] \n" << std::endl;
 }
 
 /** \Fonction afficheB
-
  *  \brief affiche le tableau B
  */
 void MatriceN::afficheB() const {
 
-   std::cout << "[";
+  std::cout << "[";
   for(int i=0; i<taille-1; i++)
-
-         std::cout << tabB[i] << ",";
-	 std::cout << tabB[taille-1];
-    	 std::cout << "] \n" << std::endl;
+   std::cout << tabB[i] << ",";
+   std::cout << tabB[taille-1];
+   std::cout << "] \n" << std::endl;
 }
 
 /** \Fonction afficheC
-
  *  \brief affiche le tableau C
  */
 void MatriceN::afficheC() const {
 
-   std::cout << "[";
+  std::cout << "[";
   for(int i=0; i<taille-1; i++)
-
-         std::cout << tabC[i] << ",";
-	 std::cout << tabC[taille-1];
-    	 std::cout << "] \n" << std::endl;
+   std::cout << tabC[i] << ",";
+   std::cout << tabC[taille-1];
+   std::cout << "] \n" << std::endl;
 }
 
 
@@ -153,10 +137,8 @@ void MatriceN::afficheC() const {
 void MatriceN::Matrice_en_tabA(const Matrice &m){
 
       for(int l=2; l<taille+1; l++){
-	
 	setAValue(l-1,m.getValue(l-1,l-2));
       }	
-
 }
 
 
@@ -168,7 +150,6 @@ void MatriceN::Matrice_en_tabA(const Matrice &m){
 void MatriceN::Matrice_en_tabB(const Matrice &m){
 
       for(int l=0; l<taille; l++){
-	
 	setBValue(l,m.getValue(l,l));
       }	
 }
@@ -183,15 +164,18 @@ void MatriceN::Matrice_en_tabB(const Matrice &m){
 void MatriceN::Matrice_en_tabC(const Matrice &m){
 
       for(int l=1; l<taille; l++){
-	
 	setCValue(l-1,m.getValue(l-1,l));
       }	
 }
 
-
+/** \Fonction Retourne la taille de la matrice <<
+ *  \brief permet de renvoyer le taille d'une matrice 
+ */
 int MatriceN::getTaille() const{
-	return taille;
+     return taille;
 }
+
+
 /** \Fonction calcul de la matrice inverse de N <<
  *  \brief permet de calculer Ninv à partir de Linv et Uinv
  *  \param [in] tableau à 2D Uinv et Linv 
@@ -203,24 +187,26 @@ Matrice MatriceN:: matriceInverseN(float ** &Uinv,float ** &Linv) const{
 int l;
 Matrice Ninv(taille,taille);
 
+	for(int i=0; i<taille; i++){
 
-for(int i=0; i<taille; i++){
-//int i=2;
-	for(int j=0;j<taille;j++){
-         if((i-j)>0) 
-		l=i;
-	else l=j;
+		for(int j=0;j<taille;j++){
+	         if((i-j)>0) 
+	          l=i;
+	         else l=j;
 
-Ninv.setValue(j,i,0);
-	   for(int k=0;k<taille-l;k++){
-			Ninv.setValue(j,i,Ninv.getValue(j,i)+ Uinv[taille-k-1-j][j] * Linv[taille-k-i-1][i]);
-			}
-          }
+
+        Ninv.setValue(j,i,0);
+			   for(int k=0;k<taille-l;k++){
+				Ninv.setValue(j,i,Ninv.getValue(j,i)+ Uinv[taille-k-1-j][j] * Linv[taille-k-i-1][i]);
+	            	    }
+                 }
 
 	}	
 
 return Ninv;
 }
+
+
 
 
 

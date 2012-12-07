@@ -24,10 +24,11 @@
 
       //cout<<m_eta;
       //cout<<m_p;
-     cout<<m_eta.block<1,194>(1,0)<<"\n";
-     cout<<"---------------------------"<<"\n";
-     cout<<m_p.block<1,194>(1,0)<<"\n";
-     cout<<"---------------------------"<<"\n";
+    // cout<<m_eta;
+    std::cout << "The matrix m is of size "<< m_p.rows() << "x" << m_p.cols() << std::endl;
+     //cout<<"---------------------------"<<"\n";
+    // cout<<m_p.block<1,194>(1,0)<<"\n";
+     //cout<<"---------------------------"<<"\n";
 
 
   //system("PAUSE");
