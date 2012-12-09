@@ -30,6 +30,6 @@ function MATRICE_C = calcul_C(h,MATRICE_A,MATRICE_C,coeffdepot2,N1,iteration)
     
  end
   
-
+end
  
  

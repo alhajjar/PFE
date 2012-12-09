@@ -8,4 +8,4 @@ function [B] = calculN2(h,taux_acroissement,alpha2)
    end
 
     B = pinv(m);
-    
+end

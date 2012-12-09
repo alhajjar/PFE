@@ -25,3 +25,4 @@ function [matn] = calculN1(h,k,D,alpha1,vitesse)
 
  matn = gallery('tridiag',vec2(1,1:38023),vec1(1,:),vec3(1,1:38023));
 % Replace inv(A)*b with A\b and replace b*inv(A) with b/A.
+end
