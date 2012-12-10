@@ -7,7 +7,7 @@ function  [alpha1]= coeff_depot1( p,eta)
   
     for i=1:196
         for j=1:194
-              alpha1(i, j)=log(a1+a*(-(p(i,j)*p(i,j))*atan(k*eta(i,j))+a2*p(i,j)));
+              alpha1(i, j)=log(a1+a*(-p(i,j)*p(i,j)+p(i,j))*atan(k*eta(i,j))+a2*p(i,j)));
         end
     end
     
