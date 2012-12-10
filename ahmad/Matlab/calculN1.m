@@ -7,7 +7,7 @@ function [matn] = calculN1(h,k,D,alpha1,vitesse)
             for j=1:194
                 
 
-                alpha1ij(i,j)= ((1 - h + h*alpha1(i,j)) + (2 * h /(k*k) *D(i,j))) ;
+                alpha1ij(i,j)= ((1 + h + h*alpha1(i,j)) + (2 * h /(k*k) *D(i,j))) ;
                 vec1(1,f) = alpha1ij(i,j);
                 alpha2ij(i,j)  = ((-h/k)*(D(i,j)/k + vitesse(i,j)/2) ) ;
                 vec2(1,f) = alpha2ij(i,j);
