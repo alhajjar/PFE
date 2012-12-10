@@ -1,4 +1,4 @@
-function MATRICE_C = calcul_C(h,MATRICE_A,MATRICE_C,coeffdepot2,N1,iteration)
+function MATRICE_C = calcul_C(h,MATRICE_A,MATRICE_C,coeffenvol,N1,iteration)
 
 
  for it = 1 : iteration
@@ -7,7 +7,7 @@ function MATRICE_C = calcul_C(h,MATRICE_A,MATRICE_C,coeffdepot2,N1,iteration)
 
       for j = 1:194
 
-             vec1(1,f) = MATRICE_C(i,j) + h* coeffdepot2(i,j)* MATRICE_A(i,j);
+             vec1(1,f) = MATRICE_C(i,j) + h* coeffenvol(i,j)* MATRICE_A(i,j);
                  f = f + 1;
       end
   end
