@@ -1,0 +1,5 @@
+libapteresInitialize
+libapteresInitializeWithHandlers
+libapteresTerminate
+libapteresPrintStackTrace
+

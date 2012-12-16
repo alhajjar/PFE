@@ -10,18 +10,7 @@
 #ifndef __projet_pfe__simulation__
 #define __projet_pfe__simulation__
 
-
-#include <iostream>
-#include "/usr/include/eigen2/Eigen/Array"
-#include "/usr/include/eigen2/Eigen/Core"
-#include "/usr/include/eigen2/Eigen/LU"
-#include "/usr/include/eigen2/Eigen/Dense"
-
-    using namespace std;
-    using namespace Eigen;
-
-    typedef Matrix<float, 196,194> Matrice;
-    typedef Matrix<float, 197,194> Matrice1;
+#include "allincludes.hpp"
 
     Matrice taux_accroissement( Matrice theta, Matrice stades);
     Matrice coeff_depot1      ( Matrice m    , Matrice n     );

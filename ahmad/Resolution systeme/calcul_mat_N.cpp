@@ -7,126 +7,61 @@
 ////////////////////////////////////////////////////////////////////
 #include "calcul_mat_N.hpp"
 
-Vecteur MatriceNdiag(int h , int k ,  Matrice d , Matrice alpha1 , Matrice v){
+cs* matricen (int h , int k ,  Matrice d , Matrice alpha1 , Matrice v){
 
-    Matrice alpha1ij;
-    Vecteur vec1;
-    int f = 0;
+    cs *A;
+    cs *T;
+    int n = d.rows()*d.cols();
+    int i = 0,j = 0;
+    double vec3[n];
+    double vec2[n];
+    double vec1[n];
 
-   for(int i=0;i<alpha1ij.rows();i++){
-            for(int j=0;j<alpha1ij.cols();j++){
-                alpha1ij(i,j)= ((1 - h + h*alpha1(i,j)) + (2 * h /(k*k) *d(i,j))) ;
+/* Allocation en m�moire de la matrice tridiagonale temporaire */
+     T = cs_spalloc (0, 0, 1, 1, 1) ;
+     int f = 0;
+//je cree la matrice tridiagonal
+	 for(int i=0;i!=d.rows();i++){
+		 for(int j=0;j!=d.cols();j++){
 
-            }
-    }
-   // cout <<alpha1ij;
+		    cs_entry (T, f, f, double ((1 - h + h*alpha1(i,j)) + (2 * h /(k*k) *d(i,j)))) ;//diag
+		    vec2[f]  = double ((-h/k)*(d(i,j)/k + v(i,j)/2) ) ;//diag inf
+		    vec3[f]  = double ((-h/k)*(d(i,j)/k - v(i,j)/2) ) ;//diag sup
 
-   for(int i=0;i<alpha1ij.rows();i++){
+		    	f++;
+		    }
+	   }
 
-            for(int j=0;j<alpha1ij.cols();j++){
+	for( i = 0; i!=n-1;i++){
 
-              vec1(f) = alpha1ij(i,j);
-              f++;
-            }
-    }
+	cs_entry (T, i+1, i,vec2[i]);//diaginf
+	cs_entry (T,  i, i+1,vec3[i]);//diagsup
 
-    //cout<<vec1.rows()<<vec1.cols();
-//cout <<vec1;
+	}
 
-//cout<< vec1.block <1,100>(0,0);
+/* Compression en m�moire et remplissage de la matrice creuse */
+	A = cs_compress(T);
 
-return vec1;
+/* Liberation de l'espace memoire T */
+	cs_spfree(T);
+
+ return A;
 }
-Vecteur MatriceNdiaginf(int h , int k ,  Matrice d  , Matrice v){
-
-    Matrice alpha2ij;
-    Vecteur vec2;
-    int f = 0;
-
-   for(int i=0;i<alpha2ij.rows();i++){
-            for(int j=0;j<alpha2ij.cols();j++){
-
-                alpha2ij(i,j)  = ((-h/k)*(d(i,j)/k + v(i,j)/2) ) ;
-
-            }
-    }
 
 
-   for(int i=0;i<alpha2ij.rows();i++){
+Vecteur calculmatriceN2N4 (int h , Matrice r , Matrice alpha2 ){
 
-            for(int j=0;j<alpha2ij.cols();j++){
+   Vecteur N2=Vecteur::Zero();
+   int f = 0;
 
-              vec2(f) = alpha2ij(i,j);
-              f++;
-            }
-    }
-
-return vec2;
-
-}
-    Vecteur MatriceNdiagsup(int h , int k ,  Matrice d , Matrice v){
-
-    Matrice alpha3ij;
-    Vecteur vec3;
-    int f = 0;
-
-   for(int i=0;i<alpha3ij.rows();i++){
-            for(int j=0;j<alpha3ij.cols();j++){
-
-                alpha3ij(i,j)  = ((-h/k)*(d(i,j)/k - v(i,j)/2) ) ;
-            }
-    }
-
-   for(int i=0;i<alpha3ij.rows();i++){
-
-            for(int j=0;j<alpha3ij.cols();j++){
-
-              vec3(f) = alpha3ij(i,j);
-
-              f++;
-            }
-    }
-
-return vec3;
-
-    }
-
-    MatriceN matricen (Vecteur VECINF, Vecteur DIAG, Vecteur VECSUP){
-        MatriceN matn;
-        matn = MatriceN::Zero(194*196, 194*196);
-      for(int i=0;i<matn.cols();i++){
-        matn(i,i) = DIAG(i);
-        //cout<<mat(i,i);
-        //cout<< vec1(i);
-       }
-
-//cout<< mat.cols()<<"\n";
-   for(int i=0;i<matn.cols()-1;i++){
-          matn(i,i+1)  = VECSUP(i);
-          matn(i+1,i)  = VECINF(i);
-       }
-    return matn;
-    }
-
- Matrice_carre calculmatriceN2N4 (int h , Matrice r , Matrice alpha2 ){
-
-   Matrice mat;
-   for(int i=0;i<mat.rows();i++){
-        for(int j=0;j<mat.cols();j++){
-            mat(i,j) = (1 - h *(r(i,j) - alpha2(i,j)));
-
+   for(int i=0;i!=r.rows();i++){
+        for(int j=0;j!=r.cols();j++){
+            N2(f) = 1/(1 - h * (r(i,j)- alpha2(i,j)));
+            f++;
         }
     }
-        Matrice_carre m = Matrice_carre::Ones();
-       for(int i=0;i<m.rows();i++){
-                for(int j=0;j<m.cols();j++){
-                    m(i,j)= mat(i,j);
-                }
-       }
-Eigen::LU<Matrice_carre> lu(m);
- Matrice_carre m2 =lu.inverse();
- //cout<<m2;
- // Matrice_carre m2 = m.inverse();
-   // cout<<mat;
- return m2;
- }
+
+ return N2;
+
+}
+

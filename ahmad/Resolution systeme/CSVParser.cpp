@@ -8,7 +8,7 @@
 
 #include "CSVParser.hpp"
 
-Matrice CSVParser(const string filePath){
+Matrice CSVParser( string filePath){
 
     Matrice mfinal= Matrice::Zero();
     string data(filePath);
@@ -35,7 +35,7 @@ Matrice CSVParser(const string filePath){
             split(splitArray, vec.at(0), is_any_of(";"));
             int nbcolonne=splitArray.size();
 
-            for (int a=0;a<nbcolonne;a++){
+            for (int a=0;a!=nbcolonne;a++){
                 try{
                     splitArrayd[a]= boost::lexical_cast<float>(splitArray[a]);
                     m(nbligne,a)= splitArrayd.at(a);
