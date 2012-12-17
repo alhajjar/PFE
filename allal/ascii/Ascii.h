@@ -10,7 +10,7 @@
 class Ascii{
 private:
 int ncols , nrows,xllcorner,yllcorner,cellsize,NODATA_value;
-Matrice *matrice;
+
 public:
 
 Ascii();
