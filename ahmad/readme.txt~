@@ -8,7 +8,7 @@ remarque:
 
 5. ./win 
 remarque:
- pour afficher le temps d'execution time ./win
+pour afficher le temps d'execution time ./win
 
 remarque:
  tout les fichiers CSV doivent etre de dimensions 197X194 car pour l'instant on n'a pas implementer voronoy dans le code
