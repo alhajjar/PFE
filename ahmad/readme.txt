@@ -3,10 +3,10 @@
 3. make
 remarque:
  vous copier le makefile du dossier makefiles2arch qui correspond a votre architecture  
+4. vous entrer dans le dossier test
+5. g++ -o win main.cpp libpfe.a
 
-4. g++ -o win main.cpp libpfe.a
-
-5. ./win 
+6. ./win 
 remarque:
  pour afficher le temps d'execution time ./win
 
