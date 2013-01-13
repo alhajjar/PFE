@@ -24,10 +24,8 @@
     	using namespace boost;
 
     typedef tokenizer< escaped_list_separator<char> > Tokenizer;
-    typedef Matrix<double, 196,194> Matrice;
-    typedef Matrix<double, 1 ,196*194> Vecteur;
-    typedef MatrixXd Matricedyn;
-
+    typedef MatrixXd Matrice;
+    typedef VectorXd Vecteur;
 
 
 #endif

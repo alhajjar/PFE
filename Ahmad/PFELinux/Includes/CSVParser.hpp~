@@ -11,7 +11,7 @@
 
 #include "allincludes.hpp"
 
-Matrice CSVParser(int m,int n, string filePath);
+Matricedyn CSVParser(int m,int n, string filePath);
 
 
 #endif

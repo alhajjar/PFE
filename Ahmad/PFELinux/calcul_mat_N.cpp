@@ -5,7 +5,7 @@
 //                 -------------------------                      //
 //                                                                //
 ////////////////////////////////////////////////////////////////////
-#include <calcul_mat_N.hpp>
+#include "Includes/calcul_mat_N.hpp"
 
 cs* matricen (int h , int k ,  Matrice d , Matrice alpha1 , Matrice v){
 
@@ -50,8 +50,9 @@ cs* matricen (int h , int k ,  Matrice d , Matrice alpha1 , Matrice v){
 
 
 Vecteur calculmatriceN2N4 (int h , Matrice r , Matrice alpha2 ){
+       Vecteur  N2(38024);
+       N2 = Vecteur::Zero(38024);
 
-   Vecteur N2=Vecteur::Zero();
    int f = 0;
 
    for(int i=0;i!=r.rows();i++){

@@ -6,7 +6,6 @@
 //                                                                //
 ////////////////////////////////////////////////////////////////////
 #include <stdio.h>
-#include <dlfcn.h>
 #include "../Includes/CSVParser.hpp"
 #include "../Includes/simulation.hpp"
 #include "../Includes/calcul_mat_N.hpp"
@@ -19,8 +18,8 @@
 
 int main(int argc, char **argv)
 {
-
-        Vecteur N22 = Vecteur::Zero();
+			Vecteur N22(38024);
+		N22=Vecteur::Zero(38024);
 int m,n;
 /***************************************************************************************************/
 cout << "veuillez entree le nombre de lignes du CSV[default :197]:";
@@ -40,21 +39,27 @@ cout << "veuillez entree le nombre de colonnes du CSV[default :194]:";
   else
     n = atoi(numtmpe1.c_str());
 /***************************************************************************************************/
-        Matricedyn theta(m-1,n);
-        theta = Matricedyn::Zero(m-1,n);
-        Matricedyn mat_A(m-1,n);
-	mat_A = Matricedyn::Zero(m-1,n);
-	Matricedyn mat_C(m-1,n);
-	mat_C = Matricedyn::Zero(m-1,n);
+        Matrice theta(m-1,n);
+        theta = Matrice::Zero(m-1,n);
+        Matrice mat_A(m-1,n);
+		mat_A = Matrice::Zero(m-1,n);
+		Matrice mat_C(m-1,n);
+		mat_C = Matrice::Zero(m-1,n);
         cs* N1;
-        Matricedyn stades(m-1,n); 
-	stades = Matricedyn::Zero(m-1,n);
-	Matricedyn m_eta(m-1,n);  
-	m_eta = Matricedyn::Zero(m-1,n);
-        Matricedyn m_p (m-1,n);
-	m_p = Matricedyn::Zero(m-1,n);
-	Matricedyn coeffenvol(m-1,n);
-	coeffenvol = Matricedyn::Zero(m-1,n);
+        Matrice stades(m-1,n); 
+		stades = Matrice::Zero(m-1,n);
+		Matrice m_eta(m-1,n);  
+		m_eta = Matrice::Zero(m-1,n);
+			Matrice m_p (m-1,n);
+		m_p = Matrice::Zero(m-1,n);
+		Matrice coeffenvol(m-1,n);
+		coeffenvol = Matrice::Zero(m-1,n);
+		Matrice tauxaccroissement(m-1,n);
+		tauxaccroissement = Matrice::Zero(m-1,n);
+		Matrice coeffdepot1(m-1,n); 
+		coeffdepot1 = Matrice::Zero(m-1,n);
+		Matrice coeffdepot2(m-1,n); 
+		coeffdepot2 = Matrice::Zero(m-1,n);
 /***************************************************************************************************/
 cout << "veuillez entree le nombre d'iteration [default : 1 ]:";
     int num ;
@@ -141,19 +146,19 @@ cout << "veuillez entree la valeur de h [default : 1]:";
     if (numtmp3== "") //user typed something different than Enter
      num3 = 1;
     else //otherwise use default value
-         num3 = atoi(numtmp3.c_str());
+     num3 = atoi(numtmp3.c_str());
 /***************************************************************************************************/
           m_eta  = CSVParser(m,n,str );
           m_p    = CSVParser(m,n,str1 );
          stades = CSVParser(m,n,str2);
-	 theta = CSVParser(m,n,str3);
-	 mat_A = CSVParser(m,n,str4 );
+		 theta = CSVParser(m,n,str3);
+		 mat_A = CSVParser(m,n,str4 );
          mat_C = CSVParser(m,n,str5 );
 //cout<<mat_C.block<1, 194>(0,0)<<"\n";
 /***************************************************************************************************/
-        Matrice tauxaccroissement   = taux_accroissement(theta,stades);
-        Matrice coeffdepot1         = coeff_depot1(m_p,m_eta)         ;
-        Matrice coeffdepot2         = coeff_depot2(m_p,m_eta)         ;
+         tauxaccroissement   = taux_accroissement(theta,stades);
+         coeffdepot1         = coeff_depot1(m_p,m_eta)         ;
+         coeffdepot2         = coeff_depot2(m_p,m_eta)         ;
         //Matrice coeffdepot3       = coeff_depot3(m_p,m_eta)         ;
         //Matrice coeffdepot4       = coeff_depot4(m_p,m_eta)         ;
         //Matrice coeffdepot5       = coeff_depot5(m_p,m_eta)         ;
@@ -168,13 +173,16 @@ const string defaultTexteee = "oui";
     string strin ;
     string tmptt;
        for(int i = 0; i!= num;i++){
-  	coeffenvol = coeff_envol(mat_A,theta,m_eta)     ;
+  		coeffenvol = coeff_envol(mat_A,theta,m_eta)     ;
         N22 = calculmatriceN2N4 ( num2,  tauxaccroissement , coeffenvol );
-        //mat_C = Resolution_apteres(num2 , mat_A, mat_C , coeffdepot2, N1);
+        mat_C = Resolution_apteres(num2 , mat_A, mat_C , coeffdepot2, N1);
         mat_A =Resolution_ailees (num2, mat_A, mat_C, coeffenvol,N22);
-        //mat_C = Resolution_apteres(num2 , mat_A, mat_C , coeffdepot2, N1);
-        //mat_A =Resolution_ailees (num2, mat_A, mat_C, coeffenvol,N22);
+        mat_C = Resolution_apteres(num2 , mat_A, mat_C , coeffdepot2, N1);
+        mat_A =Resolution_ailees (num2, mat_A, mat_C, coeffenvol,N22);
 	//cout<< mat_C;
+	 cout<<"premiere ligne de la matrice c "<<"\n------------------\n"<< mat_C.block<1, 194>(0,0)<<"\n------------------\n"<<
+	 "premiere ligne de la matrice A "<<"\n------------------\n"<< mat_A.block<1, 194>(0,0)<<"\n------------------\n";
+
 	cout << "Voulez vous enregistrez le resultat de mat_A [default :oui]:";
  
     getline(cin, tmpt);
@@ -199,7 +207,7 @@ cout << "Voulez vous enregistrez le resultatde mat_C[default :oui]:";
 if (strin == "oui")
  save_matrice_C( m , n, mat_C);
 
-       cout<<"premiere ligne de la matrice c "<<"\n------------------\n"<< mat_C.block<1, 194>(0,0)<<"\n------------------\n"<<"premiere ligne de la matrice A "<<"\n------------------\n"<< mat_A.block<1, 194>(0,0)<<"\n------------------\n";
+      
    }
 
  return 0;

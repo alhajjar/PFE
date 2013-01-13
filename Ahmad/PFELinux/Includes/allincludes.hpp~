@@ -14,10 +14,14 @@
 #include <boost/algorithm/string.hpp>
 #include <eigen3/Eigen/Core>
 #include "cs.h"
+#include <cstdlib> 
 
-    using namespace std;
-    using namespace Eigen;
-    using namespace boost;
+	using std::cerr;
+	using std::endl;
+	using std::ofstream;
+    	using namespace std;
+    	using namespace Eigen;
+    	using namespace boost;
 
     typedef tokenizer< escaped_list_separator<char> > Tokenizer;
     typedef Matrix<double, 196,194> Matrice;

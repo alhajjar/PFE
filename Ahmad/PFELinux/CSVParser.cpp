@@ -6,15 +6,14 @@
 //                                                                //
 ////////////////////////////////////////////////////////////////////
 
-#include <CSVParser.hpp>
+#include "Includes/CSVParser.hpp"
 
-Matricedyn CSVParser(int m,int n, string filePath){
+Matrice CSVParser(int m,int n, string filePath){
 
-        Matricedyn mfinal(m,n);
-mfinal = Matricedyn::Zero(m,n);
-        Matricedyn mfin(m-1,n);
-mfin = Matricedyn::Zero(m-1,n);
-   // Matricedyn mfinal;
+    Matrice mfinal(m,n);
+    mfinal = Matrice::Zero(m,n);
+    Matrice mfin(m-1,n);
+    mfin = Matrice::Zero(m-1,n);
     string data(filePath);
     ifstream in(data.c_str());
 
@@ -27,7 +26,7 @@ mfin = Matricedyn::Zero(m-1,n);
         vector< string > vec;
         vector<string> splitArray;
         vector<double> splitArrayd;
-       // Matricedyn1 m ;
+       // Matrice1 m ;
         string line;
         int nbligne=0;
         /* ************************************************************* */
@@ -51,16 +50,12 @@ mfin = Matricedyn::Zero(m-1,n);
           nbligne++;
 
           }
-int k = n;
-for (int i = 0;i<m-1;i++){
-	for (int j = 0;j<n;j++){
-mfin(i,j)=mfinal(i+1,j);
-
-}
-
-}
-//cout<<mfinal.rows() <<"X" << mfinal.cols();
-
+	int k = n;
+	for (int i = 0;i<m-1;i++){
+		for (int j = 0;j<n;j++){
+			mfin(i,j)=mfinal(i+1,j);
+	}
+		}
     }
  return mfin;
 }

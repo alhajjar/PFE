@@ -6,7 +6,7 @@
 //                                                                //
 ////////////////////////////////////////////////////////////////////
 
-#include <simulation.hpp>
+#include "Includes/simulation.hpp"
 
 /** \taux d'accroissement
  *  \brief calcul la matrice du taux d'accroissement
@@ -21,7 +21,9 @@ Matrice taux_accroissement(Matrice theta, Matrice stades){
     float a2 = 0.11132;
     float num = 0;
     float den = 0;
-    Matrice mat = Matrice::Zero();
+    Matrice mat(196,194);
+    mat = Matrice::Zero(196,194);
+
     for(int i = 0;i != mat.rows();i++){
             for(int j = 0;j != mat.cols();j++){
                     if(theta(i,j) >= 30 || stades(i,j) >= 92){
@@ -47,7 +49,9 @@ Matrice coeff_depot1(Matrice p, Matrice eta){
     float a2 = 1.652655;
     float a = -0.267819;
     float k = 6.214583;
-    Matrice mat=Matrice::Zero();
+    Matrice mat(196,194);
+    mat = Matrice::Zero(196,194);
+
     for(int i=0;i!=mat.rows();i++){
             for(int j=0;j!=mat.cols();j++){
               mat(i, j)=log(a1+a*(-(p(i,j)*p(i,j)+p(i,j))*atan(k*eta(i,j))+a2*p(i,j)));
@@ -74,7 +78,9 @@ Matrice coeff_depot2(Matrice p, Matrice eta){
     float k = 7.317821;
     float num = 0;
     float den = 0;
-    Matrice mat=Matrice::Zero();
+    Matrice mat(196,194);
+    mat = Matrice::Zero(196,194);
+
     for(int i=0;i!=mat.rows();i++){
             for(int j=0;j!=mat.cols();j++){
               num = (a4*exp(p(i,j))+a5*log(1+p(i,j)));
@@ -96,7 +102,9 @@ Matrice coeff_depot3(Matrice p, Matrice eta){
     float a2 = 0.86894;
     float a3 = 1.08105;
     float k = 8.22311;
-    Matrice mat=Matrice::Zero();
+    Matrice mat(196,194);
+    mat = Matrice::Zero(196,194);
+
     for(int i=0;i!=mat.rows();i++){
             for(int j=0;j!=mat.cols();j++){
                     mat(i, j) = log(a2+a1*(p(i,j)-p(i,j)*p(i,j))*atan(k*eta(i,j))+a3*p(i,j)) ;
@@ -115,7 +123,9 @@ Matrice coeff_depot4(Matrice p, Matrice eta){
     float a2=0.983375;
     float a3=1.669692;
     float k =-6.572036;
-    Matrice mat=Matrice::Zero();
+    Matrice mat(196,194);
+    mat = Matrice::Zero(196,194);
+
     for(int i=0;i!=mat.rows();i++){
             for(int j=0;j!=mat.cols();j++){
                 mat(i, j) = log(a2+a1*(p(i,j)-(p(i,j)*p(i,j)))*atan(k*eta(i,j))+a3*p(i,j));
@@ -134,7 +144,9 @@ Matrice coeff_depot5(Matrice p, Matrice eta){
     float a2 = 0.73519;
     float a3 =1.92703;
     float k =38.70085;
-    Matrice mat=Matrice::Zero();
+    Matrice mat(196,194);
+    mat = Matrice::Zero(196,194);
+
     for(int i=0;i!=mat.rows();i++){
             for(int j=0;j!=mat.cols();j++){
                     if (p(i,j)<0.5)
@@ -159,7 +171,9 @@ Matrice coeff_envol(Matrice A,Matrice stades,Matrice theta){
     float a2=-0.543663;
     float logN4 = 0;
     float phi_alpha2 = 0;
-    Matrice mat=Matrice::Zero();
+    Matrice mat(196,194);
+    mat = Matrice::Zero(196,194);
+
     for(int i=0;i!=mat.rows();i++){
             for(int j=0;j!=mat.cols();j++){
             logN4=exp(a*stades(i,j))/(1+exp(a0+a1*stades(i,j)+a2*log(1+A(i,j))));

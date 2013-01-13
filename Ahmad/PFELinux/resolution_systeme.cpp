@@ -5,20 +5,19 @@
 //                 -------------------------                      //
 //                                                                //
 ////////////////////////////////////////////////////////////////////
-#include<resolution_systeme.hpp>
+#include"Includes/resolution_systeme.hpp"
 
 Matrice Resolution_apteres(int h , Matrice A , Matrice C , Matrice alpha2, cs* N){
  int n = 38024;
  double I[38024] = {0};
  double I1[38024] = {0};
  I1[0] = 1;
- Vecteur vec1;
+ Vecteur vec1(38024);
+ vec1 = Vecteur::Zero(38024);
  int f = 0;
  csn *R;
- 
-
-  double *x;
-  x = (double*)cs_malloc (N->n , sizeof (double)) ;
+ double *x;
+ x = (double*)cs_malloc (N->n , sizeof (double)) ;
 
  for(int i = 0;i != C.rows();i++){
      for(int j = 0;j != C.cols();j++){
@@ -27,7 +26,7 @@ Matrice Resolution_apteres(int h , Matrice A , Matrice C , Matrice alpha2, cs* N
        }
   }
 
- R = cs_lusol_init (0, N, I1, 1e-14,x);
+  R = cs_lusol_init (0, N, I1, 1e-14,x);
   for(int i = 1;i < 38024;i++){
         double val = vec1(i);
         for(int k = 0;k < n;k++){
@@ -36,11 +35,11 @@ Matrice Resolution_apteres(int h , Matrice A , Matrice C , Matrice alpha2, cs* N
         }
         I1[i] = 1;
     cs_lusol_boucle (N, I1, R, x);
- }
+  }
   cs_nfree (R) ;
   cs_free(x);
 
-  f = 0;
+ f = 0;
  for(int i = 0;i != C.rows();i++){
      for(int j = 0;j != C.cols();j++){
          C(i,j) = I[f];
