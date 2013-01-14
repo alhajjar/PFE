@@ -13,8 +13,8 @@ cs* matricen (int h , int k ,  Matrice d , Matrice alpha1 , Matrice v){
     cs *T;
     int n = d.rows()*d.cols();
     int i = 0;
-    double vec3[n];
-    double vec2[n];
+    double vec3[38024];
+    double vec2[38024];
 
 
 /* Allocation en memoire de la matrice tridiagonale temporaire */
@@ -26,8 +26,9 @@ cs* matricen (int h , int k ,  Matrice d , Matrice alpha1 , Matrice v){
 		 for(int j=0;j!=d.cols();j++){
 
 		    cs_entry (T, f, f, (1+h*alpha1(i,j)+(2*h*d(i,j))/(k*k))) ;//diag
-		    vec2[f]  = -(h/(k*k))*d(i,j)+((h/2*k))*  v(i,j);//diag inf
-		    vec3[f]  =  -(h/(k*k))*d(i,j)+((h/2*k))*  v(i,j);//diag sup
+		    cs_entry (T, f, f, (1+h*alpha1(i,j)+(2*h*d(i,j))/(k*k))) ;//diag
+		    vec2[f]  = -(h/(k*k))*d(i,j)+(h/(2*k)) *  v(i,j);//diag inf
+		    vec3[f]  =  -(h/(k*k))*d(i,j)+(h/(2*k))*  v(i,j);//diag sup
 
 		    	f++;
 		    }
