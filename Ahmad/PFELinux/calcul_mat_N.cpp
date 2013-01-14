@@ -26,8 +26,8 @@ cs* matricen (int h , int k ,  Matrice d , Matrice alpha1 , Matrice v){
 		 for(int j=0;j!=d.cols();j++){
 
 		    cs_entry (T, f, f, (1+h*alpha1(i,j)+(2*h*d(i,j))/(k*k))) ;//diag
-		    vec2[f]  = -(h/(k*k))*d(i,j)+((h/2*k))*  v(i,j);//diag inf
-		    vec3[f]  =  -(h/(k*k))*d(i,j)+((h/2*k))*  v(i,j);//diag sup
+		    vec2[f]  = -(h/(k*k))*d(i,j)+(h/(2*k)) *  v(i,j);//diag inf
+		    vec3[f]  =  -(h/(k*k))*d(i,j)+(h/(2*k))*  v(i,j);//diag sup
 
 		    	f++;
 		    }
