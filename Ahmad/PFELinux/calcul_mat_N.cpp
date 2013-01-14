@@ -25,9 +25,9 @@ cs* matricen (int h , int k ,  Matrice d , Matrice alpha1 , Matrice v){
 	 for(int i=0;i!=d.rows();i++){
 		 for(int j=0;j!=d.cols();j++){
 
-		    cs_entry (T, f, f,  ((1 - h + h*alpha1(i,j)) + (2 * h /(k*k) *d(i,j)))) ;//diag
-		    vec2[f]  =  ((-h/k)*(d(i,j)/k + v(i,j)/2) ) ;//diag inf
-		    vec3[f]  =  ((-h/k)*(d(i,j)/k - v(i,j)/2) ) ;//diag sup
+		    cs_entry (T, f, f, (1+h*alpha1(i,j)+(2*h*d(i,j))/(k*k))) ;//diag
+		    vec2[f]  = -(h/(k*k))*d(i,j)+((h/2*k))*  v(i,j);//diag inf
+		    vec3[f]  =  -(h/(k*k))*d(i,j)+((h/2*k))*  v(i,j);//diag sup
 
 		    	f++;
 		    }
@@ -57,7 +57,7 @@ Vecteur calculmatriceN2N4 (int h , Matrice r , Matrice alpha2 ){
 
    for(int i=0;i!=r.rows();i++){
         for(int j=0;j!=r.cols();j++){
-            N2(f) = 1/(1 - h * (r(i,j)- alpha2(i,j)));
+            N2(f) = 1/(1 + h * (r(i,j))*(1-alpha2(i,j)));
             f++;
         }
     }
