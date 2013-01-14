@@ -1,11 +1,11 @@
-#include "Includes/save_matrice_C.hpp"
+#include "Includes/save_matrice_CSV.hpp"
 
-void save_matrice_C(int m , int n ,Matrice mat)
+void save_matrice_CSV(int m , int n ,Matrice mat,string str)
 {
    ofstream outdata; // outdata is like cin
    int i=0,j=0; // loop index
 
-  outdata.open("mat_C.csv"); // opens the file
+  outdata.open(str.c_str()); // opens the file
    if( !outdata ) { // file couldn't be opened
       cerr << "Error: file could not be opened" << endl;
       exit(1);

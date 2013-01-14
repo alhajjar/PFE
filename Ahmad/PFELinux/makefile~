@@ -14,7 +14,7 @@ LFLAGS = -L.
 LIBS = -lcsparce86 -lm
 
 # source files.
-SRC =  	CSVParser.cpp  simulation.cpp calcul_mat_N.cpp  resolution_systeme.cpp   save_matrice_CSV.cpp
+SRC =  	CSVParser.cpp  simulation.cpp calcul_mat_N.cpp  resolution_systeme.cpp   save_matrice_save.cpp
 
 OBJ = $(SRC:.cpp=.o)
 

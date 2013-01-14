@@ -14,13 +14,13 @@
  *  \return matrice avec taux d'accroissement
  */
 Matrice taux_accroissement(Matrice theta, Matrice stades){
-    double sm = 15.27211;
-    double b = 0.04133;
-    double k = 0.11987;
-    double a1 = -0.10373;
-    double a2 = 0.11132;
-    double num = 0;
-    double den = 0;
+    float sm = 15.27211;
+    float b = 0.04133;
+    float k = 0.11987;
+    float a1 = -0.10373;
+    float a2 = 0.11132;
+    float num = 0;
+    float den = 0;
     Matrice mat(196,194);
     mat = Matrice::Zero(196,194);
 
@@ -45,10 +45,10 @@ Matrice taux_accroissement(Matrice theta, Matrice stades){
  */
 
 Matrice coeff_depot1(Matrice p, Matrice eta){
-    double a1 = 1.004855;
-    double a2 = 1.652655;
-    double a = -0.267819;
-    double k = 6.214583;
+    float a1 = 1.004855;
+    float a2 = 1.652655;
+    float a = -0.267819;
+    float k = 6.214583;
     Matrice mat(196,194);
     mat = Matrice::Zero(196,194);
 
@@ -71,14 +71,14 @@ Matrice coeff_depot1(Matrice p, Matrice eta){
 
 
 Matrice coeff_depot2(Matrice p, Matrice eta){
-    double a1 = -0.128715;
-    double a2 = 24.589110;
-    double a3 = 0.946651;
-    double a4 = 0.079787;
-    double a5 = 0.906087;
-    double k = 7.317821;
-    double num = 0;
-    double den = 0;
+    float a1 = -0.128715;
+    float a2 = 24.589110;
+    float a3 = 0.946651;
+    float a4 = 0.079787;
+    float a5 = 0.906087;
+    float k = 7.317821;
+    float num = 0;
+    float den = 0;
     Matrice mat(196,194);
     mat = Matrice::Zero(196,194);
 
@@ -99,10 +99,10 @@ Matrice coeff_depot2(Matrice p, Matrice eta){
  */
 
 Matrice coeff_depot3(Matrice p, Matrice eta){
-    double a1 = 0.23001;
-    double a2 = 0.86894;
-    double a3 = 1.08105;
-    double k = 8.22311;
+    float a1 = 0.23001;
+    float a2 = 0.86894;
+    float a3 = 1.08105;
+    float k = 8.22311;
     Matrice mat(196,194);
     mat = Matrice::Zero(196,194);
 
@@ -120,10 +120,10 @@ Matrice coeff_depot3(Matrice p, Matrice eta){
  *  \return matrice avec les coeff depot4
  */
 Matrice coeff_depot4(Matrice p, Matrice eta){
-    double a1=0.318941;
-    double a2=0.983375;
-    double a3=1.669692;
-    double k =-6.572036;
+    float a1=0.318941;
+    float a2=0.983375;
+    float a3=1.669692;
+    float k =-6.572036;
     Matrice mat(196,194);
     mat = Matrice::Zero(196,194);
 
@@ -141,10 +141,10 @@ Matrice coeff_depot4(Matrice p, Matrice eta){
  *  \return matrice avec les coeff depot5
  */
 Matrice coeff_depot5(Matrice p, Matrice eta){
-    double a1=-0.12952;
-    double a2 = 0.73519;
-    double a3 =1.92703;
-    double k =38.70085;
+    float a1=-0.12952;
+    float a2 = 0.73519;
+    float a3 =1.92703;
+    float k =38.70085;
     Matrice mat(196,194);
     mat = Matrice::Zero(196,194);
 
@@ -166,12 +166,12 @@ Matrice coeff_depot5(Matrice p, Matrice eta){
  */
 
 Matrice coeff_envol(Matrice A,Matrice stades,Matrice theta){
-    double a=0.034733;
-    double a0=1.417143;
-    double a1=0.048163;
-    double a2=-0.543663;
-    double logN4 = 0;
-    double phi_alpha2 = 0;
+    float a=0.034733;
+    float a0=1.417143;
+    float a1=0.048163;
+    float a2=-0.543663;
+    float logN4 = 0;
+    float phi_alpha2 = 0;
     Matrice mat(196,194);
     mat = Matrice::Zero(196,194);
 

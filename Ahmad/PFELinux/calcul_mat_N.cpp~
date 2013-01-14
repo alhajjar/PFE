@@ -13,8 +13,8 @@ cs* matricen (int h , int k ,  Matrice d , Matrice alpha1 , Matrice v){
     cs *T;
     int n = d.rows()*d.cols();
     int i = 0;
-    double vec3[38024];
-    double vec2[38024];
+    double vec3[n];
+    double vec2[n];
 
 
 /* Allocation en memoire de la matrice tridiagonale temporaire */

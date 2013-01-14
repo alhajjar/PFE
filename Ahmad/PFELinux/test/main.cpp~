@@ -198,7 +198,7 @@ string defaultnameA = "mat_v.csv";
     string tmpr;
     getline(cin, tmpr);
     if (!tmpr.empty()){ //user typed something different than Enter
-        nameA = tmpr;}
+        nameA = tmpw;}
     else //otherwise use default value
         {nameA = defaultnameA;}
  save_matrice_CSV( m , n, mat_A,nameA);}
