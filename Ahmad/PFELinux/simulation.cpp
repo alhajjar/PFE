@@ -54,7 +54,8 @@ Matrice coeff_depot1(Matrice p, Matrice eta){
 
     for(int i=0;i!=mat.rows();i++){
             for(int j=0;j!=mat.cols();j++){
-              mat(i, j)=log(a1+a*(-(p(i,j)*p(i,j)+p(i,j))*atan(k*eta(i,j))+a2*p(i,j)));
+              mat(i, j)=log(a1+a*(-(p(i,j)*p(i,j)+p(i,j))
+              *atan(k*eta(i,j))+a2*p(i,j)));
             }
     }
     return mat;
@@ -107,7 +108,7 @@ Matrice coeff_depot3(Matrice p, Matrice eta){
 
     for(int i=0;i!=mat.rows();i++){
             for(int j=0;j!=mat.cols();j++){
-                    mat(i, j) = log(a2+a1*(p(i,j)-p(i,j)*p(i,j))*atan(k*eta(i,j))+a3*p(i,j)) ;
+                    mat(i, j) = log(a2+a1*(p(i,j)-p(i,j)*p(i,j))*atan(k*eta(i,j)))+a3*p(i,j);
             }
     }
     return  mat;
@@ -150,8 +151,8 @@ Matrice coeff_depot5(Matrice p, Matrice eta){
     for(int i=0;i!=mat.rows();i++){
             for(int j=0;j!=mat.cols();j++){
                     if (p(i,j)<0.5)
-                       mat(i, j) =  log(a2+a1*(p(i,j)-(p(i,j)*p(i,j))*atan(-k*eta(i,j))+a3*p(i,j))) ;
-                    else mat(i, j) = log(a2+a1*(p(i,j)-(p(i,j)*p(i,j))*atan(k*eta(i,j))+a3*p(i,j)));
+                       mat(i, j) =  log(a2+a1*(p(i,j)-(p(i,j)*p(i,j)))*atan(-k*eta(i,j))+a3*p(i,j)) ;
+                    else mat(i, j) = log(a2+a1*(p(i,j)-(p(i,j)*p(i,j)))*atan(k*eta(i,j))+a3*p(i,j));
             }
     }
     return  mat;
