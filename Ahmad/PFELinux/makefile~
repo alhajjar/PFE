@@ -11,10 +11,10 @@ INCLUDES = -I. -I/usr/local/include -IIncludes/
 LFLAGS = -L.
 
 # library paths
-LIBS = -lcsparce86 -lm
+LIBS = -lcsparce -lm
 
 # source files.
-SRC =  	CSVParser.cpp  simulation.cpp calcul_mat_N.cpp  resolution_systeme.cpp   save_matrice_save.cpp
+SRC =  	CSVParser.cpp  simulation.cpp calcul_mat_N.cpp  resolution_systeme.cpp   save_matrice_CSV.cpp
 
 OBJ = $(SRC:.cpp=.o)
 
