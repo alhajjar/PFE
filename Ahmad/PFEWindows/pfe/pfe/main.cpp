@@ -6,15 +6,13 @@
 //                                                                //
 ////////////////////////////////////////////////////////////////////
 #include <stdio.h>
-#include "../Includes/CSVParser.hpp"
-#include "../Includes/simulation.hpp"
-#include "../Includes/calcul_mat_N.hpp"
-#include "../Includes/resolution_systeme.hpp"
-#include "../Includes/save_matrice_CSV.hpp"
+#include "CSVParser.hpp"
+#include "simulation.hpp"
+#include "calcul_mat_N.hpp"
+#include "resolution_systeme.hpp"
+#include "save_matrice_CSV.hpp"
+#include "Ascii.hpp"
 
-
-//cp libpfe.a /usr/local/lib
-// ldconfig /usr/local/lib
 
 int main(int argc, char **argv)
 {
@@ -43,6 +41,7 @@ cout << "veuillez entrer le nombre de colonnes du CSV[default :194]:";
         	Matrice theta(m-1,n);
         	Matrice stades(m-1,n); 
         	Matrice mat_A(m-1,n);
+//		Matrice Ascii_lecture(2161 ,1891);
 		Matrice mat_C(m-1,n);
 		Matrice m_eta(m-1,n);
 		Matrice m_p (m-1,n); 
@@ -150,7 +149,11 @@ cout << "veuillez entrer la valeur de h [default : 1]:";
         //Matrice coeffdepot3       = coeff_depot3(m_p,m_eta)         ;
         //Matrice coeffdepot4       = coeff_depot4(m_p,m_eta)         ;
         //Matrice coeffdepot5       = coeff_depot5(m_p,m_eta)         ;
-       
+
+        //Ascii_lecture = Lecture_ASCII("MNT500_L93_FRANCE.ASC");
+     	//cout<<Ascii_lecture.block<1,2321>(1891,0);
+     	//Ecriture_ASCII(2161 ,1891 ,89750 ,6039750 ,500 ,-9999 ,Ascii_lecture ,"test.ASC");
+
         N1=matricen (num2 , num3 ,  m_p, coeffdepot1 , m_eta);
 
        for(int i = 0; i!= num;i++){

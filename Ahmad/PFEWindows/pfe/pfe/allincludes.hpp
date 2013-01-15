@@ -12,9 +12,12 @@
 #include <boost/tokenizer.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/algorithm/string.hpp>
-#include <eigen3/Eigen/Core>
+#include "eigen3/Eigen/Core"
 #include "cs.h"
 #include <cstdlib> 
+#include <math.h>
+#include <string>
+#include <iomanip>
 
 	using std::cerr;
 	using std::endl;
