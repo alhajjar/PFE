@@ -35,7 +35,7 @@ Matrice CSVParser(int m,int n, string filePath){
     if (in.fail()){
         cout <<filePath <<" "<<"not found" <<endl;
     }
-/** \sinon il extrait son contenu et il le met dans une matrice
+/** \sinon il extracte son contenu et il le met dans une matrice
 */
     else{
 /** \declaration trois vecteurs deux de type string et un de type double 

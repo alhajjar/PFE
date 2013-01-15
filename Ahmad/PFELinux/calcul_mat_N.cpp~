@@ -59,18 +59,18 @@ cs* matriceN1N3 (int h , int k ,  Matrice d , Matrice alpha1 , Matrice v){
 Vecteur calculmatriceN22N44 (int h , Matrice r , Matrice alpha2 ){
 /** \cette fonction cree la matrice N2 et l'inverse
 */
-       Vecteur  N22(38024);
-       N22 = Vecteur::Zero(38024);
+       Vecteur  N2(38024);
+       N2 = Vecteur::Zero(38024);
 
    int f = 0;
 
    for(int i=0;i!=r.rows();i++){
         for(int j=0;j!=r.cols();j++){
-            N22(f) = 1/(1 + h * (r(i,j))*(1-alpha2(i,j)));
+            N2(f) = 1/(1 + h * (r(i,j))*(1-alpha2(i,j)));
             f++;
         }
     }
 
- return N22;
+ return N2;
 }
 
