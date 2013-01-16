@@ -1,5 +1,5 @@
-#include "Includes/Voronoi.hpp"
-#include "Includes/Voronoi_fct.hpp"
+#include "Voronoi.hpp"
+#include "Voronoi_fct.hpp"
 
 
 // ********** Constructeur Voronoi **********

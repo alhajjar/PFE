@@ -12,6 +12,7 @@
 #include "resolution_systeme.hpp"
 #include "save_matrice_CSV.hpp"
 #include "Ascii.hpp"
+#include "Voronoi.hpp"
 
 
 int main(int argc, char **argv)
@@ -22,7 +23,7 @@ int main(int argc, char **argv)
     string numtmp,nameC,nameA,str,tmp;
     cs* N1;
 /****************************************************************************************************************************/
-			/********************Choisur les dimensions des CSV**********************/
+			/********************Choisir les dimensions des CSV**********************/
 /****************************************************************************************************************************/
 cout << "veuillez entrer le nombre de lignes du CSV[default :197]:";
     getline(cin, numtmp);
@@ -49,9 +50,20 @@ cout << "veuillez entrer le nombre de colonnes du CSV[default :194]:";
 		Matrice coeffdepot1(m-1,n); 
 		Matrice coeffdepot2(m-1,n); 
 		Matrice tauxaccroissement(m-1,n);
+		Matrice mat(n,m-1);
+		Matrice tt(n,m-1);
 		/********************initialisation**********************/
         	m_p = m_eta = stades = mat_C = mat_A = theta = Matrice::Zero(m-1,n);
 		coeffdepot2 = coeffdepot1 = coeffenvol = tauxaccroissement = Matrice::Zero(m-1,n);
+/****************************************************************************************************************************/
+			/********************voronoy**********************/
+/****************************************************************************************************************************/
+	Voronoi voronoi("coord.csv",23,3,"data.csv",367,23);
+	Voronoi voronoitemp("coord.csv",23,3,"theta.csv",4943,68);
+	for (int i=1; i<91; i++){
+	stades = voronoi.iteration(i);
+	theta = voronoitemp.iteration(i);
+	}
 
 /****************************************************************************************************************************/
 			/********************input**********************/
@@ -85,7 +97,7 @@ cout << "veuillez entrer le nom du fichier CSV contenant les valeurs de la matri
         m_p    = CSVParser(m,n,str );
 
 /******************************************/
-cout << "veuillez entrer le nom du fichier CSV contenant les valeurs de la matrice stade  [default :stade.csv]:";
+/*cout << "veuillez entrer le nom du fichier CSV contenant les valeurs de la matrice stade  [default :stade.csv]:";
     const string defaultText2 = "stade.csv";
     getline(cin, tmp);
     if (!tmp.empty()) 
@@ -95,7 +107,7 @@ cout << "veuillez entrer le nom du fichier CSV contenant les valeurs de la matri
         stades = CSVParser(m,n,str);
 
 /******************************************/
-cout << "veuillez entrer le nom du fichier CSV contenant les valeurs de la matrice theta  [default :theta.csv]:";
+/*cout << "veuillez entrer le nom du fichier CSV contenant les valeurs de la matrice theta  [default :theta.csv]:";
  const string defaultText3 = "theta.csv";
     getline(cin, tmp);
     if (!tmp.empty()) 
@@ -154,12 +166,12 @@ cout << "veuillez entrer la valeur de h [default : 1]:";
      	//cout<<Ascii_lecture.block<1,2321>(1891,0);
      	//Ecriture_ASCII(2161 ,1891 ,89750 ,6039750 ,500 ,-9999 ,Ascii_lecture ,"test.ASC");
 
-        N1=matricen (num2 , num3 ,  m_p, coeffdepot1 , m_eta);
+        N1=matriceN1N3 (num2 , num3 ,  m_p, coeffdepot1 , m_eta);
 
        for(int i = 0; i!= num;i++){
 
   	coeffenvol = coeff_envol(mat_A,theta,m_eta)     ;
-        N22 = calculmatriceN2N4 ( num2,  tauxaccroissement , coeffenvol );
+        N22 = calculmatriceN22N44 ( num2,  tauxaccroissement , coeffenvol );
         mat_C = Resolution_apteres(num2 , mat_A, mat_C , coeffdepot2, N1);
         mat_A =Resolution_ailees (num2, mat_A, mat_C, coeffenvol,N22);
         mat_C = Resolution_apteres(num2 , mat_A, mat_C , coeffdepot2, N1);
@@ -168,7 +180,7 @@ cout << "veuillez entrer la valeur de h [default : 1]:";
 	 cout<<"premiere ligne de la matrice c "<<"\n------------------\n"<< mat_C.block<1, 194>(0,0)<<"\n------------------\n"<<
 	 "premiere ligne de la matrice A "<<"\n------------------\n"<< mat_A.block<1, 194>(0,0)<<"\n------------------\n";
 /****************************************************************************************************************************/
-			/********************Sauvgarde**********************/
+			/********************Sauvegarde**********************/
 /****************************************************************************************************************************/
 const string defaultTextee = "oui";
 cout << "Voulez vous enregistrez le resultat de mat_A [default :oui]:";

@@ -1,4 +1,4 @@
-#include "Includes/Voronoi_fct.hpp"
+#include "Voronoi_fct.hpp"
 
 Matrice voronoi_lecture_coord(string file_name_coord, int nb_row_coord, int nb_col_coord){
 
