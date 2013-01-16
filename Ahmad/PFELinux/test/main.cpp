@@ -12,6 +12,7 @@
 #include "../Includes/resolution_systeme.hpp"
 #include "../Includes/save_matrice_CSV.hpp"
 #include "../Includes/Ascii.hpp"
+#include "../Includes/Voronoi.hpp"
 
 
 int main(int argc, char **argv)
@@ -49,9 +50,19 @@ cout << "veuillez entrer le nombre de colonnes du CSV[default :194]:";
 		Matrice coeffdepot1(m-1,n); 
 		Matrice coeffdepot2(m-1,n); 
 		Matrice tauxaccroissement(m-1,n);
+		Matrice mat(n,m-1);
+		Matrice tt(n,m-1);
 		/********************initialisation**********************/
         	m_p = m_eta = stades = mat_C = mat_A = theta = Matrice::Zero(m-1,n);
 		coeffdepot2 = coeffdepot1 = coeffenvol = tauxaccroissement = Matrice::Zero(m-1,n);
+/****************************************************************************************************************************/
+			/********************voronoy**********************/
+/****************************************************************************************************************************/
+	Voronoi voronoi("coord.csv",23,3,"data.csv",367,23);
+	Voronoi voronoitemp("coord.csv",23,3,"theta.csv",4943,68);
+
+	stades = voronoi.iteration(1);
+	theta = voronoitemp.iteration(1);
 
 /****************************************************************************************************************************/
 			/********************input**********************/
@@ -85,7 +96,7 @@ cout << "veuillez entrer le nom du fichier CSV contenant les valeurs de la matri
         m_p    = CSVParser(m,n,str );
 
 /******************************************/
-cout << "veuillez entrer le nom du fichier CSV contenant les valeurs de la matrice stade  [default :stade.csv]:";
+/*cout << "veuillez entrer le nom du fichier CSV contenant les valeurs de la matrice stade  [default :stade.csv]:";
     const string defaultText2 = "stade.csv";
     getline(cin, tmp);
     if (!tmp.empty()) 
@@ -95,7 +106,7 @@ cout << "veuillez entrer le nom du fichier CSV contenant les valeurs de la matri
         stades = CSVParser(m,n,str);
 
 /******************************************/
-cout << "veuillez entrer le nom du fichier CSV contenant les valeurs de la matrice theta  [default :theta.csv]:";
+/*cout << "veuillez entrer le nom du fichier CSV contenant les valeurs de la matrice theta  [default :theta.csv]:";
  const string defaultText3 = "theta.csv";
     getline(cin, tmp);
     if (!tmp.empty()) 

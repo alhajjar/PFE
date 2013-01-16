@@ -28,7 +28,7 @@ default: dep $(OUT)
 	$(CCC) -c   $(INCLUDES)  $(CCFLAGS)  $< -o $@  $(LFLAGS) $(LIBS)
 
 $(OUT): $(OBJ)
-	ar -x libcsparse86.a
+	ar -x libcsparse.a
 	ar rcs $(OUT) *.o
 	rm -f *.o
 	mv -f $(OUT) test/
