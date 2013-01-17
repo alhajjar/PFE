@@ -6,7 +6,6 @@
 //                                                                //
 ////////////////////////////////////////////////////////////////////
 #include <stdio.h>
-#include  <tiffio.h>
 #include "../Includes/CSVParser.hpp"
 #include "../Includes/simulation.hpp"
 #include "../Includes/calcul_mat_N.hpp"
