@@ -75,11 +75,7 @@ Matrice CSVParser(int m,int n, string filePath){
           }
 /** \on efface la premiere ligne de la matrice qui est la ligne d'entete du CSV
 */ 
-	for (int i = 0;i<m-1;i++){
-		for (int j = 0;j<n;j++){
-			mfin(i,j)=mfinal(i+1,j);
-		}
-	}
+mfin = mfinal.block(1,0,m-1,n);
     }
  return mfin;
 }

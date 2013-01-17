@@ -14,10 +14,12 @@
 #include <boost/algorithm/string.hpp>
 #include "eigen3/Eigen/Core"
 #include "cs.h"
+#include <tiffio.h>
 #include <cstdlib> 
 #include <math.h>
 #include <string>
 #include <iomanip>
+
 
 	using std::cerr;
 	using std::endl;

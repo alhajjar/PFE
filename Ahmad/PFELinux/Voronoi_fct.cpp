@@ -105,7 +105,6 @@ Matrice voronoi_iteration(int jour, Matrice mat_data, Matrice mat_index){
 	for(int u=0 ; u<194 ; u++){
 		for(int v=0 ; v<196 ; v++){
 			mat_final(u,v)= mat_data(jour,mat_index(u,v)+1);
-			// rotation de -90 degre
 			mat_finale(v,u) = mat_final(u,195-v);
 		}
 	}

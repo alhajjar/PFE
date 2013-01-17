@@ -6,12 +6,13 @@
 //                                                                //
 ////////////////////////////////////////////////////////////////////
 #include <stdio.h>
+#include  <tiffio.h>
 #include "../Includes/CSVParser.hpp"
 #include "../Includes/simulation.hpp"
 #include "../Includes/calcul_mat_N.hpp"
 #include "../Includes/resolution_systeme.hpp"
 #include "../Includes/save_matrice_CSV.hpp"
-#include "../Includes/Ascii.hpp"
+#include "../Includes/Formatgeomatique.hpp"
 #include "../Includes/Voronoi.hpp"
 
 
@@ -42,7 +43,8 @@ cout << "veuillez entrer le nombre de colonnes du CSV[default :194]:";
         	Matrice theta(m-1,n);
         	Matrice stades(m-1,n); 
         	Matrice mat_A(m-1,n);
-//		Matrice Ascii_lecture(2161 ,1891);
+    		Matrice MatriceResultat(10,10); 
+		Matrice MatriceResultat1(10,10); 
 		Matrice mat_C(m-1,n);
 		Matrice m_eta(m-1,n);
 		Matrice m_p (m-1,n); 
@@ -59,10 +61,11 @@ cout << "veuillez entrer le nombre de colonnes du CSV[default :194]:";
 			/********************voronoy**********************/
 /****************************************************************************************************************************/
 	Voronoi voronoi("coord.csv",23,3,"data.csv",367,23);
-	Voronoi voronoitemp("coord.csv",23,3,"theta.csv",4943,68);
-
-	stades = voronoi.iteration(1);
-	theta = voronoitemp.iteration(1);
+	Voronoi voronoitemp("coord.csv",23,3,"data.csv",367,23);
+	for (int i=1; i<91; i++){
+	stades = voronoi.iteration(i);
+	theta = voronoitemp.iteration(i);
+	}
 
 /****************************************************************************************************************************/
 			/********************input**********************/
@@ -95,27 +98,6 @@ cout << "veuillez entrer le nom du fichier CSV contenant les valeurs de la matri
         str = defaultText1;
         m_p    = CSVParser(m,n,str );
 
-/******************************************/
-/*cout << "veuillez entrer le nom du fichier CSV contenant les valeurs de la matrice stade  [default :stade.csv]:";
-    const string defaultText2 = "stade.csv";
-    getline(cin, tmp);
-    if (!tmp.empty()) 
-        str = tmp;
-    else 
-        str = defaultText2;
-        stades = CSVParser(m,n,str);
-
-/******************************************/
-/*cout << "veuillez entrer le nom du fichier CSV contenant les valeurs de la matrice theta  [default :theta.csv]:";
- const string defaultText3 = "theta.csv";
-    getline(cin, tmp);
-    if (!tmp.empty()) 
-        str = tmp;
-    else 
-        str = defaultText3;
-        theta = CSVParser(m,n,str);
-
-/******************************************/
 cout << "veuillez entrer le nom du fichier CSV contenant les valeurs de la matrice A  [default :mat_A.csv]:";
  const string defaultText4 = "mat_A.csv";
     getline(cin, tmp);
@@ -218,7 +200,15 @@ string defaultnameC = "mat_C_save.csv";
     else{nameC = defaultnameC;
 	}
  save_matrice_CSV( m , n, mat_C,nameC);
-}      
+} 
+ 
+  /*  Formatgeomatique geo;
+    MatriceResultat=geo.Lecture("erd.tif");
+    
+    geo.Ecriture(MatriceResultat ,"test.tif"); 
+MatriceResultat1=geo.Lecture("MNT500_L93_FRANCE.ASC");
+    
+    geo.Ecriture(MatriceResultat1 ,"test.ASC");   */ 
    }
 
  return 0;

@@ -3,18 +3,18 @@
 CCC = g++
 
 # C++ compiler flags 
-CCFLAGS = -g -fPIC -O3 
-
+CCFLAGS = -g -fPIC -O3 -lm -L./ -lcsparce -pipe -fomit-frame-pointer -msse3
+CFLAGS=" -march=native"
+CXXFLAGS="${CFLAGS}"
 # include directories
-INCLUDES = -I. -I/usr/local/include -IIncludes/ 
-
-LFLAGS = -L.
+INCLUDES = -I. -I/usr/local/include -IIncludes/
+CFLAGS=$(DMALLOC)
 
 # library paths
-LIBS = -lcsparce -lm
+LIBS =$(LIBDMALLOC)  -ltiff  -llzma -ljbig -ljpeg -lz -lm 
 
 # source files.
-SRC =  	CSVParser.cpp  simulation.cpp calcul_mat_N.cpp  resolution_systeme.cpp   save_matrice_CSV.cpp Ascii.cpp
+SRC =  	CSVParser.cpp  simulation.cpp calcul_mat_N.cpp  resolution_systeme.cpp   save_matrice_CSV.cpp Formatgeomatique.cpp Voronoi.cpp Voronoi_fct.cpp
 
 OBJ = $(SRC:.cpp=.o)
 
@@ -25,10 +25,10 @@ all: $(OUT)
 default: dep $(OUT)
 
 .cpp.o:
-	$(CCC) -c   $(INCLUDES)  $(CCFLAGS)  $< -o $@  $(LFLAGS) $(LIBS)
+	$(CCC) -c  $(CFLAGS) $(INCLUDES)   $(CCFLAGS)  $< -o $@ $(LIBS)
 
 $(OUT): $(OBJ)
-	ar -x libcsparse.a
+	ar -x libcsparse.a 
 	ar rcs $(OUT) *.o
 	rm -f *.o
 	mv -f $(OUT) test/
