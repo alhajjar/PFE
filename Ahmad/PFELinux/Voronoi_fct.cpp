@@ -1,10 +1,11 @@
-#include "Includes/Voronoi_fct.hpp"
+#include "Voronoi_fct.hpp"
+#include "math.h"
 
 Matrice voronoi_lecture_coord(string file_name_coord, int nb_row_coord, int nb_col_coord){
 
 	// *** Lecture du fichier coord *****************************************************************
 	Matrice mat_coord(nb_row_coord,nb_col_coord);	
-	mat_coord = Matrice::Zero(nb_row_coord,nb_col_coord); // Initialisation de la matrice des coordonnées des villes
+	//mat_coord = Matrice::Zero(nb_row_coord,nb_col_coord); // Initialisation de la matrice des coordonnées des villes
 	
 	mat_coord = CSVParser(nb_row_coord,nb_col_coord,file_name_coord);
 
@@ -18,45 +19,53 @@ Matrice voronoi_lecture_coord(string file_name_coord, int nb_row_coord, int nb_c
 
 Matrice voronoi_lecture_data(string file_name_data, int nb_row_data, int nb_col_data){
 
+	
+
 	Matrice mat_data_temp(nb_row_data,nb_col_data);	
 	// mat_data_temp = Matrice::Zero(nb_row_data,nb_col_data); 
 
 	Matrice mat_data(nb_row_data,nb_col_data-1);	
 	// mat_data = Matrice::Zero(nb_row_data,nb_col_data-1); 
+
 	
-	mat_data_temp = CSVParser(nb_row_data,nb_col_data,file_name_data);	
-	
+	mat_data_temp = CSVParser(nb_row_data,nb_col_data,file_name_data);	// PROBLEME ICI !!!
+
+		
 	for(int j=0 ; j<nb_row_data-1 ; j++){
 		for(int k=0 ; k<nb_col_data-1 ; k++){
 			mat_data(j+1,k)=mat_data_temp(j,k+1);
 		}
 	}
 
+	
 	for(int m=0 ; m<nb_row_data ; m++){
 				mat_data(m,0) = m ;
 	}
 
+	
 	for(int n=0 ; n<nb_col_data-2 ; n++){
 				mat_data(0,n+1) = n ;
 	}	
+
 	return mat_data;
 }
 
 Matrice voronoi_build_index(Matrice mat_coord, int nb_row_coord, int nb_col_coord,int nb_row_data, int nb_col_data){
 	Matrice mat_dist(nb_row_coord-1,2);	
-	mat_dist = Matrice::Zero(nb_row_coord-1,2); // Initialisation de la matrice des indices
+	//mat_dist = Matrice::Zero(nb_row_coord-1,2); // Initialisation de la matrice des indices
 	
 	Matrice mat_index(194,196);	
-	mat_index = Matrice::Zero(194,196);
+	//mat_index = Matrice::Zero(194,196);
 
 	for(int a=0 ; a<194 ; a++){
 		for(int b=0 ; b<196 ; b++){
 			
 
-			for(int p=0 ; p<21 ; p++){
+			for(int p=0 ; p<nb_row_coord-1 ; p++){
 				mat_dist(p,0) = p;
-				mat_dist(p,1) = (mat_coord(p,1)-a)*(mat_coord(p,1)-a) + (mat_coord(p,2)-b)*(mat_coord(p,2)-b);
-				// Carré ??!
+				//mat_dist(p,1) = (mat_coord(p,1)-a)*(mat_coord(p,1)-a) + (mat_coord(p,2)-b)*(mat_coord(p,2)-b);
+				mat_dist(p,1) = pow((mat_coord(p,1)-a),2) + pow((mat_coord(p,2)-b),2);
+				// Carré ! Vérifier résultat
 				
 			}		
 
@@ -65,7 +74,7 @@ Matrice voronoi_build_index(Matrice mat_coord, int nb_row_coord, int nb_col_coor
 			int itemp = 0 ; // initialisation indice temporaire (1ère ville)
 			int temp = 0 ;  // initialisation valeur temporaire de distance minimale
 
-			for(int q=1 ; q<21 ; q++){	              // On parcourt toutes les villes...		 
+			for(int q=1 ; q<nb_row_coord-1 ; q++){	              // On parcourt toutes les villes...		 
 				 temp = min(mat_dist(itemp,1),mat_dist(q,1)); // deux à deux...	
 				 if (temp == mat_dist(q,1)){              // et on conserve l'indice de la ville dont la valeur de la
 					 itemp = q;                       // distance est la plus faible pour la prochaine itération
@@ -111,3 +120,4 @@ Matrice voronoi_iteration(int jour, Matrice mat_data, Matrice mat_index){
 	
 	return mat_finale;
 }
+

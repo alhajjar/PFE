@@ -59,8 +59,8 @@ cout << "veuillez entrer le nombre de colonnes du CSV[default :194]:";
 /****************************************************************************************************************************/
 			/********************voronoy**********************/
 /****************************************************************************************************************************/
-	Voronoi voronoi("coord.csv",23,3,"data.csv",367,23);
-	Voronoi voronoitemp("coord.csv",23,3,"data.csv",367,23);
+	Voronoi voronoi("coord_s.csv",22,3,"data_s.csv",367,23);
+	Voronoi voronoitemp("coord_t.csv",67,3,"data_t.csv",4384,68); 
 	for (int i=1; i<91; i++){
 	stades = voronoi.iteration(i);
 	theta = voronoitemp.iteration(i);
@@ -142,10 +142,6 @@ cout << "veuillez entrer la valeur de h [default : 1]:";
         //Matrice coeffdepot4       = coeff_depot4(m_p,m_eta)         ;
         //Matrice coeffdepot5       = coeff_depot5(m_p,m_eta)         ;
 
-        //Ascii_lecture = Lecture_ASCII("MNT500_L93_FRANCE.ASC");
-     	//cout<<Ascii_lecture.block<1,2321>(1891,0);
-     	//Ecriture_ASCII(2161 ,1891 ,89750 ,6039750 ,500 ,-9999 ,Ascii_lecture ,"test.ASC");
-
         N1=matriceN1N3 (num2 , num3 ,  m_p, coeffdepot1 , m_eta);
 
        for(int i = 0; i!= num;i++){
@@ -201,13 +197,13 @@ string defaultnameC = "mat_C_save.csv";
  save_matrice_CSV( m , n, mat_C,nameC);
 } 
  
-  /*  Formatgeomatique geo;
+    Formatgeomatique geo;
     MatriceResultat=geo.Lecture("erd.tif");
     
     geo.Ecriture(MatriceResultat ,"test.tif"); 
-MatriceResultat1=geo.Lecture("MNT500_L93_FRANCE.ASC");
+    MatriceResultat1=geo.Lecture("MNT500_L93_FRANCE.ASC");
     
-    geo.Ecriture(MatriceResultat1 ,"test.ASC");   */ 
+    geo.Ecriture(MatriceResultat1 ,"test.ASC");   
    }
 
  return 0;
