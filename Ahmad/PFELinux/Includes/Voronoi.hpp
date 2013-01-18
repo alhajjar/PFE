@@ -9,7 +9,10 @@ private:
   Matrice mat_finale;
 public:
   Voronoi(string , int , int , string , int , int );
-  ~Voronoi();  Matrice getcoordMatrix();  Matrice getdataMatrix();  Matrice getindexMatrix();
+  ~Voronoi();  
+  Matrice getcoordMatrix();  
+  Matrice getdataMatrix();  
+  Matrice getindexMatrix();
   Matrice getfinalMatrix();
   void setfinalMatrix(Matrice);
   Matrice iteration(int);

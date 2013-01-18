@@ -10,7 +10,7 @@
 #define Voronoi_fct_H
 
 #include "allincludes.hpp"
-#include "CSVParser.hpp"
+#include "lecture.hpp"
 
 /* Fonction de lecture du fichier de coordonnées des villes qui prend en entrée le nom du fichier,
    le nombre de lignes et le nombre de colonnes de ce dernier et renvoie la matrice des coordonnées */

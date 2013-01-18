@@ -1,13 +1,13 @@
 #include "Voronoi_fct.hpp"
-#include "math.h"
 
 Matrice voronoi_lecture_coord(string file_name_coord, int nb_row_coord, int nb_col_coord){
 
 	// *** Lecture du fichier coord *****************************************************************
 	Matrice mat_coord(nb_row_coord,nb_col_coord);	
 	//mat_coord = Matrice::Zero(nb_row_coord,nb_col_coord); // Initialisation de la matrice des coordonnées des villes
-	
-	mat_coord = CSVParser(nb_row_coord,nb_col_coord,file_name_coord);
+	    lecture lect;
+	lect.LectureCSV(nb_row_coord,nb_col_coord,file_name_coord);
+	mat_coord = lect.get_CSV();
 
 	for(int i=0 ; i<nb_row_coord-1 ; i++){
 		mat_coord(i,0) = i ; // La 1ere colonne devient la colonne des indices des villes
@@ -20,7 +20,7 @@ Matrice voronoi_lecture_coord(string file_name_coord, int nb_row_coord, int nb_c
 Matrice voronoi_lecture_data(string file_name_data, int nb_row_data, int nb_col_data){
 
 	
-
+    lecture lect;
 	Matrice mat_data_temp(nb_row_data,nb_col_data);	
 	// mat_data_temp = Matrice::Zero(nb_row_data,nb_col_data); 
 
@@ -28,9 +28,9 @@ Matrice voronoi_lecture_data(string file_name_data, int nb_row_data, int nb_col_
 	// mat_data = Matrice::Zero(nb_row_data,nb_col_data-1); 
 
 	
-	mat_data_temp = CSVParser(nb_row_data,nb_col_data,file_name_data);	// PROBLEME ICI !!!
-
-		
+	lect.LectureCSV(nb_row_data,nb_col_data,file_name_data);	// PROBLEME ICI !!!
+	mat_data_temp = lect.get_CSV();
+		//cout<<mat_data_temp;
 	for(int j=0 ; j<nb_row_data-1 ; j++){
 		for(int k=0 ; k<nb_col_data-1 ; k++){
 			mat_data(j+1,k)=mat_data_temp(j,k+1);

@@ -18,14 +18,6 @@ Voronoi::Voronoi(string coord_file_name, int coord_nb_row, int coord_nb_col, str
 	mat_index= Matrice(194,196);
 	mat_index = voronoi_build_index(mat_coord,coord_nb_row,coord_nb_col,data_nb_row,data_nb_col);
 
-
-	Matrice mat_finale(194,196);	
-	mat_finale = Matrice::Zero(194,196);
-
-
-	
-
-
 }
 
 // ********** Destructeur Voronoi **********

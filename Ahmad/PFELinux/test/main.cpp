@@ -5,15 +5,10 @@
 //                 -------------------------                      //
 //                                                                //
 ////////////////////////////////////////////////////////////////////
-#include <stdio.h>
-#include "../Includes/CSVParser.hpp"
-#include "../Includes/simulation.hpp"
-#include "../Includes/calcul_mat_N.hpp"
-#include "../Includes/resolution_systeme.hpp"
-#include "../Includes/save_matrice_CSV.hpp"
-#include "../Includes/Formatgeomatique.hpp"
+#include "../Includes/lecture.hpp"
+#include "../Includes/calcullois.hpp"
+#include "../Includes/calcul_matrice.hpp"
 #include "../Includes/Voronoi.hpp"
-
 
 int main(int argc, char **argv)
 {
@@ -22,22 +17,16 @@ int main(int argc, char **argv)
     int m,n,num ;
     string numtmp,nameC,nameA,str,tmp;
     cs* N1;
+    calcullois calcul_lois;
+    lecture lect;
+
 /****************************************************************************************************************************/
 			/********************Choisir les dimensions des CSV**********************/
 /****************************************************************************************************************************/
-cout << "veuillez entrer le nombre de lignes du CSV[default :197]:";
-    getline(cin, numtmp);
-    if (numtmp== "")
-    m = 197;
-  else
-    m = atoi(numtmp.c_str());
 
-cout << "veuillez entrer le nombre de colonnes du CSV[default :194]:";
-    getline(cin, numtmp);
-    if (numtmp== "")
+    m = 197;
     n = 194;
-  else
-    n = atoi(numtmp.c_str());
+
 /***************************************************************************************************/
         	Matrice theta(m-1,n);
         	Matrice stades(m-1,n); 
@@ -84,8 +73,8 @@ cout << "veuillez entrer le nom du fichier CSV contenant les valeurs de la matri
         str = tmp;
     else 
         str = defaultText;
-          m_eta  = CSVParser(m,n,str );
-          m_p    = CSVParser(m,n,str );
+          lect.LectureCSV(m,n,str );
+	m_eta = lect.get_CSV();
 
 /******************************************/
 cout << "veuillez entrer le nom du fichier CSV contenant les valeurs de la matrice P [default :mat_p.csv]:";
@@ -95,7 +84,8 @@ cout << "veuillez entrer le nom du fichier CSV contenant les valeurs de la matri
         str = tmp;
     else 
         str = defaultText1;
-        m_p    = CSVParser(m,n,str );
+          lect.LectureCSV(m,n,str );
+	m_p = lect.get_CSV();
 
 cout << "veuillez entrer le nom du fichier CSV contenant les valeurs de la matrice A  [default :mat_A.csv]:";
  const string defaultText4 = "mat_A.csv";
@@ -104,7 +94,8 @@ cout << "veuillez entrer le nom du fichier CSV contenant les valeurs de la matri
         str = tmp;
     else 
         str = defaultText4;
-	mat_A = CSVParser(m,n,str );
+          lect.LectureCSV(m,n,str );
+	mat_A = lect.get_CSV();
  
 /******************************************/
 cout << "veuillez entrer le nom du fichier CSV contenant les valeurs de la matrice C  [default :mat_C.csv]:";
@@ -114,7 +105,8 @@ cout << "veuillez entrer le nom du fichier CSV contenant les valeurs de la matri
         str = tmp;
     else 
         str = defaultText5;
-        mat_C = CSVParser(m,n,str );
+          lect.LectureCSV(m,n,str );
+	mat_C = lect.get_CSV();
 
 /******************************************/
 cout << "veuillez entrer la valeur de k [default : 5]:";
@@ -135,25 +127,45 @@ cout << "veuillez entrer la valeur de h [default : 1]:";
 /****************************************************************************************************************************/
 			/********************Simulation**********************/
 /****************************************************************************************************************************/
-         tauxaccroissement   = taux_accroissement(theta,stades);
-         coeffdepot1         = coeff_depot1(m_p,m_eta)         ;
-         coeffdepot2         = coeff_depot2(m_p,m_eta)         ;
-        //Matrice coeffdepot3       = coeff_depot3(m_p,m_eta)         ;
+
+	 calcul_lois.calcul_taux_accroissement(theta,stades);
+	 tauxaccroissement = calcul_lois.get_taux_accroissement();
+	//cout<< tauxaccroissement ;
+         calcul_lois.calcul_coeffdepot1(m_p,m_eta)         ;
+	 coeffdepot1 = calcul_lois.get_coeffdepot1();
+	//cout<<calcul_lois.get_coeffdepot1();
+	//cout<<coeffdepot1.cols()<<"X"<<coeffdepot1.rows();
+         calcul_lois.calcul_coeffdepot2(m_p,m_eta)         ;
+         coeffdepot2 = calcul_lois.get_coeffdepot2();
+       /* //Matrice coeffdepot3       = coeff_depot3(m_p,m_eta)         ;
         //Matrice coeffdepot4       = coeff_depot4(m_p,m_eta)         ;
-        //Matrice coeffdepot5       = coeff_depot5(m_p,m_eta)         ;
+        //Matrice coeffdepot5       = coeff_depot5(m_p,m_eta)         ;*/
 
-        N1=matriceN1N3 (num2 , num3 ,  m_p, coeffdepot1 , m_eta);
-
+	calcul_matrice calculmatrice;
+         calculmatrice.matriceN1N3(num2 , num3 ,  m_p, coeffdepot1 , m_eta);
+	N1 = calculmatrice.get_N1();
+//cout<<N1;
        for(int i = 0; i!= num;i++){
 
-  	coeffenvol = coeff_envol(mat_A,theta,m_eta)     ;
-        N22 = calculmatriceN22N44 ( num2,  tauxaccroissement , coeffenvol );
-        mat_C = Resolution_apteres(num2 , mat_A, mat_C , coeffdepot2, N1);
-        mat_A =Resolution_ailees (num2, mat_A, mat_C, coeffenvol,N22);
-        mat_C = Resolution_apteres(num2 , mat_A, mat_C , coeffdepot2, N1);
-        mat_A =Resolution_ailees (num2, mat_A, mat_C, coeffenvol,N22);
+  	calcul_lois.calcul_coeff_envol(mat_A,theta,m_eta)     ;
+	coeffenvol = calcul_lois.get_coeff_envol();
+//cout<<coeffenvol;
+ 	calculmatrice.calculmatriceN22N44 ( num2,  tauxaccroissement , coeffenvol );
+	N22 =calculmatrice.get_N22();
+       //cout<< N22<<"\n===========\n";
 
-	 cout<<"premiere ligne de la matrice c "<<"\n------------------\n"<< mat_C.block<1, 194>(0,0)<<"\n------------------\n"<<
+	calculmatrice.Resolution_apteres(num2 , mat_A, mat_C , coeffdepot2, N1);
+        mat_C =calculmatrice.get_mat_C();
+	//cout<<mat_C;
+	calculmatrice.Resolution_ailees (num2, mat_A, mat_C, coeffenvol,N22);
+        mat_A =calculmatrice.get_mat_A();
+	//cout<<"\n=============================\n"<<mat_A<<"\n=============================\n";
+	calculmatrice.Resolution_apteres(num2 , mat_A, mat_C , coeffdepot2, N1);
+        mat_C =calculmatrice.get_mat_C();
+	calculmatrice.Resolution_ailees (num2, mat_A, mat_C, coeffenvol,N22);
+       mat_A =calculmatrice.get_mat_A();
+
+	cout<<"premiere ligne de la matrice c "<<"\n------------------\n"<< mat_C.block<1, 194>(0,0)<<"\n------------------\n"<<
 	 "premiere ligne de la matrice A "<<"\n------------------\n"<< mat_A.block<1, 194>(0,0)<<"\n------------------\n";
 /****************************************************************************************************************************/
 			/********************Sauvegarde**********************/
@@ -175,7 +187,7 @@ string defaultnameA = "mat_A_save.csv";
 	}
     else {nameA = defaultnameA;
 	}
- save_matrice_CSV( m , n, mat_A,nameA);
+lect.EcritureCSV( mat_A,nameA);
 }
 
 cout << "Voulez vous enregistrez le resultat de mat_C[default :oui]:";
@@ -194,16 +206,16 @@ string defaultnameC = "mat_C_save.csv";
 	}
     else{nameC = defaultnameC;
 	}
- save_matrice_CSV( m , n, mat_C,nameC);
+ lect.EcritureCSV( mat_C,nameC);
 } 
- 
-    Formatgeomatique geo;
-    MatriceResultat=geo.Lecture("erd.tif");
-    
-    geo.Ecriture(MatriceResultat ,"test.tif"); 
-    MatriceResultat1=geo.Lecture("MNT500_L93_FRANCE.ASC");
-    
-    geo.Ecriture(MatriceResultat1 ,"test.ASC");   
+
+  /*  lect.EcritureCSV(m_eta,"mat.csv");
+
+    MatriceResultat=lect.LectureGeotiff("erd.tif");
+    lect.EcritureGeotiff(MatriceResultat ,"test.tif");  
+
+    MatriceResultat=lect.LectureAscii("MNT500_L93_FRANCE.ASC");
+    lect.EcritureAscii(MatriceResultat ,"test.ASC"); */ 
    }
 
  return 0;

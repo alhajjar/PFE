@@ -2,19 +2,22 @@
 # compiler
 CCC = g++
 
+prefix=/usr/local
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
 # C++ compiler flags 
-CCFLAGS = -g -fPIC -O3 -lm -L./ -lcsparce -pipe -fomit-frame-pointer -msse3
-CFLAGS=" -march=native"
-CXXFLAGS="${CFLAGS}"
+CCFLAGS = -g -fPIC -O3  -pipe -fomit-frame-pointer -msse3 
 # include directories
-INCLUDES = -I. -I/usr/local/include -IIncludes/
-CFLAGS=$(DMALLOC)
+INCLUDES = -I. -IIncludes/ -I${includedir}
 
 # library paths
-LIBS =$(LIBDMALLOC)  -ltiff  -llzma -ljbig -ljpeg -lz -lm 
+LIBS = -L${libdir} -L./ -L/usr/lib
+DEPENDLIBS =  -ltiff -llzma -ljbig -ljpeg -lz -lm
 
 # source files.
-SRC =  	CSVParser.cpp  simulation.cpp calcul_mat_N.cpp  resolution_systeme.cpp   save_matrice_CSV.cpp Formatgeomatique.cpp Voronoi.cpp Voronoi_fct.cpp
+SRC =$(wildcard *.cpp)
 
 OBJ = $(SRC:.cpp=.o)
 
@@ -25,7 +28,7 @@ all: $(OUT)
 default: dep $(OUT)
 
 .cpp.o:
-	$(CCC) -c  $(CFLAGS) $(INCLUDES)   $(CCFLAGS)  $< -o $@ $(LIBS)
+	$(CCC) -c  $(INCLUDES)   $(CCFLAGS)  $< -o $@ $(LIBS) $(DEPENDLIBS)
 
 $(OUT): $(OBJ)
 	ar -x libcsparse.a 
@@ -37,9 +40,10 @@ $(OUT): $(OBJ)
 depend: dep
 
 dep:
-	$(CCC) $(CFLAGS)  -M $(SRC) $(LIBS) > makedep
+	$(CCC) $(OUT)  -M $(SRC)  > makedep
 
 clean:
 	
 	rm -f test/libpfe.a
+install:
 	
