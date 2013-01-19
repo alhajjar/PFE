@@ -8,7 +8,7 @@ Responsable qualité et tests :
                 Ahmad AL HAJJAR
 
 Expert technique:
-                Francoit BLOUIN
+                Francois BLOUIN
 
 Developpeurs :
                 Allal AIOUAJ
