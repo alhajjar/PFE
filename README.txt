@@ -12,7 +12,7 @@ Expert technique:
 
 Developpeurs :
                 Allal AIOUAJ
-                Romain BESSONET
+                Romain BESSONNET
                 Cedric POUVREAU
 
 Mission :
