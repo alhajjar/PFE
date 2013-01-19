@@ -5,10 +5,10 @@
 //                 -------------------------                      //
 //                                                                //
 ////////////////////////////////////////////////////////////////////
-#include "../Includes/lecture.hpp"
-#include "../Includes/calcullois.hpp"
-#include "../Includes/calcul_matrice.hpp"
-#include "../Includes/Voronoi.hpp"
+#include "Includes/lecture_ecriture.hpp"
+#include "Includes/calcullois.hpp"
+#include "Includes/calcul_matrice.hpp"
+#include "Includes/Voronoi.hpp"
 
 int main(int argc, char **argv)
 {
@@ -18,7 +18,7 @@ int main(int argc, char **argv)
     string numtmp,nameC,nameA,str,tmp;
     cs* N1;
     calcullois calcul_lois;
-    lecture lect;
+    lecture_ecriture lect;
 
 /****************************************************************************************************************************/
 			/********************Choisir les dimensions des CSV**********************/
@@ -29,19 +29,19 @@ int main(int argc, char **argv)
 
 /***************************************************************************************************/
         	Matrice theta(m-1,n);
-        	Matrice stades(m-1,n); 
+        	Matrice stades(m-1,n);
         	Matrice mat_A(m-1,n);
-    		Matrice MatriceResultat(10,10); 
-		Matrice MatriceResultat1(10,10); 
-		Matrice mat_C(m-1,n);
-		Matrice m_eta(m-1,n);
-		Matrice m_p (m-1,n); 
-		Matrice coeffenvol(m-1,n);
-		Matrice coeffdepot1(m-1,n); 
-		Matrice coeffdepot2(m-1,n); 
-		Matrice tauxaccroissement(m-1,n);
-		Matrice mat(n,m-1);
-		Matrice tt(n,m-1);
+    		Matrice MatriceResultat(10,10);
+    		Matrice MatriceResultat1(10,10);
+			Matrice mat_C(m-1,n);
+			Matrice m_eta(m-1,n);
+			Matrice m_p (m-1,n);
+			Matrice coeffenvol(m-1,n);
+			Matrice coeffdepot1(m-1,n);
+			Matrice coeffdepot2(m-1,n);
+			Matrice tauxaccroissement(m-1,n);
+			Matrice mat(n,m-1);
+			Matrice tt(n,m-1);
 		/********************initialisation**********************/
         	m_p = m_eta = stades = mat_C = mat_A = theta = Matrice::Zero(m-1,n);
 		coeffdepot2 = coeffdepot1 = coeffenvol = tauxaccroissement = Matrice::Zero(m-1,n);
@@ -49,10 +49,12 @@ int main(int argc, char **argv)
 			/********************voronoy**********************/
 /****************************************************************************************************************************/
 	Voronoi voronoi("coord_s.csv",22,3,"data_s.csv",367,23);
-	Voronoi voronoitemp("coord_t.csv",67,3,"data_t.csv",4384,68); 
+	Voronoi voronoitemp("coord_t.csv",67,3,"data_t.csv",4384,68);
 	for (int i=1; i<91; i++){
-	stades = voronoi.iteration(i);
-	theta = voronoitemp.iteration(i);
+	voronoi.iteration(i);
+	stades = voronoi.getfinalMatrix();
+	voronoitemp.iteration(i);
+	theta =voronoitemp.getfinalMatrix();
 	}
 
 /****************************************************************************************************************************/
@@ -69,9 +71,9 @@ cout << "veuillez entrer le nombre d'iteration [default : 1 ]:";
 cout << "veuillez entrer le nom du fichier CSV contenant les valeurs de la matrice eta [default : mat_eta.csv ]:";
     const string defaultText = "mat_eta.csv";
     getline(cin, tmp);
-    if (!tmp.empty()) 
+    if (!tmp.empty())
         str = tmp;
-    else 
+    else
         str = defaultText;
           lect.LectureCSV(m,n,str );
 	m_eta = lect.get_CSV();
@@ -80,9 +82,9 @@ cout << "veuillez entrer le nom du fichier CSV contenant les valeurs de la matri
 cout << "veuillez entrer le nom du fichier CSV contenant les valeurs de la matrice P [default :mat_p.csv]:";
     const string defaultText1 = "mat_p.csv";
     getline(cin, tmp);
-    if (!tmp.empty()) 
+    if (!tmp.empty())
         str = tmp;
-    else 
+    else
         str = defaultText1;
           lect.LectureCSV(m,n,str );
 	m_p = lect.get_CSV();
@@ -90,20 +92,20 @@ cout << "veuillez entrer le nom du fichier CSV contenant les valeurs de la matri
 cout << "veuillez entrer le nom du fichier CSV contenant les valeurs de la matrice A  [default :mat_A.csv]:";
  const string defaultText4 = "mat_A.csv";
     getline(cin, tmp);
-    if (!tmp.empty()) 
+    if (!tmp.empty())
         str = tmp;
-    else 
+    else
         str = defaultText4;
           lect.LectureCSV(m,n,str );
 	mat_A = lect.get_CSV();
- 
+
 /******************************************/
 cout << "veuillez entrer le nom du fichier CSV contenant les valeurs de la matrice C  [default :mat_C.csv]:";
  const string defaultText5 = "mat_C.csv";
     getline(cin, tmp);
-    if (!tmp.empty()) 
+    if (!tmp.empty())
         str = tmp;
-    else 
+    else
         str = defaultText5;
           lect.LectureCSV(m,n,str );
 	mat_C = lect.get_CSV();
@@ -112,17 +114,17 @@ cout << "veuillez entrer le nom du fichier CSV contenant les valeurs de la matri
 cout << "veuillez entrer la valeur de k [default : 5]:";
     int num2 ;
     getline(cin, numtmp);
-    if (numtmp== "") 
+    if (numtmp== "")
         num2 = 5;
-    else 
+    else
         num2 = atoi(numtmp.c_str());
 /******************************************/
 cout << "veuillez entrer la valeur de h [default : 1]:";
     int num3 ;
     getline(cin, numtmp);
-    if (numtmp== "") 
+    if (numtmp== "")
      num3 = 1;
-    else 
+    else
      num3 = atoi(numtmp.c_str());
 /****************************************************************************************************************************/
 			/********************Simulation**********************/
@@ -173,16 +175,16 @@ cout << "veuillez entrer la valeur de h [default : 1]:";
 const string defaultTextee = "oui";
 cout << "Voulez vous enregistrez le resultat de mat_A [default :oui]:";
     getline(cin, tmp);
-    if (!tmp.empty()) 
+    if (!tmp.empty())
         str = tmp;
-    else 
+    else
         str = defaultTextee;
 
 if (str == "oui"){
 cout << "choisissez le nom de fichier destination [mat_A_save.csv]:";
 string defaultnameA = "mat_A_save.csv";
     getline(cin, tmp);
-    if (!tmp.empty()){ 
+    if (!tmp.empty()){
         nameA = tmp;
 	}
     else {nameA = defaultnameA;
@@ -192,33 +194,32 @@ lect.EcritureCSV( mat_A,nameA);
 
 cout << "Voulez vous enregistrez le resultat de mat_C[default :oui]:";
     getline(cin, tmp);
-    if (!tmp.empty()) 
+    if (!tmp.empty())
         str = tmp;
-    else 
+    else
         str = defaultTextee;
 
 if (str == "oui"){
 cout << "choisissez le nom de fichier destination [mat_C_save.csv]:";
 string defaultnameC = "mat_C_save.csv";
     getline(cin, tmp);
-    if (!tmp.empty()){ 
+    if (!tmp.empty()){
         nameC = tmp;
 	}
     else{nameC = defaultnameC;
 	}
  lect.EcritureCSV( mat_C,nameC);
-} 
+}
 
   /*  lect.EcritureCSV(m_eta,"mat.csv");
 
     MatriceResultat=lect.LectureGeotiff("erd.tif");
-    lect.EcritureGeotiff(MatriceResultat ,"test.tif");  
+    lect.EcritureGeotiff(MatriceResultat ,"test.tif");
 
     MatriceResultat=lect.LectureAscii("MNT500_L93_FRANCE.ASC");
-    lect.EcritureAscii(MatriceResultat ,"test.ASC"); */ 
+    lect.EcritureAscii(MatriceResultat ,"test.ASC"); */
    }
 
  return 0;
  }
-
 

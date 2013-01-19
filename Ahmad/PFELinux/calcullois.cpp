@@ -8,9 +8,30 @@
  *  \brief constructeur de la classe calcullois
  *  \details cette classe calculs les différentes voids des lois
  */
-calcullois::calcullois(){//Constructeur sans paramètres
+calcullois::calcullois(){
+	 taux_accroissement= new Matrice(196,194);
+	 *taux_accroissement=Matrice::Zero(196,194);
+	 coeff_depot1=new Matrice(196,194);
+	 *coeff_depot1=Matrice::Zero(196,194);
+	 coeff_depot2=new Matrice(196,194);
+	 *coeff_depot2=Matrice::Zero(196,194);
+	 coeff_depot3=new Matrice(196,194);
+	 *coeff_depot3=Matrice::Zero(196,194);
+	 coeff_depot4=new Matrice(196,194);
+	 *coeff_depot4=Matrice::Zero(196,194);
+	 coeff_depot5=new Matrice(196,194);
+	 *coeff_depot5=Matrice::Zero(196,194);
+	 coeff_envol=new Matrice(196,194);
+	 *coeff_envol=Matrice::Zero(196,194);
 }
-calcullois::~calcullois(){//Constructeur sans paramètres
+calcullois::~calcullois(){
+	delete(taux_accroissement);
+	delete(coeff_depot1);
+	delete(coeff_depot2);
+	delete(coeff_depot3);
+	delete(coeff_depot4);
+	delete(coeff_depot5);
+	delete(coeff_envol);
 }
 /** 
  *  \brief calcul la matrice du taux d'accroissement
@@ -25,20 +46,21 @@ void calcullois::calcul_taux_accroissement(Matrice theta, Matrice stades){
     double a2 = 0.11132;
     double num = 0;
     double den = 0;
-     taux_accroissement=Matrice(196,194);
-    taux_accroissement = Matrice::Zero(196,194);
+   Matrice mat(196,194);
+    mat = Matrice::Zero(196,194);
 
-    for(int i = 0;i != taux_accroissement.rows();i++){
-            for(int j = 0;j != taux_accroissement.cols();j++){
+    for(int i = 0;i != mat.rows();i++){
+            for(int j = 0;j != mat.cols();j++){
                     if(theta(i,j) >= 30 || stades(i,j) >= 92){
-                        taux_accroissement(i, j) = 0;}
+                        mat(i, j) = 0;}
                     else{
                         num = a1*log(30-theta(i,j))+a2*log(92-stades(i,j));
                         den = 1+exp(-k*(stades(i,j)-sm))+exp(-b*theta(i,j));
-                        taux_accroissement(i, j) = num/den;
+                        mat(i, j) = num/den;
                     }
             }
     }
+    *taux_accroissement = mat;
 }
  /** 
  *  \brief calcul coeff depot1
@@ -51,14 +73,15 @@ void calcullois::calcul_coeffdepot1(Matrice p, Matrice eta){
     double a2 = 1.652655;
     double a = -0.267819;
     double k = 6.214583;
-     coeff_depot1=Matrice(196,194);
-    coeff_depot1 = Matrice::Zero(196,194);
+    Matrice mat(196,194);
+     mat = Matrice::Zero(196,194);
 
-    for(int i=0;i!=coeff_depot1.rows();i++){
-            for(int j=0;j!=coeff_depot1.cols();j++){
-              coeff_depot1(i, j)=log(a1+a*(-(p(i,j)*p(i,j)+p(i,j)) *atan(k*eta(i,j))+a2*p(i,j)));
+    for(int i=0;i!=mat.rows();i++){
+            for(int j=0;j!=mat.cols();j++){
+              mat(i, j)=log(a1+a*(-(p(i,j)*p(i,j)+p(i,j)) *atan(k*eta(i,j))+a2*p(i,j)));
             }
     }
+    *coeff_depot1 = mat;
 }
  /** 
  *  \brief calcul coeff depot2
@@ -75,16 +98,16 @@ void calcullois::calcul_coeffdepot2(Matrice p, Matrice eta){
     double k = 7.317821;
     double num = 0;
     double den = 0;
-     coeff_depot2=Matrice(196,194);
-    coeff_depot2 = Matrice::Zero(196,194);
-
-    for(int i=0;i!=coeff_depot2.rows();i++){
-            for(int j=0;j!=coeff_depot2.cols();j++){
+    Matrice mat(196,194);
+     mat = Matrice::Zero(196,194);
+    for(int i=0;i!=mat.rows();i++){
+            for(int j=0;j!=mat.cols();j++){
               num = (a4*exp(p(i,j))+a5*log(1+p(i,j)));
               den = 1-a1*atan(k*eta(i,j))+exp(a2*(p(i,j)-a3));
-              coeff_depot2(i, j) = num/den;
+              mat(i, j) = num/den;
             }
     }
+    *coeff_depot2=mat;
 }
  /** 
  *  \brief calcul coeff depot3
@@ -97,14 +120,15 @@ void calcullois::calcul_coeffdepot3(Matrice p, Matrice eta){
     double a2 = 0.86894;
     double a3 = 1.08105;
     double k = 8.22311;
-     coeff_depot3=Matrice(196,194);
-    coeff_depot3 = Matrice::Zero(196,194);
+    Matrice mat(196,194);
+     mat = Matrice::Zero(196,194);
 
-    for(int i=0;i!=coeff_depot3.rows();i++){
-            for(int j=0;j!=coeff_depot3.cols();j++){
-                    coeff_depot3(i, j) = log(a2+a1*(p(i,j)-p(i,j)*p(i,j))*atan(k*eta(i,j)))+a3*p(i,j);
+    for(int i=0;i!=mat.rows();i++){
+            for(int j=0;j!=mat.cols();j++){
+            	mat(i, j) = log(a2+a1*(p(i,j)-p(i,j)*p(i,j))*atan(k*eta(i,j)))+a3*p(i,j);
             }
     }
+    *coeff_depot3=mat;
 }
 
  /** 
@@ -118,14 +142,15 @@ void calcullois::calcul_coeffdepot4(Matrice p, Matrice eta){
     double a2=0.983375;
     double a3=1.669692;
     double k =-6.572036;
-     coeff_depot4=Matrice(196,194);
-    coeff_depot4 = Matrice::Zero(196,194);
+    Matrice mat(196,194);
+     mat = Matrice::Zero(196,194);
 
-    for(int i=0;i!=coeff_depot4.rows();i++){
-            for(int j=0;j!=coeff_depot4.cols();j++){
-                coeff_depot4(i, j) = log(a2+a1*(p(i,j)-(p(i,j)*p(i,j)))*atan(k*eta(i,j))+a3*p(i,j));
+    for(int i=0;i!=mat.rows();i++){
+            for(int j=0;j!=mat.cols();j++){
+            	mat(i, j) = log(a2+a1*(p(i,j)-(p(i,j)*p(i,j)))*atan(k*eta(i,j))+a3*p(i,j));
             }
     }
+    *coeff_depot4=mat;
 }
  /** 
  *  \brief calcul coeff depot5
@@ -138,16 +163,17 @@ void calcullois::calcul_coeffdepot5(Matrice p, Matrice eta){
     double a2 = 0.73519;
     double a3 =1.92703;
     double k =38.70085;
-     coeff_depot5=Matrice(196,194);
-    coeff_depot5 = Matrice::Zero(196,194);
+    Matrice mat(196,194);
+     mat = Matrice::Zero(196,194);
 
-    for(int i=0;i!=coeff_depot5.rows();i++){
-            for(int j=0;j!=coeff_depot5.cols();j++){
+    for(int i=0;i!=mat.rows();i++){
+            for(int j=0;j!=mat.cols();j++){
                     if (p(i,j)<0.5)
-                       coeff_depot5(i, j) =  log(a2+a1*(p(i,j)-(p(i,j)*p(i,j)))*atan(-k*eta(i,j))+a3*p(i,j)) ;
-                    else coeff_depot5(i, j) = log(a2+a1*(p(i,j)-(p(i,j)*p(i,j)))*atan(k*eta(i,j))+a3*p(i,j));
+                    	mat(i, j) =  log(a2+a1*(p(i,j)-(p(i,j)*p(i,j)))*atan(-k*eta(i,j))+a3*p(i,j)) ;
+                    else mat(i, j) = log(a2+a1*(p(i,j)-(p(i,j)*p(i,j)))*atan(k*eta(i,j))+a3*p(i,j));
             }
     }
+    *coeff_depot5=mat;
 }
   /** 
  *  \brief calcul la matrice des coeff_envol
@@ -163,100 +189,101 @@ void calcullois::calcul_coeff_envol(Matrice A,Matrice stades,Matrice theta){
     double a2=-0.543663;
     double logN4 = 0;
     double phi_alpha2 = 0;
-     coeff_envol=Matrice(196,194);
-    coeff_envol = Matrice::Zero(196,194);
+    Matrice mat(196,194);
+     mat = Matrice::Zero(196,194);
 
-    for(int i=0;i!=coeff_envol.rows();i++){
-            for(int j=0;j!=coeff_envol.cols();j++){
+    for(int i=0;i!=mat.rows();i++){
+            for(int j=0;j!=mat.cols();j++){
             logN4=exp(a*stades(i,j))/(1+exp(a0+a1*stades(i,j)+a2*log(1+A(i,j))));
             phi_alpha2=2/( 1 + exp( - 0.1 * theta(i,j)))- 1;
-            coeff_envol(i, j) = exp(logN4)*phi_alpha2;
+            mat(i, j) = exp(logN4)*phi_alpha2;
             }
     }
+    *coeff_envol=mat;
 }
 
  /** 
  *  \brief setter matrice des taux d'accroissement
  */
-void  calcullois::set_taux_accroissement(Matrice taux_accroissement){
-this->taux_accroissement = taux_accroissement;
+void  calcullois::set_taux_accroissement(Matrice tauxaccroissement){
+*taux_accroissement = tauxaccroissement;
 }
  /** 
  *  \brief setter matrice coeff_depot1
  */
-void  calcullois::set_coeffdepot1(Matrice coeff_depot1){
-this->coeff_depot1=coeff_depot1;
+void  calcullois::set_coeffdepot1(Matrice coeffdepot1){
+*coeff_depot1=coeffdepot1;
 }
  /** 
  *  \brief setter matrice coeff_depot2
  */
-void  calcullois::set_coeffdepot2(Matrice coeff_depot2){
-this->coeff_depot2=coeff_depot2;
+void  calcullois::set_coeffdepot2(Matrice coeffdepot2){
+*coeff_depot2=coeffdepot2;
 }
  /** 
  *  \brief setter matrice coeff_depot3
  */
-void  calcullois::set_coeffdepot3(Matrice coeff_depot3){
-this->coeff_depot3=coeff_depot3;
+void  calcullois::set_coeffdepot3(Matrice coeffdepot3){
+*coeff_depot3=coeffdepot3;
 }
  /** 
  *  \brief setter matrice coeff_depot4
  */
-void  calcullois::set_coeffdepot4(Matrice coeff_depot4){
-this->coeff_depot4=coeff_depot4;
+void  calcullois::set_coeffdepot4(Matrice coeffdepot4){
+*coeff_depot4=coeffdepot4;
 }
  /** 
  *  \brief setter matrice coeff_depot5
  */
-void  calcullois::set_coeffdepot5(Matrice coeff_depot5){
-this->coeff_depot5=coeff_depot5;
+void  calcullois::set_coeffdepot5(Matrice coeffdepot5){
+*coeff_depot5=coeffdepot5;
 }
  /** 
  *  \brief setter matrice coeff_envol
  */
-void  calcullois::set_coeff_envol(Matrice coeff_envol){
-this->coeff_envol=coeff_envol;
+void  calcullois::set_coeff_envol(Matrice coeffenvol){
+*coeff_envol=coeffenvol;
 }
  /** 
  *  \brief getter matrice des taux d'accroissement
  */
 Matrice  calcullois::get_taux_accroissement(){
-return taux_accroissement;
+return *taux_accroissement;
  }
   /** 
  *  \brief getter matrice coeff_depot1
  */
 Matrice  calcullois::get_coeffdepot1(){
-return coeff_depot1;
+return *coeff_depot1;
  }
   /** 
  *  \brief getter matrice coeff_depot2
  */
 Matrice  calcullois::get_coeffdepot2(){
-return coeff_depot2;
+return *coeff_depot2;
 }
  /** 
  *  \brief getter matrice coeff_depot3
  */
 Matrice  calcullois::get_coeffdepot3(){
-return coeff_depot3;
+return *coeff_depot3;
 }
  /** 
  *  \brief getter matrice coeff_depot4
  */
 Matrice  calcullois::get_coeffdepot4(){
-return coeff_depot4;
+return *coeff_depot4;
 }
  /** 
  *  \brief getter matrice coeff_depot5
  */
 Matrice  calcullois::get_coeffdepot5(){
-return coeff_depot5;
+return *coeff_depot5;
 }
  /** 
  *  \brief getter matrice coeff_envol
  */
 Matrice  calcullois::get_coeff_envol(){
-return coeff_envol;
+return *coeff_envol;
 }
 

@@ -30,9 +30,9 @@ class calcul_matrice
 	
 	private :
 		cs* N1;
-		Vecteur N22;
-		Matrice mat_A;
-		Matrice mat_C;
+		Vecteur *N22;
+		Matrice *mat_A;
+		Matrice *mat_C;
 		int h;
 		int k;
 };

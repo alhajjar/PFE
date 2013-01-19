@@ -35,13 +35,13 @@ class calcullois
 		Matrice  get_coeff_envol();
 	
 	private :
-		Matrice taux_accroissement;
-		Matrice coeff_depot1;
-		Matrice coeff_depot2;
-		Matrice coeff_depot3;
-		Matrice coeff_depot4;
-		Matrice coeff_depot5;
-		Matrice coeff_envol;
+		Matrice *taux_accroissement;
+		Matrice *coeff_depot1;
+		Matrice *coeff_depot2;
+		Matrice *coeff_depot3;
+		Matrice *coeff_depot4;
+		Matrice *coeff_depot5;
+		Matrice *coeff_envol;
 };
 
 #endif /* defined(__projet_pfe__simulation__) */

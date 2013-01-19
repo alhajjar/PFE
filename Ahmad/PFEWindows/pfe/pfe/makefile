@@ -2,43 +2,48 @@
 # compiler
 CCC = g++
 
+prefix=/usr/local
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
 # C++ compiler flags 
-CCFLAGS = -g -fPIC -O3 
-
+CCFLAGS = -g -fPIC -O3  -pipe -fomit-frame-pointer -msse3 
 # include directories
-INCLUDES = -I. -I/usr/local/include -IIncludes/ 
-
-LFLAGS = -L.
+INCLUDES = -I. -IIncludes/ -I${includedir}
 
 # library paths
-LIBS = -lcsparce -lm
+LIBS = -L${libdir} -L./ -L/usr/lib
+DEPENDLIBS =  -ltiff -llzma -ljbig -ljpeg -lz -lm
 
 # source files.
-SRC =  	CSVParser.cpp  simulation.cpp calcul_mat_N.cpp  resolution_systeme.cpp  
+SRC =$(wildcard *.cpp)
 
 OBJ = $(SRC:.cpp=.o)
 
-OUT = libpfe.dll
+OUT = libpfe.a
 all: $(OUT)
 .SUFFIXES: .cpp
 
 default: dep $(OUT)
 
 .cpp.o:
-	$(CCC) -c   $(INCLUDES)  $(CCFLAGS)  $< -o $@  $(LFLAGS) $(LIBS)
+	$(CCC) -c  $(INCLUDES)   $(CCFLAGS)  $< -o $@ $(LIBS) $(DEPENDLIBS)
 
 $(OUT): $(OBJ)
-	ar rcs $(OUT) $(OBJ)
-	rm -f $(OBJ)
+	ar -x libcsparse.a 
+	ar rcs $(OUT) *.o
+	rm -f *.o
 	mv -f $(OUT) test/
 	chmod 777 test/$(OUT)
 	
 depend: dep
 
 dep:
-	$(CCC) $(CFLAGS)  -M $(SRC) $(LIBS) > makedep
+	$(CCC) $(OUT)  -M $(SRC)  > makedep
 
 clean:
 	
-	rm -f test/libpfe.dll
+	rm -f test/libpfe.a
+install:
 	

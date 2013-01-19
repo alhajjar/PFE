@@ -30,7 +30,6 @@
 
     typedef tokenizer< escaped_list_separator<char> > Tokenizer;
     typedef MatrixXd Matrice;
-    typedef Matrix<double,196,194> Matrice1;
     typedef VectorXd Vecteur;
 
 
