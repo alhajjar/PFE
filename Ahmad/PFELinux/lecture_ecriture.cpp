@@ -82,6 +82,7 @@ void lecture_ecriture::LectureCSV(int m,int n, string filePath){
 */ 
 *sortie = mfinal.block(1,0,m-1,n);
     }
+cout<<"\nfin de la lecture de "<<filePath<<"\n";
 }
 
 void lecture_ecriture::EcritureCSV(Matrice mat,string str){
@@ -108,6 +109,7 @@ ofstream outdata; // outdata is like cin
 	outdata <<mat(i,j)<<endl ;
    }
    outdata.close();
+   cout<<"\nfin de l'ecriture de la matrcice dans "<<str<<"\n";
 }
 
 Matrice lecture_ecriture:: LectureAscii(string fichiergeomatique){
@@ -130,7 +132,9 @@ Matrice lecture_ecriture:: LectureAscii(string fichiergeomatique){
         }
         else  // sinon
              cerr << "Impossible d'ouvrir le fichier !" << endl;
+		  
         return *sortie;
+		 cout<<"\nfin de la lecture de "<<fichiergeomatique<<"\n";
 }    
 
 void lecture_ecriture:: EcritureAscii(Matrice mat,std::string fichiergeomatique){
@@ -155,7 +159,8 @@ cellsize pas entre chaque valeur, NODATA_value valeur par defaut du manque de do
                 fichier.close();
         }
         else
-                cerr << "Impossible d'ouvrir le fichier !" << endl;         
+                cerr << "Impossible d'ouvrir le fichier !" << endl;      
+		cout<<"\nfin de l'ecriture de la matrcice dans "<<fichiergeomatique<<"\n";
 }
 
 Matrice lecture_ecriture::LectureGeotiff(std::string fichiergeomatique){
@@ -194,7 +199,9 @@ Matrice lecture_ecriture::LectureGeotiff(std::string fichiergeomatique){
         }
         TIFFClose(tif);
     }
+
     return *sortie;
+		   cout<<"\nfin de la lecture de "<<fichiergeomatique<<"\n";
 }
 
 void lecture_ecriture::EcritureGeotiff(Matrice matrice,std::string fichiergeomatique){
@@ -230,16 +237,17 @@ TIFFSetField(out, TIFFTAG_ROWSPERSTRIP, TIFFDefaultStripSize(out, width*samplepe
 
 int h=height;
 //Ecriture de l'image
-for (uint32 row = 0; row < h;row++)
+for (uint32 row = 0; row < (uint32)h;row++)
 {
     memcpy(buf, &image[(h-row-1)*linebytes], linebytes);
     if (TIFFWriteScanline(out, buf, row, 0) < 0)
     break;
 }
-
+cout<<"\nfin de l'ecriture de la matrcice dans "<<fichiergeomatique<<"\n";
 (void) TIFFClose(out);
 if (buf)
     _TIFFfree(buf);
+
 }
 
 Matrice  lecture_ecriture::get_CSV(){
