@@ -8,7 +8,7 @@ OUT = test/libpfe.a
 # include directories
 INCLUDES = -IIncludes/ -I/usr/local/include
 
-# C++ compiler flags (-g -O2 -Wall)
+# C++ compiler flags
 CCFLAGS = -g -fPIC -O3  -pipe -fomit-frame-pointer -msse3 -Wall 
 
 # compiler
