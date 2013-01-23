@@ -62,8 +62,7 @@ private :
 	
 	Calcul_Lois calcul_lois;
 	Lecture_Ecriture lect;
-        Calcul_Matrice calculmatrice1;
-	Calcul_Matrice calculmatrice2;
+        Calcul_Matrice calculmatrice;
 
 };
 

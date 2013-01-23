@@ -16,6 +16,7 @@ Calcul_Matrice::Calcul_Matrice(){
 	mat_C =  Matrice(196,194);
 	mat_C = Matrice::Zero(196,194);
 	N1 = cs_spalloc (0, 0, 1, 1, 1) ;
+	N3 = cs_spalloc (0, 0, 1, 1, 1) ;
 	h = 5;
 	k = 1;
 	 
@@ -29,17 +30,17 @@ Calcul_Matrice::~Calcul_Matrice(){
 
 }
 
-/** \fn void matriceN1N3 (double h , double k ,  Matrice p , Matrice alpha , Matrice v)
- *  \brief Calcul de la matrice tridiagonale N1 qui est égale à N3
+/** \fn void matriceN1 (double h , double k ,  Matrice p , Matrice alpha , Matrice vitesse_h)
+ *  \brief Calcul de la matrice tridiagonale N1 
  *  \param h Pas de temps
  *  \param k Pas d'espace
  *  \param p Proportion de blé en tout point (variant de 0 à 1)
  *  \param alpha Coefficient de dépôt pour la loi sélectionnée
- *  \param v Données de vent disponibles sur l'axe vertical
+ *  \param vitesse_h Données de vent disponibles sur l'axe vertical
  *  \return Rien
  */
 //matrice D a la place de p 
-void Calcul_Matrice:: matriceN1N3 (double h , double k ,  Matrice p , Matrice alpha , Matrice v){
+void Calcul_Matrice:: matriceN1 (double h , double k ,  Matrice p , Matrice alpha , Matrice vitesse_h){
 /* Déclaration de deux matrices creuse A et T */
 	cs *A;
     cs *T;
@@ -59,9 +60,9 @@ void Calcul_Matrice:: matriceN1N3 (double h , double k ,  Matrice p , Matrice al
 /* Remplissage de la diagonale centrale */
 			vec1[f]  = (1+h*alpha(i,j)+(2*h*p(i,j))/(k*k));
 /* Remplissage de la diagonale inférieure */
-		    vec2[f]  = -(h/(k*k))*p(i,j)+(h/(2*k)) *  v(i,j);
+		    vec2[f]  = -(h/(k*k))*p(i,j)-(h/(2*k)) *  vitesse_h(i,j);
 /* Remplissage de la diagonale supérieure */
-		    vec3[f]  =  -(h/(k*k))*p(i,j)+(h/(2*k))*  v(i,j);
+		    vec3[f]  =  -(h/(k*k))*p(i,j)+(h/(2*k))*  vitesse_h(i,j);
 		    f++;
 		}
 	}
@@ -81,8 +82,63 @@ void Calcul_Matrice:: matriceN1N3 (double h , double k ,  Matrice p , Matrice al
 
 /* Suppression en mémoire de la matrice tridiagonale temporaire */
 	cs_spfree(T);
-        cout<<"\nFin du calcul de la matrice diagonale\n";
+       
 }
+
+/** \fn void matriceN3 (double h , double k ,  Matrice p , Matrice alpha , Matrice vitesse_v)
+ *  \brief Calcul de la matrice tridiagonale N3 
+ *  \param h Pas de temps
+ *  \param k Pas d'espace
+ *  \param p Proportion de blé en tout point (variant de 0 à 1)
+ *  \param alpha Coefficient de dépôt pour la loi sélectionnée
+ *  \param vitesse_v Données de vent disponibles sur l'axe vertical
+ *  \return Rien
+ */
+//matrice D a la place de p 
+void Calcul_Matrice:: matriceN3 (double h , double k ,  Matrice p , Matrice alpha , Matrice vitesse_v){
+/* Déclaration de deux matrices creuse A et T */
+    cs *A;
+    cs *T;
+    int n = p.rows()*p.cols();
+    int i = 0;
+	int f = 0;
+    double vec1[38024]={0};
+    double vec2[38024]={0};
+    double vec3[38024]={0};
+/* Allocation en mémoire de la matrice tridiagonale temporaire */
+	T = cs_spalloc (0, 0, 1, 1, 1) ;
+
+/* Création de la matrice tridiagonale */
+	for(int i=0;i!=p.rows();i++){
+		for(int j=0;j!=p.cols();j++){
+/* Remplissage de la diagonale centrale */
+			vec1[f]  = (1+h*alpha(i,j)+(2*h*p(i,j))/(k*k));
+/* Remplissage de la diagonale inférieure */
+		    vec2[f]  = -(h/(k*k))*p(i,j)-(h/(2*k)) *  vitesse_v(i,j);
+/* Remplissage de la diagonale supérieure */
+		    vec3[f]  =  -(h/(k*k))*p(i,j)+(h/(2*k))*  vitesse_v(i,j);
+		    f++;
+		}
+	}
+
+	for( i = 0; i!=n-1;i++){
+/* Stockage dans la matrice tridiagonale temporaire de la diagonale centrale */
+		cs_entry (T, i, i,vec1[i]);
+/* Stockage dans la matrice tridiagonale temporaire de la diagonale inférieure */
+		cs_entry (T, i+1, i,vec2[i]);
+/* Stockage dans la matrice tridiagonale temporaire de la diagonale supérieure */
+		cs_entry (T,  i, i+1,vec3[i]);
+	}
+
+/* Compression en mémoire et remplissage de la matrice creuse tridiagonale */
+	A = cs_compress(T);
+	set_N3(A);
+
+/* Suppression en mémoire de la matrice tridiagonale temporaire */
+	cs_spfree(T);
+       
+}
+
 
 /** \fn void inverseN2N4 (double h , Matrice r , Matrice alpha )
  *  \brief Calcul l'inverse de la matrice N2 (N4 = N2)
@@ -103,7 +159,7 @@ void  Calcul_Matrice::inverseN2N4 (double h , Matrice r , Matrice alpha2 ){
         }
     }
 	set_inverse_N2(N2);
-        cout<<"\nFin du calcul de la matrice inverse de N2\n";
+       
 }
 
 /** \fn void Resolution_ailes(double h , Matrice A , Matrice C , Matrice alpha, cs* N)
@@ -116,11 +172,11 @@ void  Calcul_Matrice::inverseN2N4 (double h , Matrice r , Matrice alpha2 ){
  *  \return Rien
  */
 void Calcul_Matrice::Resolution_ailes(double h , Matrice A , Matrice C , Matrice alpha2, cs* N){
-	cout<<"\nCalcul de la matrice d'ailes\n";
-	int n = 38024;
 	int f = 0;
 	double I[38024] = {0};
 	double I1[38024] = {0};
+    	double I3[38024]={0};
+
 	Vecteur vec1(38024);
 	vec1 = Vecteur::Zero(38024);
 	csn *R;
@@ -145,12 +201,20 @@ void Calcul_Matrice::Resolution_ailes(double h , Matrice A , Matrice C , Matrice
 	R = cs_lusol_init (0, N, I1, 1e-14, x);
 	for(int i = 1;i < 38024;i++){
 		double val = vec1(i);
-        for(int k = 0;k < n;k++){
+// ancienne methode
+     /*  for(int k = 0;k < n;k++){
 			I[k] += I1[k]*val;
             I1[k] = 0;
-        }
-        I1[i] = 1;
-		cs_lusol_boucle (N, I1, R, x);
+        }*/
+//methode 2
+	//I3 =I3+I1*val	
+	cs_add_vec ( I3,I3,I1,val);
+
+	//memset(I1, 0, sizeof I1);
+	I[i-1] = 0;
+        I[i] = 1;
+	cs_lusol_inverse (N, I,I1,R, x);
+
 	}
 /* Suppression en mémoire de R, variable contenant la décomposition LU, */
 /* et de x, la variable temporaire servant à construire l'inverse de la ième colonne de l'inverse de N1*/
@@ -162,13 +226,12 @@ void Calcul_Matrice::Resolution_ailes(double h , Matrice A , Matrice C , Matrice
 		for(int j = 0;j != C.cols();j++){
 
 /* Arrondi fait par Ahmad. Fo voir si on peut le faire ou pas */
-				C(i,j) = I[f];
+				C(i,j) = I3[f];
 
 			f++;
 		}
 	}
 	set_mat_C(C);
-	cout<<"\nFin du calculde la matrice d'ailes\n";
 }
 
 /** \fn  Resolution_apteres (double h , Matrice A , Matrice C , Matrice alpha,Vecteur N22  )
@@ -181,7 +244,7 @@ void Calcul_Matrice::Resolution_ailes(double h , Matrice A , Matrice C , Matrice
  *  \return Rien
  */
 void Calcul_Matrice::Resolution_apteres(double h , Matrice A , Matrice C , Matrice alpha ,Vecteur N22){
-	cout<<"\nCalcul de la matrice d'apteres\n";
+
 	int f = 0;
 	Vecteur vec(38024);
 	vec = Vecteur::Zero(38024);
@@ -196,7 +259,6 @@ void Calcul_Matrice::Resolution_apteres(double h , Matrice A , Matrice C , Matri
         }
 	}
 	set_mat_A(A);
-	cout<<"\nFin du calcul de la matrice d'apteres\n";
 }
 
 /** \fn void  Calcul_Matrice::set_N1(cs* mat)
@@ -206,6 +268,18 @@ void Calcul_Matrice::Resolution_apteres(double h , Matrice A , Matrice C , Matri
  */
 void  Calcul_Matrice::set_N1(cs* mat){
 	*N1 = *mat;
+}
+
+/** \fn void  Calcul_Matrice::set_N3(cs* mat)
+ *  \brief Mise à jour de la matrice N3
+
+ *  \param mat 
+
+ *  \return Rien
+
+ */
+void  Calcul_Matrice::set_N3(cs* mat){
+	*N3 = *mat;
 }
 
 /** \fn void  Calcul_Matrice::set_N22(Vecteur vec)
@@ -261,6 +335,17 @@ cs* Calcul_Matrice::get_N1(){
 	return N1;
 }
  
+/** \fn cs* Calcul_Matrice::get_N3()
+
+ *  \brief Retourne la matrice tridiagonale N3
+
+ *  \return N3 Matrice tridigaonale
+
+ */
+cs* Calcul_Matrice::get_N3(){
+	return N3;
+}
+
 /** \fn Vecteur Calcul_Matrice::get_inverse_N2()
  *  \brief Retourne la matrice inverse de N2
  *  \return N22 Matrice inverse de N2

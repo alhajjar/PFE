@@ -12,7 +12,9 @@ Simulation::Simulation(){
 int  m = 197;
 int n = 194;
 	mat_A = Matrice(m-1,n);
+	mat_A = Matrice::Zero(196,194);
 	mat_C = Matrice(m-1,n);
+	mat_C = Matrice::Zero(196,194);
 };
 
 /** \fn Simulation::~Simulation()
@@ -46,16 +48,28 @@ Simulation::~Simulation(){
  *  \param nbcolonneCSV_data_t Nombres de colonnes à récupérer dans le fichier CSV des données de la matrice des températures theta
  *  \return Rien
  */
-void Simulation::initialisation(double k, double h, string CSV_mat_C, string CSV_mat_A, string CSV_p, string CSV_eta, string CSV_coord_stades,
+void Simulation::initialisation(double k1, double h1, string CSV_mat_C, string CSV_mat_A, string CSV_p, string CSV_eta, string CSV_coord_stades,
 								int nbligneCSV_coord_s, int nbcolonneCSV_coord_s, string CSV_data_stades, int nbligneCSV_data_s, int nbcolonneCSV_data_s,
 								string CSV_coord_temp, int nbligneCSV_coord_t, int nbcolonneCSV_coord_t, string CSV_data_temp, int nbligneCSV_data_t, int nbcolonneCSV_data_t,string CSV_mat_D,string CSV_vitesse_h,string CSV_vitesse_v ){
 	m_eta = Matrice(NB_LIGNES-1, NB_COLONNES);
+	m_eta = Matrice::Zero(196,194);
 	m_p = Matrice(NB_LIGNES-1, NB_COLONNES);
+	m_p = Matrice::Zero(196,194);
 	m_D = Matrice(NB_LIGNES-1, NB_COLONNES);
+	m_D = Matrice::Zero(196,194);
 	m_vitesse_h = Matrice(NB_LIGNES-1, NB_COLONNES);
+	m_vitesse_h = Matrice::Zero(196,194);
 	m_vitesse_v = Matrice(NB_LIGNES-1, NB_COLONNES);
-	m_p = m_eta = Matrice::Zero(NB_LIGNES-1, NB_COLONNES);
-    
+	m_vitesse_v = Matrice::Zero(196,194);
+	cout<<"\n"
+	<<"\t"
+	<<"===================\n"
+	<<"\t"
+	<< "= "<< "Initialisation "
+	<<" ="
+	<<"\n"
+	<<"\t"<<"===================\n";
+  
 	voronoistades =  Voronoi(CSV_coord_stades, nbligneCSV_coord_s, nbcolonneCSV_coord_s, CSV_data_stades, nbligneCSV_data_s, nbcolonneCSV_data_s);
 
 	voronoitheta =  Voronoi(CSV_coord_temp, nbligneCSV_coord_t, nbcolonneCSV_coord_t, CSV_data_temp, nbligneCSV_data_t, nbcolonneCSV_data_t);
@@ -67,11 +81,12 @@ void Simulation::initialisation(double k, double h, string CSV_mat_C, string CSV
 	m_p = lect.get_CSV();
 
 	lect.LectureCSV(NB_LIGNES, NB_COLONNES, CSV_mat_A);
-	calculmatrice1.set_mat_A(lect.get_CSV());
-
+	calculmatrice.set_mat_A(lect.get_CSV());
+	mat_A = lect.get_CSV();
 	lect.LectureCSV(NB_LIGNES, NB_COLONNES, CSV_mat_C);
-	calculmatrice1.set_mat_C(lect.get_CSV());
-	
+	calculmatrice.set_mat_C(lect.get_CSV());
+	mat_C = lect.get_CSV();
+
 	lect.LectureCSV(NB_LIGNES, NB_COLONNES, CSV_mat_D);
 	m_D = lect.get_CSV();
 	
@@ -84,11 +99,13 @@ void Simulation::initialisation(double k, double h, string CSV_mat_C, string CSV
     calcul_lois.calcul_coeffdepot1(m_p, m_eta);
     calcul_lois.calcul_coeffdepot2(m_p, m_eta);
 
-    calculmatrice1.matriceN1N3(h, k, m_D, calcul_lois.get_coeffdepot1(), m_vitesse_h);
-    calculmatrice2.matriceN1N3(h, k, m_D, calcul_lois.get_coeffdepot1(), m_vitesse_v);
+    calculmatrice.matriceN1(h1, k1, m_D, calcul_lois.get_coeffdepot1(), m_vitesse_h);
+       cout<<"\nFin du calcul de la matrice tridiagonale N1\n";
+    calculmatrice.matriceN3(h1, k1, m_D, calcul_lois.get_coeffdepot1(), m_vitesse_v);
+       cout<<"\nFin du calcul de la matrice tridiagonale N3\n";
 	//cs_print(calculmatrice.get_N1(),0);
-	this->k = k;
-	this->h = h;
+	k = k1;
+	h = h1;
 }
 
 /** \fn void Simulation::iteration(int jour)
@@ -97,33 +114,43 @@ void Simulation::initialisation(double k, double h, string CSV_mat_C, string CSV
  *  \return Rien
  */
 void Simulation::iteration(int jour){
-for(int i=1;i<=jour;i++){
+	cout<<"\n"
+	<<"\t"
+	<<"=======================\n"
+	<<"\t"
+	<< "= "<< "Iteration numero :"
+	<< jour
+	<<" ="
+	<<"\n"
+	<<"\t"<<"=======================\n";
+
 	voronoistades.iteration(jour);
 	voronoitheta.iteration(jour);
 	
 	calcul_lois.calcul_taux_accroissement(voronoitheta.get_Matrice_Finale(), voronoistades.get_Matrice_Finale());
 
-	mat_C = calculmatrice1.get_mat_C();
-	mat_A = calculmatrice1.get_mat_A();
-
 	calcul_lois.calcul_coeff_envol(mat_A, voronoitheta.get_Matrice_Finale(), m_eta);
-	calculmatrice1.inverseN2N4(k, calcul_lois.get_taux_accroissement(), calcul_lois.get_coeff_envol());
-		
-	calculmatrice1.Resolution_ailes(k, mat_A, mat_C, calcul_lois.get_coeffdepot2(), calculmatrice1.get_N1());
+	calculmatrice.inverseN2N4(k, calcul_lois.get_taux_accroissement(), calcul_lois.get_coeff_envol());
+	cout<<"\nFin du calcul de la matrice inverse de N2 et de N4\n";
 
-	calculmatrice1.Resolution_apteres (k, mat_A, mat_C, calcul_lois.get_coeff_envol(), calculmatrice1.get_inverse_N2());
+	cout<<"\nCalcul de la matrice d'ailes demi_pas\n";	
+	calculmatrice.Resolution_ailes(k, mat_A, mat_C, calcul_lois.get_coeffdepot2(), calculmatrice.get_N1());
+	cout<<"\nFin du calcul de la matrice d'ailes demi_pas\n";
+	cout<<"\nCalcul de la matrice d'apteres demi_pas\n";
+	calculmatrice.Resolution_apteres (k, mat_A, mat_C, calcul_lois.get_coeff_envol(), calculmatrice.get_inverse_N2());
+	cout<<"\nFin du calcul de la matrice d'apteres demi_pas\n";
+	mat_C = calculmatrice.get_mat_C();
+	mat_A = calculmatrice.get_mat_A();
+
+	cout<<"\nCalcul de la matrice d'ailes pas_entiere\n";
+	calculmatrice.Resolution_ailes(k, mat_A, mat_C, calcul_lois.get_coeffdepot2(), calculmatrice.get_N3());
+	cout<<"\nFin du calcul de la matrice d'ailes pas_entiere\n";
+	cout<<"\nCalcul de la matrice d'apteres pas_entiere\n";
+	calculmatrice.Resolution_apteres(k, mat_A, mat_C, calcul_lois.get_coeff_envol(), calculmatrice.get_inverse_N2());
+	cout<<"\nFin du calcul de la matrice d'apteres pas_entiere\n";
+	mat_C = calculmatrice.get_mat_C();
+	mat_A = calculmatrice.get_mat_A();
 	
-	mat_C = calculmatrice1.get_mat_C();
-	mat_A = calculmatrice1.get_mat_A();
-
-	calculmatrice2.Resolution_ailes(k, mat_A, mat_C, calcul_lois.get_coeffdepot2(), calculmatrice2.get_N1());
-
-	calculmatrice1.Resolution_apteres(k, mat_A, mat_C, calcul_lois.get_coeff_envol(), calculmatrice1.get_inverse_N2());
-	
-	mat_C = calculmatrice2.get_mat_C();
-	mat_A = calculmatrice1.get_mat_A();
-       affiche_bloc(0,0,1,194);
-}	
 }
 
 /** \fn static double **Simulation::taux_accroissement(int stade, double sm, double b, double k, double a1, double a2)
@@ -192,10 +219,10 @@ for(int i=1;i<=jour;i++){
  */
 void Simulation::affiche_bloc (int abscisse_point,int coordonnee_point,int nbligne,int nbcolonne){
 	cout<<"\npremiere ligne matrice apteres A est :\n";
-	cout << Simulation::get_mat_A().block( abscisse_point, coordonnee_point, nbligne, nbcolonne);
+	cout << get_mat_A().block( abscisse_point, coordonnee_point, nbligne, nbcolonne);
 	cout << "\n=========================================================\n";
 	cout<<"\npremiere ligne matrice ailes C est :\n";
-	cout << Simulation::get_mat_C().block( abscisse_point, coordonnee_point, nbligne, nbcolonne)<<"\n";
+	cout << get_mat_C().block( abscisse_point, coordonnee_point, nbligne, nbcolonne)<<"\n";
 }
 
 /** \fn void Simulation::affiche()
