@@ -11,7 +11,7 @@ csn *cs_lusol_init (csi order, const cs *A, double *b, double tol, double *x)
     S = cs_sqr (order, A, 0) ;              /* ordering and symbolic analysis */
     N = cs_lu (A, S, tol) ;                 /* numeric LU factorization */
    // x = cs_malloc (n, sizeof (double)) ;    /* get workspace */
-   
+
         cs_ipvec (N->pinv, b, x, n) ;       /* x = b(p) */
         cs_lsolve (N->L, x) ;               /* x = L\x */
         cs_usolve (N->U, x) ;               /* x = U\x */

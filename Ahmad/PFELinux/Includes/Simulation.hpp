@@ -64,6 +64,7 @@ private :
 	Lecture_Ecriture lect;
         Calcul_Matrice calculmatrice;
 
+
 };
 
 #endif

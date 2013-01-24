@@ -17,7 +17,7 @@ public :
 	Calcul_Matrice();
 	~Calcul_Matrice();
 	
-	void matriceN1 (double h , double k ,  Matrice p , Matrice alpha1 , Matrice vitesse_h);
+	void matriceN1 (double h , double k ,  Matrice p , Matrice alpha1 , Matrice v);
 	void matriceN3 (double h , double k ,  Matrice p , Matrice alpha1 , Matrice vitesse_v);
 	void inverseN2N4 (double h , Matrice r , Matrice alpha2 );
 	void Resolution_ailes(double h , Matrice mat_A , Matrice mat_C , Matrice alpha2, cs* N1);

@@ -6,7 +6,7 @@ csn *cs_lu (const cs *A, const css *S, double tol)
     csn *N ;
     double pivot, *Lx, *Ux, *x,  a, t ;
     csi *Lp, *Li, *Up, *Ui, *pinv, *xi, *q, n, ipiv, k, top, p, i, col, lnz,unz;
-    if (!CS_CSC (A) || !S) return (NULL) ;          /* check inputs */
+   // if (!CS_CSC (A) || !S) return (NULL) ;          /* check inputs */
     n = A->n ;
     q = S->q ; lnz = S->lnz ; unz = S->unz ;
     x = cs_malloc (n, sizeof (double)) ;            /* get double workspace */

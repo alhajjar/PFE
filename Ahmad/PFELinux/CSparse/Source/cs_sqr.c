@@ -61,7 +61,7 @@ css *cs_sqr (csi order, const cs *A, csi qr)
 {
     csi n, k, ok = 1, *post ;
     css *S ;
-    if (!CS_CSC (A)) return (NULL) ;        /* check inputs */
+   // if (!CS_CSC (A)) return (NULL) ;        /* check inputs */
     n = A->n ;
     S = cs_calloc (1, sizeof (css)) ;       /* allocate result S */
     if (!S) return (NULL) ;                 /* out of memory */
