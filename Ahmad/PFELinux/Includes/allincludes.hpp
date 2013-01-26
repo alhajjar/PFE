@@ -13,6 +13,7 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/algorithm/string.hpp>
 #include "eigen3/Eigen/Core"
+#include <eigen3/Eigen/Sparse>
 #include "cs.h"
 #include <tiffio.h>
 #include <cstdlib> 

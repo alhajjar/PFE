@@ -4,7 +4,7 @@ csi cs_usolve (const cs *U, double *x)
 {
     csi p, j, n, *Up, *Ui ;
     double *Ux ;
-    if (!CS_CSC (U) || !x) return (0) ;                     /* check inputs */
+   // if (!CS_CSC (U) || !x) return (0) ;                     /* check inputs */
     n = U->n ; Up = U->p ; Ui = U->i ; Ux = U->x ;
     for (j = n-1 ; j >= 0 ; j--)
     {

@@ -1,4 +1,4 @@
-#include "cs.h"
+﻿#include "cs.h"
 /* x=A\b where A is unsymmetric; b overwritten with solution */
 csn *cs_lusol_init (csi order, const cs *A, double *b, double tol, double *x)
 {
@@ -12,13 +12,11 @@ csn *cs_lusol_init (csi order, const cs *A, double *b, double tol, double *x)
     N = cs_lu (A, S, tol) ;                 /* numeric LU factorization */
    // x = cs_malloc (n, sizeof (double)) ;    /* get workspace */
 
-	N->q=S->q;
-   
         cs_ipvec (N->pinv, b, x, n) ;       /* x = b(p) */
         cs_lsolve (N->L, x) ;               /* x = L\x */
         cs_usolve (N->U, x) ;               /* x = U\x */
         cs_ipvec (S->q, x, b, n) ;          /* b(q) = x */
-    
+    	//N->q=S->q;
 //	cs_free(x);
     return N ;
 }

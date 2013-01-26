@@ -121,7 +121,9 @@ csd *cs_dfree (csd *D) ;
 /* Francois routines */
 csn *cs_lusol_init (csi order, const cs *A, double *b, double tol, double *x);
 csi cs_lusol_boucle (const cs *A, double *b, csn *N, double *x);
-
+csi cs_add_vec(double *a,double *b,double *d,double val);
+csi cs_lusol_inverse (const cs *A, double *b,double *d, csn *N, double *x);
+csi cs_lusol_modifier (csi order, const cs *A, double *b, double *a, double tol);
 /* --- tertiary CSparse routines -------------------------------------------- */
 csi *cs_counts (const cs *A, const csi *parent, const csi *post, csi ata) ;
 double cs_cumsum (csi *p, csi *c, csi n) ;
