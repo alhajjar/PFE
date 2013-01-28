@@ -177,7 +177,7 @@ void Voronoi::voronoi_iteration(int jour, Matrice mat_data, Matrice mat_index){
 	for(int u=0; u < 194; u++){
 		for(int v=0; v < 196; v++){
 			mat_final(u, v) = mat_data(jour, mat_index(u, v) + 1);
-			matfinale(v, u) = mat_final(u, 195 - v);
+			matfinale(195 -v, u) = mat_final(u,v);
 		}
 	}
 	set_Matrice_Finale(matfinale);
