@@ -11,8 +11,8 @@
  *  \brief Constructeur de la classe Lecture_Ecriture
  */
 Lecture_Ecriture::Lecture_Ecriture(){
-	m = 197;
-	n = 194;
+
+
 	ncols = 0;
 	nrows = 0;
 	xllcorner = 0;

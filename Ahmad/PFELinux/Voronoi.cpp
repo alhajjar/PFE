@@ -4,7 +4,8 @@
   */
 
 #include "Includes/Voronoi.hpp"
-Voronoi::Voronoi(){}
+Voronoi::Voronoi(){
+}
 
 /** \fn Voronoi::Voronoi()
  *  \brief Constructeur de la classe Voronoi
@@ -36,7 +37,6 @@ Voronoi::Voronoi(string coord_file_name, int nb_row_coord, int nb_col_coord, str
 	
 	lecture_donnees(data_file_name, nb_row_data, nb_col_data);
 	matdata = get_Matrice_Donnees();
-
 	construction_index(matcoord, nb_row_coord, nb_col_coord, nb_row_data, nb_col_data);
 }
 
@@ -180,7 +180,6 @@ void Voronoi::voronoi_iteration(int jour, Matrice mat_data, Matrice mat_index){
 			matfinale(v, u) = mat_final(u, 195 - v);
 		}
 	}
-
 	set_Matrice_Finale(matfinale);
 }
 

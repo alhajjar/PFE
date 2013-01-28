@@ -42,7 +42,6 @@ public :
 	void EcritureGeotiff(Matrice ,string fichiergeomatique);
 
 private :
-	int m, n;
 	Matrice sortie;
 	string cheminFichier;
 	int ncols , nrows, xllcorner, yllcorner, cellsize, NODATA_value;

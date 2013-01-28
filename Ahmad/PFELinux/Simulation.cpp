@@ -93,7 +93,7 @@ void Simulation::initialisation(double k1, double h1, string CSV_mat_C, string C
 
 	lect.LectureCSV(NB_LIGNES, NB_COLONNES, CSV_mat_D);
 	m_D = lect.get_CSV();
-	
+
 	lect.LectureCSV(NB_LIGNES, NB_COLONNES, CSV_vitesse_h);
 	m_vitesse_h = lect.get_CSV();
 
@@ -141,7 +141,7 @@ void Simulation::iteration(int jour){
 	calculmatrice.Resolution_ailes_demi_pas(k, mat_A, mat_C, calcul_lois.get_coeffdepot2(), calculmatrice.get_N1());
 	cout<<"\nFin du calcul de la matrice d'ailes demi_pas\n";
 	cout<<"\nCalcul de la matrice d'apteres demi_pas\n";
-	calculmatrice.Resolution_apteres_demi_pas (k, mat_A, mat_C, calcul_lois.get_coeff_envol(), calculmatrice.get_inverse_N2());
+	calculmatrice.Resolution_apteres_demi_pas (5, mat_A, mat_C, calcul_lois.get_coeff_envol(), calculmatrice.get_inverse_N2());
 	cout<<"\nFin du calcul de la matrice d'apteres demi_pas\n";
 	mat_C_demi = calculmatrice.get_mat_C_demi();
 	mat_A_demi = calculmatrice.get_mat_A_demi();

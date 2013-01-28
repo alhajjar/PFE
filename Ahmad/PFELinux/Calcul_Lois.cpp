@@ -103,9 +103,13 @@ void Calcul_Lois::calcul_coeffdepot1(Matrice p, Matrice eta){
     for(int i=0; i!=mat.rows(); i++){
 		for(int j=0; j!=mat.cols(); j++){
 			mat(i, j) = log(cd1_a1+cd1_a*(-(p(i,j)*p(i,j)+p(i,j))) *atan(cd1_k*eta(i,j))+cd1_a2*p(i,j));
+
+
 		}
     }
     coeff_depot1 = mat;
+
+
 }
 
 /** \fn void Calcul_Lois::calcul_coeffdepot2(Matrice p, Matrice eta)
@@ -197,17 +201,25 @@ void Calcul_Lois::calcul_coeffdepot5(Matrice p, Matrice eta){
  */
 void Calcul_Lois::calcul_coeff_envol(Matrice A, Matrice stades, Matrice theta){
 //cout<<theta;
+int f = 0;
     double logN4 = 0;
     double phi_alpha2 = 0;
     Matrice mat(196,194);
 	mat = Matrice::Zero(196,194);
-
+double val =0;
     for(int i=0; i!=mat.rows(); i++){
 		for(int j=0; j!=mat.cols(); j++){
-            logN4=exp(ce_a*stades(i,j))/(1+exp(ce_a0+ce_a1*stades(i,j)+ce_a2*log(1+A(i,j))));
+	if (1+ A(i,j)<=0)
+	A(i,j)=0;
+	val = log(1+A(i,j));
+            logN4=exp(ce_a*stades(i,j))/(1+exp(ce_a0+ce_a1*stades(i,j)+ce_a2*val));
+/*if (f == 2230)
+cout<<ce_a0+ce_a1*stades(i,j)<<"\n"<<ce_a2*log(1+A(i,j))<<"\n"<<1+A(i,j)<<"\n";*/
             phi_alpha2=2/( 1 + exp( - 0.1 * theta(i,j)))- 1;
             mat(i, j) = exp(logN4)*phi_alpha2;
-
+/*if (f == 2230)
+cout<<mat(i, j)<<"\n"<<logN4<<"\n"<<exp(logN4)<<"\n"<<phi_alpha2<<"\n";*/
+f++;
 		}
     }
     coeff_envol = mat;

@@ -4,7 +4,7 @@
  */
 
 #include "Includes/Calcul_Matrice.hpp"
-
+#include <iomanip>
 /** \fn Calcul_Matrice::Calcul_Matrice()
  *  \brief Constructeur de la classe Calcul_Matrice
  */
@@ -195,7 +195,10 @@ void Calcul_Matrice::Resolution_ailes_demi_pas(double h , Matrice A , Matrice C 
 	for(int i = 0;i < C.rows();i++){
 		for(int j = 0;j < C.cols();j++){
 			vec1(f) = C(i,j) + h* alpha2(i,j)* A(i,j);
+/*if (f == 2230){
 
+
+cout<<A(i,j)<<"\n"<<C(i,j)<<"\n"<<alpha2(i,j)<<"\n"<<h<<"\n"<<vec1(f);}*/
 			f++;
 		}
 	}
@@ -206,10 +209,10 @@ void Calcul_Matrice::Resolution_ailes_demi_pas(double h , Matrice A , Matrice C 
 
 	R = cs_lusol_init (1, N, I1, 1e-14, x);
 
-
 	for(int i = 1;i < 38025;i++){
 	//pour arrondir 
-		int val = vec1(i-1)+0.5;
+
+		double val = vec1(i-1);
 
 	//I3 =I3+I1*val	
 	cs_add_vec ( I3,I3,I1,val);
@@ -231,7 +234,6 @@ void Calcul_Matrice::Resolution_ailes_demi_pas(double h , Matrice A , Matrice C 
 	for(int i = 0;i < C.rows();i++){
 		for(int j = 0;j < C.cols();j++){
 
-/* Arrondi fait par Ahmad. Fo voir si on peut le faire ou pas */
 				C(i,j) = I3[f];
 //cout << I3[f]<<endl;
 			f++;
@@ -284,7 +286,8 @@ void Calcul_Matrice::Resolution_ailes_pas_entier(double h , Matrice A , Matrice 
 
 	R = cs_lusol_init (0, N, I1, 1e-14, x);
 	for(int i = 1;i < 38025;i++){
-		int val = vec1(i-1)+0.5;
+		double val = vec1(i-1);
+
 //cout <<val<< endl;
 	//I3 =I3+I1*val	
 	cs_add_vec ( I3,I3,I1,val);
@@ -332,13 +335,16 @@ void Calcul_Matrice::Resolution_apteres_demi_pas(double h , Matrice A , Matrice 
 	for (int i = 0;i < A.rows();i++){
 		for (int j = 0;j < A.cols();j++){
 			vec(f) = N22(f) * (h* alpha(i,j)* C(i,j) + A(i,j));
-
+if (f == 2230)
+//cout<<A(i,j)<<"\n"<<C(i,j)<<"\n"<<alpha(i,j)<<"\n"<<h<<"\n"<<vec(f)<<"\n";
 				A(i,j) = vec(f);
-
+if(f==2230)
+//cout<<A(i,j);
 			f++;
         }
 	}
 	 mat_A_demi=A;
+
 
 }
 
