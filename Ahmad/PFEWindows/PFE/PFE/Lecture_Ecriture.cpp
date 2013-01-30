@@ -102,11 +102,20 @@ void Lecture_Ecriture::EcritureCSV(Matrice mat, string cheminFichier){
 		cerr << "Erreur: Le fichier n'a pas pu être ouvert " << endl;
 		exit(1);
 	}
-stringstream ssr;
-  	for (int j=0; j < n-1; j++)
-  	    fichier << "V" <<";" ;
-	
-	fichier << "V" << endl ;
+stringstream Filename;
+ 
+
+for (int j=0; j < n-1; j++){
+  Filename.clear();
+  Filename.str("");
+  Filename << "V"<< j+1;
+  fichier << Filename.str().c_str()  <<";" ;
+}
+   Filename.clear();
+   Filename.str("");
+   Filename << "V"<< n;
+   fichier << Filename.str().c_str()  << endl ;
+
 	for (int i = 0; i < m-1; i++){
 		for (int j = 0; j < n-1; j++)
 			fichier << mat(i,j) << ";";
@@ -302,29 +311,6 @@ cout<<"\nFin de l'ecriture de la matrcice dans "<<fichiergeomatique<<"\n";
 		_TIFFfree(buf);
 
 }
-
-Matrice Lecture_Ecriture::LectureEnvi(string fichiergeomatique){
-    int sampleperpixel=3;
-    HDRLoaderResult result;
-    bool ret = HDRLoader::load(fichiergeomatique.c_str(), result); 
-    Matrice mat(result.height,result.width*3);
-    nrows=result.height;
-    ncols=result.width;
-    for(int i=0;i<result.height ;i++){ 
-          for (int j = 0 ; j < result.width* sampleperpixel;j++){
-              float imageRGB=result.cols[i*result.width*sampleperpixel + j]*1.5;
-                    if(imageRGB>255) imageRGB=255;
-                       mat(result.height-i-1,j) = imageRGB;
-          }
-    } 
-    return mat;
-}
-
-void Lecture_Ecriture::EcritureEnvi(Matrice matrice,string fichiergeomatique){  
-     int sampleperpixel=3;
-     HDRLoaderResult result;
-}
-
 
 /** \fn Lecture_Ecriture::get_CSV()
  *  \brief Méthode de renvoi de la matrice mat_csv
