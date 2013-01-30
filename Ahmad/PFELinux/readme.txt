@@ -7,11 +7,9 @@
 #########################################################################################################################
 1. entrer dans le dossier Pfelinux                                                                                      #
 2. make clean                                                                                                           #
-3. make                                                                                                                 #
-remarque:                                                                                                               #
-vous copier le makefile qui correspond a votre architecture du dossier makefiles2arch                                   #
+3. make                                                                                                                 #                                  #
 4. entrer dans le dossier test                                                                                          #
-5. g++ -o win main.cpp libpfe.a -ltiff                                                                                  # 
+5. g++ -o win main.cpp libpfe.a                                                                                         # 
 6. ./win                                                                                                                #
 remarque:                                                                                                               #
 pour afficher le temps d'execution time ./win                                                                           #
