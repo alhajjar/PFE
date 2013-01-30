@@ -11,6 +11,7 @@ Expert technique:
                 Francois BLOUIN
 
 Developpeurs :
+                Ahmad AL HAJJAR
                 Allal AIOUAJ
                 Romain BESSONNET
                 Cedric POUVREAU
