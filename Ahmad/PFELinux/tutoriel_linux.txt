@@ -37,6 +37,6 @@ quand le make fini vous remarquez que dans le dossier "test" libpfe.a est cree
 alors vous entrez dans le dossier test et vous compilez avec:
 g++ -o output ihmlignecommande.cpp libpfe.a 
 
-enfin vous executez le utput avec :
+enfin vous executez l'output avec :
 ./output
 
