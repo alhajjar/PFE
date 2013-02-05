@@ -8,9 +8,9 @@
 1. entrer dans le dossier Pfelinux                                                                                      #
 2. make clean                                                                                                           #
 3. make                                                                                                                 #
-4. entrer dans le dossier test                                                                                          #
-5. g++ -o win main.cpp libpfe.a                                                                                         # 
-6. ./win                                                                                                                #
+4. entrer dans le dossier ihmligne de commande ou ihminterface                                                          #
+5. make                                                                                                                 # 
+6. ./executable ou interface                                                                                            #
 remarque:                                                                                                               #
 pour afficher le temps d'execution time ./win                                                                           #
 #########################################################################################################################
