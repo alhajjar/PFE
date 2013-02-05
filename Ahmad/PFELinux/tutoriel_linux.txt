@@ -9,7 +9,7 @@ les librairies necessaires sont:
 3. Csparse
 4. Tiff3
 
-pour installer ces librairies sur Ubuntu vous ouvrez le software center et vous chercher:
+pour installer ces librairies sur Ubuntu vous ouvrez le software center et vous cherchez:
 1. libboost-dev
 2. libeigen3-dev
 3. libtiff5-dev
