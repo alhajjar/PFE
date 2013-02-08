@@ -9,24 +9,43 @@
 #include "../PFELinux/Includes/Calcul_Lois.hpp"
 #include "../PFELinux/Includes/Calcul_Matrice.hpp"
 #include "../PFELinux/Includes/Voronoi.hpp"
-#include "../PFELinux/Includes/Simulation.hpp"
+#include "../PFELinux/Includes/Controleur_Simulation.hpp"
 
 int main(int argc, char **argv)
 {
-    int num;
-    string numtmp,str,nameC,nameA,tmp,theta,stades,mat_A,mat_C,m_eta,m_p,data_t,data_s,coord_t,coord_s,mat_D,vitesse_h,vitesse_v;
+    int num,choix_pression,choix_meteo;
+    string numtmp,str,tmp,theta,stades,mat_A,mat_C,m_eta,m_p,data_t,data_s,coord_t,coord_s,mat_D,vitesse_h,vitesse_v;
 
-/****************************************************************************************************************************/
-			/********************Choisir les dimensions des CSV**********************/
-/****************************************************************************************************************************/
-
-Simulation simulation;
+Controleur_Simulation simulation;
 Lecture_Ecriture lect;
 
 /****************************************************************************************************************************/
 			/********************input**********************/
 /****************************************************************************************************************************/
-cout << "veuillez entrer le nombre de jour [default : 1 ]:";
+	cout << "\n=================================================================\n";
+	cout << "\n===========Meteo et Pression des ennemis naturels================\n";
+	cout << "\n=================================================================\n";
+	cout << "veuillez choisir l'etat Meteo et pression des ennemis naturels: =\n";
+	cout << "0: Meteo Favorable   ================= 0: Pression Forte        =\n"
+		 << "1: Meteo Normale     ================= 1: Pression Normale      =\n"
+		 << "2: Meteo Defavorable ================= 2: Pression Nulle        =\n";
+cout << "=================================================================\n";
+	cout << "veuillez entrer votre choix Meteo [default : 1 ]:";
+    getline(cin, numtmp);
+    if (numtmp== "")
+    choix_meteo = 1;
+    else
+    choix_meteo = atoi(numtmp.c_str());
+cout << "\n         =========================          \n";
+	cout << "veuillez entrer votre choix Pression [default : 1 ]:";
+    getline(cin, numtmp);
+    if (numtmp== "")
+    choix_pression = 1;
+    else
+    choix_pression = atoi(numtmp.c_str());
+cout << "\n         =========================          \n";
+
+cout << "veuillez entrer le nombre de jours [default : 1 ]:";
     getline(cin, numtmp);
     if (numtmp== "")
     num = 1;
@@ -226,57 +245,29 @@ cout << "\n         =========================          \n";
 			/********************Simulation**********************/
 /****************************************************************************************************************************/
 simulation.initialisation(num2, num3, mat_C,mat_A, m_p, m_eta, coord_s,num4,num5, data_s,num6,num7,
- coord_t, num8,num9,data_t, num10,num11,mat_D,vitesse_h,vitesse_v);
+ coord_t, num8,num9,data_t, num10,num11,mat_D,vitesse_h,vitesse_v,choix_meteo,choix_pression);
 
+stringstream nameA;
+stringstream nameC;
 for ( int i=1;i<=num;i++){
 simulation.iteration(i);
 simulation.affiche_bloc(0,0,1,194);
-}
+
 	
 /****************************************************************************************************************************/
 			/********************Sauvegarde**********************/
 /****************************************************************************************************************************/
-cout<<"\n";
-const string defaultTextee = "oui";
-cout << "Voulez vous enregistrez le resultat de mat_A [default :oui]:\n";
-    getline(cin, tmp);
-    if (!tmp.empty())
-        str = tmp;
-    else
-        str = defaultTextee;
 
-if (str == "oui"){
-cout << "\n";
-cout << "choisissez le nom de fichier destination [mat_A_save.csv]:\n";
-string defaultnameA = "mat_A_save.csv";
-    getline(cin, tmp);
-    if (!tmp.empty()){
-        nameA = tmp;
-	}
-    else {nameA = defaultnameA;
-	}
-lect.EcritureCSV( simulation.get_mat_A(),nameA);
+  nameC.clear();
+  nameC.str("");
+  nameC << "mat_C_save"<< num<<".csv";
+   nameA.clear();
+   nameA.str("");
+   nameA <<  "mat_A_save"<< num<<".csv";
+   lect.EcritureCSV( simulation.get_mat_A(),nameA.str().c_str());
+   lect.EcritureCSV( simulation.get_mat_C(),nameC.str().c_str());
 }
-
-cout << "Voulez vous enregistrez le resultat de mat_C[default :oui]:\n";
-    getline(cin, tmp);
-    if (!tmp.empty())
-        str = tmp;
-    else
-        str = defaultTextee;
-
-if (str == "oui"){
-cout << "\n";
-cout << "choisissez le nom de fichier destination [mat_C_save.csv]:\n";
-string defaultnameC = "mat_C_save.csv";
-    getline(cin, tmp);
-    if (!tmp.empty()){
-        nameC = tmp;
-	}
-    else{nameC = defaultnameC;
-	}
- lect.EcritureCSV( simulation.get_mat_C(),nameC);
-}
+  
 
   /*  lect.EcritureCSV(m_eta,"mat.csv");
 
@@ -285,7 +276,6 @@ string defaultnameC = "mat_C_save.csv";
 
     MatriceResultat=lect.LectureAscii("MNT500_L93_FRANCE.ASC");
     lect.EcritureAscii(MatriceResultat ,"test.ASC"); */
-   
 
  return 0;
  }

@@ -2,7 +2,9 @@
  * \file Calcul_Lois.cpp
  * \brief Ce fichier permet de calculer les Matrices de valeurs des différentes lois de diffusion/multiplication
  */
+
 #include "Includes/Calcul_Lois.hpp"
+
 
 /** \fn Calcul_Lois::Calcul_Lois()
  *  \brief Constructeur de la classe Calcul_Lois
@@ -31,29 +33,33 @@ Calcul_Lois::Calcul_Lois(){
     cd4_a2 = 0.983375;
     cd4_a3 = 1.669692;
     cd4_k = -6.572036;
-	cd5_a1 = -0.12952;
-    cd5_a2 = 0.73519;
-    cd5_a3 = 1.92703;
-    cd5_k = 38.70085;
+	cd5_inf_a1 = -0.12952;
+    cd5_inf_a2 = 0.73519;
+    cd5_inf_a3 = 1.92703;
+    cd5_inf_k = 38.70085;
+	cd5_sup_a1 = 0.12952;
+    cd5_sup_a2 = 0.73519;
+    cd5_sup_a3 = 1.92703;
+    cd5_sup_k = 38.70066;
 	ce_a = 0.034733;
     ce_a0 = 1.417143;
     ce_a1 = 0.048163;
     ce_a2 = -0.543663;
 
-	taux_accroissement =  Matrice(196,194);
-	taux_accroissement = Matrice::Zero(196,194);
-	coeff_depot1 =  Matrice(196,194);
-	coeff_depot1 = Matrice::Zero(196,194);
-	coeff_depot2 =  Matrice(196,194);
-	coeff_depot2 = Matrice::Zero(196,194);
-	coeff_depot3 =  Matrice(196,194);
-	coeff_depot3 = Matrice::Zero(196,194);
-	coeff_depot4 =  Matrice(196,194);
-	coeff_depot4 = Matrice::Zero(196,194);
-	coeff_depot5 =  Matrice(196,194);
-	coeff_depot5 = Matrice::Zero(196,194);
-	coeff_envol =  Matrice(196,194);
-	coeff_envol = Matrice::Zero(196,194);
+	taux_accroissement =  Matrice(196, 194);
+	taux_accroissement = Matrice::Zero(196, 194);
+	coeff_depot1 =  Matrice(196, 194);
+	coeff_depot1 = Matrice::Zero(196, 194);
+	coeff_depot2 =  Matrice(196, 194);
+	coeff_depot2 = Matrice::Zero(196, 194);
+	coeff_depot3 =  Matrice(196, 194);
+	coeff_depot3 = Matrice::Zero(196, 194);
+	coeff_depot4 =  Matrice(196, 194);
+	coeff_depot4 = Matrice::Zero(196, 194);
+	coeff_depot5 =  Matrice(196, 194);
+	coeff_depot5 = Matrice::Zero(196, 194);
+	coeff_envol =  Matrice(196, 194);
+	coeff_envol = Matrice::Zero(196, 194);
 }
 
 /** \fn Calcul_Lois::~Calcul_Lois()
@@ -65,25 +71,49 @@ Calcul_Lois::~Calcul_Lois(){
 
 /** \fn void Calcul_Lois::calcul_taux_accroissement(Matrice theta, Matrice stades)
  *  \brief Calcul la matrice du taux d'accroissement
+ *  <IMG src="../images/taux_accroissement.png">
  *  \param theta Matrice de températures 
- *  \param stade Matrice de stades phénologiques : vieillissement de la plante de 0 a 93
+ *  \param stade Matrice de stades phénologiques : vieillissement de la plante de 0 à 93
+ *  \param choix_meteo Indice du choix de la météo qui influe sur le taux d'accroissement
+ *  \param choix_pression Indice du choix de la pression des ennemis qui influe sur le taux d'accroissement
  *  \return Rien
  */
-void Calcul_Lois::calcul_taux_accroissement(Matrice theta, Matrice stades){
+void Calcul_Lois::calcul_taux_accroissement(Matrice theta, Matrice stades, int choix_meteo, int choix_pression){
     double num = 0;
     double den = 0;
-	Matrice mat(196,194);
-    mat = Matrice::Zero(196,194);
+	double meteo, pression;
+	Matrice mat(196, 194);
+    mat = Matrice::Zero(196, 194);
+	
+/* Météo favorable */
+	if (choix_meteo == 0)
+		meteo = 0.2;
+/* Météo normale */
+	if(choix_meteo == 1)
+		meteo = 0;
+/* Météo défavorable */
+	if(choix_meteo == 2)
+		meteo = -0.1;
+
+/* Pression des ennemis nulle */
+	if (choix_pression == 0)
+		pression = 0.2;
+/* Pression des ennemis normale */
+	if(choix_pression == 1)
+		pression = 0;
+/* Pression des ennemis forte */
+	if(choix_pression == 2)
+		pression = -0.1;
 
     for(int i = 0;i != mat.rows();i++){
 		for(int j = 0;j != mat.cols();j++){
 			if(theta(i,j) >= 30 || stades(i,j) >= 92){
-				mat(i, j) = 0;
+				mat(i, j) = 0 + meteo + pression;
 			}
             else{
 				num = ta_a1*log(30-theta(i,j))+ta_a2*log(92-stades(i,j));
 				den = 1+exp(-ta_k*(stades(i,j)-ta_sm))+exp(-ta_b*theta(i,j));
-				mat(i, j) = num/den;
+				mat(i, j) = (num/den) + meteo + pression;
 			}
 		}
     }
@@ -92,6 +122,7 @@ void Calcul_Lois::calcul_taux_accroissement(Matrice theta, Matrice stades){
 
 /** \fn void Calcul_Lois::calcul_coeffdepot1(Matrice p, Matrice eta)
  *  \brief Calcul du coefficient de dépôt 1
+ *  <IMG src="../images/coef_depot_1.png">
  *  \param p Proportion de blé dans la grille en 0 et 1
  *  \param eta Distribution des parcelles de blé entre -1 et 1
  *  \return Rien
@@ -108,12 +139,11 @@ void Calcul_Lois::calcul_coeffdepot1(Matrice p, Matrice eta){
 		}
     }
     coeff_depot1 = mat;
-
-
 }
 
 /** \fn void Calcul_Lois::calcul_coeffdepot2(Matrice p, Matrice eta)
  *  \brief Calcul du coefficient de dépôt 2
+ *  <IMG src="../images/coef_depot_2.png">
  *  \param p Proportion de blé dans la grille en 0 et 1,
  *  \param eta Distribution des parcelles de blé entre -1 et 1
  *  \return Rien
@@ -136,17 +166,18 @@ void Calcul_Lois::calcul_coeffdepot2(Matrice p, Matrice eta){
 
 /** \fn void Calcul_Lois::calcul_coeffdepot3(Matrice p, Matrice eta)
  *  \brief Calcul du coefficient de dépôt 3
+ *  <IMG src="../images/coef_depot_3.png">
  *  \param p Proportion de blé dans la grille en 0 et 1,
  *  \param eta Distribution des parcelles de blé entre -1 et 1
  *  \return Rien
  */
 void Calcul_Lois::calcul_coeffdepot3(Matrice p, Matrice eta){
-    Matrice mat(196,194);
-	mat = Matrice::Zero(196,194);
+    Matrice mat(196, 194);
+	mat = Matrice::Zero(196, 194);
 
     for(int i=0; i != mat.rows(); i++){
 		for(int j=0; j != mat.cols(); j++){
-			mat(i, j) = log(cd3_a2+cd3_a1*(p(i,j)-p(i,j)*p(i,j))*atan(cd3_k*eta(i,j)))+cd3_a3*p(i,j);
+			mat(i, j) = log(cd3_a2 + cd3_a1 * (p(i, j) - p(i, j) * p(i, j)) * atan(cd3_k * eta(i, j))) + cd3_a3 * p(i, j);
 		}
     }
     coeff_depot3 = mat;
@@ -154,17 +185,18 @@ void Calcul_Lois::calcul_coeffdepot3(Matrice p, Matrice eta){
 
 /** \fn void Calcul_Lois::calcul_coeffdepot4(Matrice p, Matrice eta)
  *  \brief Calcul du coefficient de dépôt 4
+ *  <IMG src="../images/coef_depot_4.png">
  *  \param p Proportion de blé dans la grille en 0 et 1,
  *  \param eta Distribution des parcelles de blé entre -1 et 1
  *  \return Rien
  */	
 void Calcul_Lois::calcul_coeffdepot4(Matrice p, Matrice eta){
-    Matrice mat(196,194);
-    mat = Matrice::Zero(196,194);
+    Matrice mat(196, 194);
+    mat = Matrice::Zero(196, 194);
 
     for(int i=0; i != mat.rows(); i++){
 		for(int j=0; j != mat.cols(); j++){
-			mat(i, j) = log(cd4_a2+cd4_a1*(p(i,j)-(p(i,j)*p(i,j)))*atan(cd4_k*eta(i,j))+cd4_a3*p(i,j));
+			mat(i, j) = log(cd4_a2+cd4_a1*(p(i, j)-(p(i, j)*p(i, j)))*atan(cd4_k*eta(i, j))+cd4_a3*p(i, j));
 		}
     }
     coeff_depot4 = mat;
@@ -172,30 +204,34 @@ void Calcul_Lois::calcul_coeffdepot4(Matrice p, Matrice eta){
 
 /** \fn void Calcul_Lois::calcul_coeffdepot5(Matrice p, Matrice eta)
  *  \brief Calcul du coefficient de dépôt 5
- *  \details Calcul la matrice des coeff depot5
+ *  <IMG src="../images/coef_depot_5.png">
  *  \param p Proportion de blé dans la grille en 0 et 1,
  *  \param eta Distribution des parcelles de blé entre -1 et 1
  *  \return Rien
  */
 void Calcul_Lois::calcul_coeffdepot5(Matrice p, Matrice eta){
-	
-    Matrice mat(196,194);
-    mat = Matrice::Zero(196,194);
+    Matrice mat(196, 194);
+    mat = Matrice::Zero(196, 194);
 
     for(int i=0; i != mat.rows(); i++){
 		for(int j=0; j != mat.cols(); j++){
 			if (p(i,j)<0.5)
-				mat(i, j) =  log(cd5_a2+cd5_a1*(p(i,j)-(p(i,j)*p(i,j)))*atan(-cd5_k*eta(i,j))+cd5_a3*p(i,j)) ;
-			else mat(i, j) = log(cd5_a2+cd5_a1*(p(i,j)-(p(i,j)*p(i,j)))*atan(cd5_k*eta(i,j))+cd5_a3*p(i,j));
+				mat(i, j) =  log(cd5_inf_a2 + cd5_inf_a1 * (p(i, j) - (p(i, j) * p(i, j))) * atan(-cd5_inf_k * eta(i, j)) + cd5_inf_a3 * p(i, j)) ;
+			else mat(i, j) = log(cd5_sup_a2 + cd5_sup_a1 * (p(i, j) - (p(i, j) * p(i, j)))*atan(cd5_sup_k * eta(i, j)) + cd5_sup_a3 * p(i, j));
 		}
     }
     coeff_depot5 = mat;
 }
 
-/** \fn void Calcul_Lois::calcul_coeff_envol(Matrice A, Matrice stades, Matrice theta, double a, double a0, double a1, double a2)
- *  \brief Calcul du coefficient d'envol
- *  \param A Matrice des pucerons ailés
- *  \param stades Matrice de stades phénologiques : vieillissement de la plante de 0 a 93
+/** \fn void Calcul_Lois::calcul_coeff_envol(Matrice A, Matrice stades, Matrice theta)
+ *  \brief Calcul du coefficient d'envol, c'est-à-dire le taux d'aptères qui deviennent des ailés.
+ *  <IMG src="../images/coef_envol.png">
+ *  avec:
+ *  <IMG src="../images/logn4.png">
+ *  et:
+ *  <IMG src="../images/phi2.png">
+ *  \param A Matrice des pucerons aptères
+ *  \param stades Matrice de stades phénologiques : vieillissement de la plante de 0 à 93
  *  \param theta Matrice de températures 
  *  \return Rien
  */
@@ -204,26 +240,22 @@ void Calcul_Lois::calcul_coeff_envol(Matrice A, Matrice stades, Matrice theta){
 int f = 0;
     double logN4 = 0;
     double phi_alpha2 = 0;
-    Matrice mat(196,194);
-	mat = Matrice::Zero(196,194);
-double val =0;
+    Matrice mat(196, 194);
+	mat = Matrice::Zero(196, 194);
+	double val = 0;
+
     for(int i=0; i!=mat.rows(); i++){
 		for(int j=0; j!=mat.cols(); j++){
-	if (1+ A(i,j)<=0)
-	A(i,j)=0;
-	val = log(1+A(i,j));
-            logN4=exp(ce_a*stades(i,j))/(1+exp(ce_a0+ce_a1*stades(i,j)+ce_a2*val));
-/*if (f == 2230)
-cout<<ce_a0+ce_a1*stades(i,j)<<"\n"<<ce_a2*log(1+A(i,j))<<"\n"<<1+A(i,j)<<"\n";*/
-            phi_alpha2=2/( 1 + exp( - 0.1 * theta(i,j)))- 1;
+			if (1+ A(i,j)<=0)
+				A(i,j)=0;
+			val = log(1+A(i,j));
+            logN4 = exp(ce_a*stades(i,j))/(1+exp(ce_a0+ce_a1*stades(i,j)+ce_a2*val));
+            phi_alpha2 = 2/( 1 + exp( - 0.1 * theta(i,j)))- 1;
             mat(i, j) = exp(logN4)*phi_alpha2;
-/*if (f == 2230)
-cout<<mat(i, j)<<"\n"<<logN4<<"\n"<<exp(logN4)<<"\n"<<phi_alpha2<<"\n";*/
-f++;
+			f++;
 		}
     }
     coeff_envol = mat;
-//cout<< mat;
 }
 
 /** \fn void Calcul_Lois::set_constantes_taux_accroissement(double sm, double b, double k, double a1, double a2)
@@ -307,19 +339,34 @@ void Calcul_Lois::set_constantes_coeffdepot4(double a1, double a2, double a3, do
     cd4_k = k;
 }
 
-/** \fn void Calcul_Lois::set_constantes_coeffdepot5(double a1, double a2, double a3, double k)
- *  \brief Mise à jour des constantes pour le calcul du coefficient de dépôt pour la loi 5
- *  \param a1 Coefficient constant pour calculer le coefficient de dépôt pour la loi 5
- *  \param a2 Coefficient constant pour calculer le coefficient de dépôt pour la loi 5
- *  \param a3 Coefficient constant pour calculer le coefficient de dépôt pour la loi 5
- *  \param k Coefficient constant pour calculer le coefficient de dépôt pour la loi 5
+/** \fn void Calcul_Lois::set_constantes_coeffdepot5_inf(double a1, double a2, double a3, double k)
+ *  \brief Mise à jour des constantes pour le calcul du coefficient de dépôt pour la loi 5 avec p < 0.5
+ *  \param a1 Coefficient constant pour calculer le coefficient de dépôt pour la loi 5 avec p < 0.5
+ *  \param a2 Coefficient constant pour calculer le coefficient de dépôt pour la loi 5 avec p < 0.5
+ *  \param a3 Coefficient constant pour calculer le coefficient de dépôt pour la loi 5 avec p < 0.5
+ *  \param k Coefficient constant pour calculer le coefficient de dépôt pour la loi 5 avec p < 0.5
  *  \return Rien
  */
-void Calcul_Lois::set_constantes_coeffdepot5(double a1, double a2, double a3, double k){
-	cd5_a1 = a1;
-    cd5_a2 = a2;
-    cd5_a3 = a3;
-    cd5_k = k;
+void Calcul_Lois::set_constantes_coeffdepot5_inf(double a1, double a2, double a3, double k){
+	cd5_inf_a1 = a1;
+    cd5_inf_a2 = a2;
+    cd5_inf_a3 = a3;
+    cd5_inf_k = k;
+}
+
+/** \fn void Calcul_Lois::set_constantes_coeffdepot5_sup(double a1, double a2, double a3, double k)
+ *  \brief Mise à jour des constantes pour le calcul du coefficient de dépôt pour la loi 5 avec p >= 0.5
+ *  \param a1 Coefficient constant pour calculer le coefficient de dépôt pour la loi 5 avec p >= 0.5
+ *  \param a2 Coefficient constant pour calculer le coefficient de dépôt pour la loi 5 avec p >= 0.5
+ *  \param a3 Coefficient constant pour calculer le coefficient de dépôt pour la loi 5 avec p >= 0.5
+ *  \param k Coefficient constant pour calculer le coefficient de dépôt pour la loi 5 avec p >= 0.5
+ *  \return Rien
+ */
+void Calcul_Lois::set_constantes_coeffdepot5_sup(double a1, double a2, double a3, double k){
+	cd5_sup_a1 = a1;
+    cd5_sup_a2 = a2;
+    cd5_sup_a3 = a3;
+    cd5_sup_k = k;
 }
 
 /** \fn void Calcul_Lois::set_constantes_coeff_envol(double a, double a0, double a1, double a2)
@@ -360,7 +407,7 @@ Matrice  Calcul_Lois::get_coeffdepot1(){
 Matrice  Calcul_Lois::get_coeffdepot2(){
 	return coeff_depot2;
 }
-//////////////////////////////////////////////////////
+
 /** \fn Matrice Calcul_Lois::get_coeffdepot3()
  *  \brief Retourne la matrice coeff_depot3
  *  \return coeff_depot3 Matrice des coefficients de dépôt pour la loi 3

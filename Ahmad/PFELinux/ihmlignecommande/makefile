@@ -27,7 +27,7 @@ default: dep $(OUT)
 	$(CCC) $(INCLUDES) $(CCFLAGS) -c $< -o $@
 	@echo " "
 $(OUT): $(OBJ)
-	g++  *.o -o executable $(CCFLAGS) -L. -lpfe
+	g++  *.o -o executable $(CCFLAGS) -L. -lpfe -lshp
 	@echo " "
 	@echo "executable successfully created"
 	@echo " "

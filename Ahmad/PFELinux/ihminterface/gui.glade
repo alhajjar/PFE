@@ -102,6 +102,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
+                <property name="tooltip_text" translatable="yes">Ouvrir la carte &#xE0; charger</property>
                 <property name="image">image1</property>
               </object>
               <packing>
@@ -115,6 +116,8 @@
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
+                <property name="tooltip_text" translatable="yes">Enregistrer les cartes
+des Apt&#xE8;res et Ail&#xE9;s</property>
                 <property name="image">image2</property>
               </object>
               <packing>
@@ -128,6 +131,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
+                <property name="tooltip_text" translatable="yes">Imprimer</property>
                 <property name="image">image10</property>
               </object>
               <packing>
@@ -141,6 +145,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
+                <property name="tooltip_text" translatable="yes">Quitter l'application</property>
                 <property name="image">image3</property>
               </object>
               <packing>
@@ -154,6 +159,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
+                <property name="tooltip_text" translatable="yes">Aide</property>
                 <property name="image">image6</property>
               </object>
               <packing>
@@ -598,11 +604,11 @@
                 <child>
                   <object class="GtkTable" id="table8">
                     <property name="visible">True</property>
-                    <property name="n_rows">14</property>
+                    <property name="n_rows">5</property>
                     <property name="n_columns">3</property>
                     <child>
                       <object class="GtkLabel" id="label118">
-                        <property name="width_request">450</property>
+                        <property name="width_request">280</property>
                         <property name="height_request">20</property>
                         <property name="visible">True</property>
                         <property name="xalign">0.94999998807907104</property>
@@ -635,7 +641,7 @@
                     </child>
                     <child>
                       <object class="GtkLabel" id="label121">
-                        <property name="width_request">600</property>
+                        <property name="width_request">750</property>
                         <property name="visible">True</property>
                         <property name="xalign">0</property>
                         <property name="label" translatable="yes">A remplir obligatoirement (via le menu ou le bouton Ouvrir)</property>
@@ -690,12 +696,36 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkLabel" id="label1">
-                        <property name="width_request">600</property>
+                      <object class="GtkLabel" id="label25">
+                        <property name="visible">True</property>
+                        <property name="xalign">0.89999997615814209</property>
+                        <property name="label" translatable="yes">Chemin du dossier des donn&#xE9;es :</property>
+                      </object>
+                      <packing>
+                        <property name="top_attach">3</property>
+                        <property name="bottom_attach">4</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="button52">
+                        <property name="label" translatable="yes">Changer</property>
+                        <property name="width_request">60</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">True</property>
+                      </object>
+                      <packing>
+                        <property name="left_attach">2</property>
+                        <property name="right_attach">3</property>
+                        <property name="top_attach">3</property>
+                        <property name="bottom_attach">4</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="label26">
                         <property name="visible">True</property>
                         <property name="xalign">0</property>
-                        <property name="label" translatable="yes">A remplir obligatoirement (via le bouton Parcourir ci-contre)</property>
-                        <property name="single_line_mode">True</property>
+                        <property name="label" translatable="yes">donnees</property>
                         <attributes>
                           <attribute name="weight" value="semibold"/>
                           <attribute name="foreground" value="#414141414141"/>
@@ -706,15 +736,25 @@
                         <property name="right_attach">2</property>
                         <property name="top_attach">3</property>
                         <property name="bottom_attach">4</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="label1">
+                        <property name="visible">True</property>
+                        <property name="xalign">0.89999997615814209</property>
+                        <property name="label" translatable="yes">Chemin du dossier des enregistrements
+                temporaires de la simulation :</property>
+                      </object>
+                      <packing>
+                        <property name="top_attach">4</property>
+                        <property name="bottom_attach">5</property>
                       </packing>
                     </child>
                     <child>
                       <object class="GtkLabel" id="label4">
-                        <property name="width_request">600</property>
                         <property name="visible">True</property>
                         <property name="xalign">0</property>
-                        <property name="label" translatable="yes">A remplir obligatoirement (via le bouton Parcourir ci-contre)</property>
-                        <property name="single_line_mode">True</property>
+                        <property name="label" translatable="yes">enregistrements</property>
                         <attributes>
                           <attribute name="weight" value="semibold"/>
                           <attribute name="foreground" value="#414141414141"/>
@@ -725,435 +765,12 @@
                         <property name="right_attach">2</property>
                         <property name="top_attach">4</property>
                         <property name="bottom_attach">5</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkLabel" id="label5">
-                        <property name="width_request">600</property>
-                        <property name="visible">True</property>
-                        <property name="xalign">0</property>
-                        <property name="label" translatable="yes">A remplir obligatoirement (via le bouton Parcourir ci-contre)</property>
-                        <property name="single_line_mode">True</property>
-                        <attributes>
-                          <attribute name="weight" value="semibold"/>
-                          <attribute name="foreground" value="#414141414141"/>
-                        </attributes>
-                      </object>
-                      <packing>
-                        <property name="left_attach">1</property>
-                        <property name="right_attach">2</property>
-                        <property name="top_attach">5</property>
-                        <property name="bottom_attach">6</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkLabel" id="label6">
-                        <property name="width_request">600</property>
-                        <property name="visible">True</property>
-                        <property name="xalign">0</property>
-                        <property name="label" translatable="yes">A remplir obligatoirement (via le bouton Parcourir ci-contre)</property>
-                        <property name="single_line_mode">True</property>
-                        <attributes>
-                          <attribute name="weight" value="semibold"/>
-                          <attribute name="foreground" value="#414141414141"/>
-                        </attributes>
-                      </object>
-                      <packing>
-                        <property name="left_attach">1</property>
-                        <property name="right_attach">2</property>
-                        <property name="top_attach">6</property>
-                        <property name="bottom_attach">7</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkLabel" id="label7">
-                        <property name="width_request">600</property>
-                        <property name="visible">True</property>
-                        <property name="xalign">0</property>
-                        <property name="label" translatable="yes">A remplir obligatoirement (via le bouton Parcourir ci-contre)</property>
-                        <property name="single_line_mode">True</property>
-                        <attributes>
-                          <attribute name="weight" value="semibold"/>
-                          <attribute name="foreground" value="#414141414141"/>
-                        </attributes>
-                      </object>
-                      <packing>
-                        <property name="left_attach">1</property>
-                        <property name="right_attach">2</property>
-                        <property name="top_attach">7</property>
-                        <property name="bottom_attach">8</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkLabel" id="label8">
-                        <property name="width_request">600</property>
-                        <property name="visible">True</property>
-                        <property name="xalign">0</property>
-                        <property name="label" translatable="yes">A remplir obligatoirement (via le bouton Parcourir ci-contre)</property>
-                        <property name="single_line_mode">True</property>
-                        <attributes>
-                          <attribute name="weight" value="semibold"/>
-                          <attribute name="foreground" value="#414141414141"/>
-                        </attributes>
-                      </object>
-                      <packing>
-                        <property name="left_attach">1</property>
-                        <property name="right_attach">2</property>
-                        <property name="top_attach">8</property>
-                        <property name="bottom_attach">9</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkLabel" id="label9">
-                        <property name="width_request">600</property>
-                        <property name="visible">True</property>
-                        <property name="xalign">0</property>
-                        <property name="label" translatable="yes">A remplir obligatoirement (via le bouton Parcourir ci-contre)</property>
-                        <property name="single_line_mode">True</property>
-                        <attributes>
-                          <attribute name="weight" value="semibold"/>
-                          <attribute name="foreground" value="#414141414141"/>
-                        </attributes>
-                      </object>
-                      <packing>
-                        <property name="left_attach">1</property>
-                        <property name="right_attach">2</property>
-                        <property name="top_attach">9</property>
-                        <property name="bottom_attach">10</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkLabel" id="label10">
-                        <property name="width_request">600</property>
-                        <property name="visible">True</property>
-                        <property name="xalign">0</property>
-                        <property name="label" translatable="yes">A remplir obligatoirement (via le bouton Parcourir ci-contre)</property>
-                        <property name="single_line_mode">True</property>
-                        <attributes>
-                          <attribute name="weight" value="semibold"/>
-                          <attribute name="foreground" value="#414141414141"/>
-                        </attributes>
-                      </object>
-                      <packing>
-                        <property name="left_attach">1</property>
-                        <property name="right_attach">2</property>
-                        <property name="top_attach">10</property>
-                        <property name="bottom_attach">11</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkLabel" id="label11">
-                        <property name="width_request">600</property>
-                        <property name="visible">True</property>
-                        <property name="xalign">0</property>
-                        <property name="label" translatable="yes">A remplir obligatoirement (via le bouton Parcourir ci-contre)</property>
-                        <property name="single_line_mode">True</property>
-                        <attributes>
-                          <attribute name="weight" value="semibold"/>
-                          <attribute name="foreground" value="#414141414141"/>
-                        </attributes>
-                      </object>
-                      <packing>
-                        <property name="left_attach">1</property>
-                        <property name="right_attach">2</property>
-                        <property name="top_attach">11</property>
-                        <property name="bottom_attach">12</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkLabel" id="label12">
-                        <property name="width_request">600</property>
-                        <property name="visible">True</property>
-                        <property name="xalign">0</property>
-                        <property name="label" translatable="yes">A remplir obligatoirement (via le bouton Parcourir ci-contre)</property>
-                        <property name="single_line_mode">True</property>
-                        <attributes>
-                          <attribute name="weight" value="semibold"/>
-                          <attribute name="foreground" value="#414141414141"/>
-                        </attributes>
-                      </object>
-                      <packing>
-                        <property name="left_attach">1</property>
-                        <property name="right_attach">2</property>
-                        <property name="top_attach">12</property>
-                        <property name="bottom_attach">13</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkLabel" id="label13">
-                        <property name="width_request">600</property>
-                        <property name="visible">True</property>
-                        <property name="xalign">0</property>
-                        <property name="label" translatable="yes">A remplir obligatoirement (via le bouton Parcourir ci-contre)</property>
-                        <property name="single_line_mode">True</property>
-                        <attributes>
-                          <attribute name="weight" value="semibold"/>
-                          <attribute name="foreground" value="#414141414141"/>
-                        </attributes>
-                      </object>
-                      <packing>
-                        <property name="left_attach">1</property>
-                        <property name="right_attach">2</property>
-                        <property name="top_attach">13</property>
-                        <property name="bottom_attach">14</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkLabel" id="label14">
-                        <property name="height_request">10</property>
-                        <property name="visible">True</property>
-                        <property name="xalign">0.94999998807907104</property>
-                        <property name="label" translatable="yes">Chemin de la matrice initiale des Apt&#xE8;res :</property>
-                      </object>
-                      <packing>
-                        <property name="top_attach">3</property>
-                        <property name="bottom_attach">4</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkLabel" id="label15">
-                        <property name="height_request">10</property>
-                        <property name="visible">True</property>
-                        <property name="xalign">0.94999998807907104</property>
-                        <property name="label" translatable="yes">Chemin de la matrice initiale des Ail&#xE9;s :</property>
-                      </object>
-                      <packing>
-                        <property name="top_attach">4</property>
-                        <property name="bottom_attach">5</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkLabel" id="label16">
-                        <property name="height_request">10</property>
-                        <property name="visible">True</property>
-                        <property name="xalign">0.94999998807907104</property>
-                        <property name="label" translatable="yes">Chemin de la matrice de la proportion de bl&#xE9; :</property>
-                      </object>
-                      <packing>
-                        <property name="top_attach">5</property>
-                        <property name="bottom_attach">6</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkLabel" id="label17">
-                        <property name="height_request">10</property>
-                        <property name="visible">True</property>
-                        <property name="xalign">0.94999998807907104</property>
-                        <property name="label" translatable="yes">Chemin de la matrice eta :</property>
-                      </object>
-                      <packing>
-                        <property name="top_attach">6</property>
-                        <property name="bottom_attach">7</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkLabel" id="label18">
-                        <property name="height_request">10</property>
-                        <property name="visible">True</property>
-                        <property name="xalign">0.94999998807907104</property>
-                        <property name="label" translatable="yes">Chemin de la matrice de diffusion :</property>
-                      </object>
-                      <packing>
-                        <property name="top_attach">7</property>
-                        <property name="bottom_attach">8</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkLabel" id="label19">
-                        <property name="height_request">10</property>
-                        <property name="visible">True</property>
-                        <property name="xalign">0.94999998807907104</property>
-                        <property name="label" translatable="yes">Chemin de la matrice du vent pour le pas vertical :</property>
-                      </object>
-                      <packing>
-                        <property name="top_attach">8</property>
-                        <property name="bottom_attach">9</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkLabel" id="label20">
-                        <property name="height_request">10</property>
-                        <property name="visible">True</property>
-                        <property name="xalign">0.94999998807907104</property>
-                        <property name="label" translatable="yes">Chemin de la matrice du vent pour le pas horizontal :</property>
-                      </object>
-                      <packing>
-                        <property name="top_attach">9</property>
-                        <property name="bottom_attach">10</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkLabel" id="label21">
-                        <property name="height_request">10</property>
-                        <property name="visible">True</property>
-                        <property name="xalign">0.94999998807907104</property>
-                        <property name="label" translatable="yes">Chemin de la matrice des coordonn&#xE9;es pour les stades ph&#xE9;nologiques :</property>
-                      </object>
-                      <packing>
-                        <property name="top_attach">10</property>
-                        <property name="bottom_attach">11</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkLabel" id="label22">
-                        <property name="height_request">10</property>
-                        <property name="visible">True</property>
-                        <property name="xalign">0.94999998807907104</property>
-                        <property name="label" translatable="yes">Chemin de la matrice des donn&#xE9;es pour les stades ph&#xE9;nologiques :</property>
-                      </object>
-                      <packing>
-                        <property name="top_attach">11</property>
-                        <property name="bottom_attach">12</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkLabel" id="label23">
-                        <property name="height_request">10</property>
-                        <property name="visible">True</property>
-                        <property name="xalign">0.94999998807907104</property>
-                        <property name="label" translatable="yes">Chemin de la matrice des coordonn&#xE9;es pour les temp&#xE9;ratures :</property>
-                      </object>
-                      <packing>
-                        <property name="top_attach">12</property>
-                        <property name="bottom_attach">13</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkLabel" id="label24">
-                        <property name="height_request">10</property>
-                        <property name="visible">True</property>
-                        <property name="xalign">0.94999998807907104</property>
-                        <property name="label" translatable="yes">Chemin de la matrice des donn&#xE9;es pour les temp&#xE9;ratures :</property>
-                      </object>
-                      <packing>
-                        <property name="top_attach">13</property>
-                        <property name="bottom_attach">14</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkButton" id="button1">
-                        <property name="label" translatable="yes">Parcourir</property>
-                        <property name="height_request">20</property>
-                        <property name="visible">True</property>
-                        <property name="can_focus">True</property>
-                        <property name="receives_default">True</property>
-                      </object>
-                      <packing>
-                        <property name="left_attach">2</property>
-                        <property name="right_attach">3</property>
-                        <property name="top_attach">3</property>
-                        <property name="bottom_attach">4</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkButton" id="button20">
-                        <property name="label" translatable="yes">Parcourir</property>
-                        <property name="height_request">20</property>
-                        <property name="visible">True</property>
-                        <property name="can_focus">True</property>
-                        <property name="receives_default">True</property>
-                      </object>
-                      <packing>
-                        <property name="left_attach">2</property>
-                        <property name="right_attach">3</property>
-                        <property name="top_attach">4</property>
-                        <property name="bottom_attach">5</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkButton" id="button21">
-                        <property name="label" translatable="yes">Parcourir</property>
-                        <property name="height_request">20</property>
-                        <property name="visible">True</property>
-                        <property name="can_focus">True</property>
-                        <property name="receives_default">True</property>
-                      </object>
-                      <packing>
-                        <property name="left_attach">2</property>
-                        <property name="right_attach">3</property>
-                        <property name="top_attach">5</property>
-                        <property name="bottom_attach">6</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkButton" id="button22">
-                        <property name="label" translatable="yes">Parcourir</property>
-                        <property name="height_request">20</property>
-                        <property name="visible">True</property>
-                        <property name="can_focus">True</property>
-                        <property name="receives_default">True</property>
-                      </object>
-                      <packing>
-                        <property name="left_attach">2</property>
-                        <property name="right_attach">3</property>
-                        <property name="top_attach">6</property>
-                        <property name="bottom_attach">7</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkButton" id="button23">
-                        <property name="label" translatable="yes">Parcourir</property>
-                        <property name="height_request">20</property>
-                        <property name="visible">True</property>
-                        <property name="can_focus">True</property>
-                        <property name="receives_default">True</property>
-                      </object>
-                      <packing>
-                        <property name="left_attach">2</property>
-                        <property name="right_attach">3</property>
-                        <property name="top_attach">7</property>
-                        <property name="bottom_attach">8</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkButton" id="button24">
-                        <property name="label" translatable="yes">Parcourir</property>
-                        <property name="height_request">20</property>
-                        <property name="visible">True</property>
-                        <property name="can_focus">True</property>
-                        <property name="receives_default">True</property>
-                      </object>
-                      <packing>
-                        <property name="left_attach">2</property>
-                        <property name="right_attach">3</property>
-                        <property name="top_attach">8</property>
-                        <property name="bottom_attach">9</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkButton" id="button25">
-                        <property name="label" translatable="yes">Parcourir</property>
-                        <property name="height_request">20</property>
-                        <property name="visible">True</property>
-                        <property name="can_focus">True</property>
-                        <property name="receives_default">True</property>
-                      </object>
-                      <packing>
-                        <property name="left_attach">2</property>
-                        <property name="right_attach">3</property>
-                        <property name="top_attach">9</property>
-                        <property name="bottom_attach">10</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkButton" id="button26">
-                        <property name="label" translatable="yes">Parcourir</property>
-                        <property name="height_request">20</property>
-                        <property name="visible">True</property>
-                        <property name="can_focus">True</property>
-                        <property name="receives_default">True</property>
-                      </object>
-                      <packing>
-                        <property name="left_attach">2</property>
-                        <property name="right_attach">3</property>
-                        <property name="top_attach">10</property>
-                        <property name="bottom_attach">11</property>
                       </packing>
                     </child>
                     <child>
                       <object class="GtkButton" id="button27">
-                        <property name="label" translatable="yes">Parcourir</property>
-                        <property name="height_request">20</property>
+                        <property name="label" translatable="yes">Changer</property>
+                        <property name="width_request">60</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">True</property>
@@ -1161,38 +778,8 @@
                       <packing>
                         <property name="left_attach">2</property>
                         <property name="right_attach">3</property>
-                        <property name="top_attach">11</property>
-                        <property name="bottom_attach">12</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkButton" id="button28">
-                        <property name="label" translatable="yes">Parcourir</property>
-                        <property name="height_request">20</property>
-                        <property name="visible">True</property>
-                        <property name="can_focus">True</property>
-                        <property name="receives_default">True</property>
-                      </object>
-                      <packing>
-                        <property name="left_attach">2</property>
-                        <property name="right_attach">3</property>
-                        <property name="top_attach">12</property>
-                        <property name="bottom_attach">13</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkButton" id="button29">
-                        <property name="label" translatable="yes">Parcourir</property>
-                        <property name="height_request">20</property>
-                        <property name="visible">True</property>
-                        <property name="can_focus">True</property>
-                        <property name="receives_default">True</property>
-                      </object>
-                      <packing>
-                        <property name="left_attach">2</property>
-                        <property name="right_attach">3</property>
-                        <property name="top_attach">13</property>
-                        <property name="bottom_attach">14</property>
+                        <property name="top_attach">4</property>
+                        <property name="bottom_attach">5</property>
                       </packing>
                     </child>
                     <child>
@@ -1215,7 +802,7 @@
             <child type="tab">
               <object class="GtkLabel" id="label65">
                 <property name="visible">True</property>
-                <property name="label" translatable="yes">Acceuil</property>
+                <property name="label" translatable="yes">Accueil</property>
               </object>
               <packing>
                 <property name="tab_fill">False</property>
@@ -1333,6 +920,19 @@
                                         <property name="position">7</property>
                                       </packing>
                                     </child>
+                                    <child>
+                                      <object class="GtkButton" id="button1">
+                                        <property name="label" translatable="yes">Remettre
+les valeurs
+par d&#xE9;faut</property>
+                                        <property name="visible">True</property>
+                                        <property name="can_focus">True</property>
+                                        <property name="receives_default">True</property>
+                                      </object>
+                                      <packing>
+                                        <property name="position">8</property>
+                                      </packing>
+                                    </child>
                                   </object>
                                 </child>
                               </object>
@@ -1362,7 +962,7 @@
                                   <object class="GtkTable" id="table7">
                                     <property name="visible">True</property>
                                     <property name="n_rows">2</property>
-                                    <property name="n_columns">6</property>
+                                    <property name="n_columns">7</property>
                                     <child>
                                       <object class="GtkLabel" id="label90">
                                         <property name="visible">True</property>
@@ -1515,6 +1115,21 @@
                                         <property name="x_padding">4</property>
                                       </packing>
                                     </child>
+                                    <child>
+                                      <object class="GtkButton" id="button20">
+                                        <property name="label" translatable="yes">Remettre
+les valeurs
+par d&#xE9;faut</property>
+                                        <property name="visible">True</property>
+                                        <property name="can_focus">True</property>
+                                        <property name="receives_default">True</property>
+                                      </object>
+                                      <packing>
+                                        <property name="left_attach">6</property>
+                                        <property name="right_attach">7</property>
+                                        <property name="bottom_attach">2</property>
+                                      </packing>
+                                    </child>
                                   </object>
                                 </child>
                               </object>
@@ -1632,6 +1247,19 @@
                                         <property name="position">7</property>
                                       </packing>
                                     </child>
+                                    <child>
+                                      <object class="GtkButton" id="button21">
+                                        <property name="label" translatable="yes">Remettre
+les valeurs
+par d&#xE9;faut</property>
+                                        <property name="visible">True</property>
+                                        <property name="can_focus">True</property>
+                                        <property name="receives_default">True</property>
+                                      </object>
+                                      <packing>
+                                        <property name="position">8</property>
+                                      </packing>
+                                    </child>
                                   </object>
                                 </child>
                               </object>
@@ -1747,6 +1375,19 @@
                                       <packing>
                                         <property name="padding">4</property>
                                         <property name="position">7</property>
+                                      </packing>
+                                    </child>
+                                    <child>
+                                      <object class="GtkButton" id="button22">
+                                        <property name="label" translatable="yes">Remettre
+les valeurs
+par d&#xE9;faut</property>
+                                        <property name="visible">True</property>
+                                        <property name="can_focus">True</property>
+                                        <property name="receives_default">True</property>
+                                      </object>
+                                      <packing>
+                                        <property name="position">8</property>
                                       </packing>
                                     </child>
                                   </object>
@@ -1883,6 +1524,19 @@
                                             <property name="position">7</property>
                                           </packing>
                                         </child>
+                                        <child>
+                                          <object class="GtkButton" id="button23">
+                                            <property name="label" translatable="yes">Remettre
+les valeurs
+par d&#xE9;faut</property>
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">True</property>
+                                            <property name="receives_default">True</property>
+                                          </object>
+                                          <packing>
+                                            <property name="position">8</property>
+                                          </packing>
+                                        </child>
                                       </object>
                                       <packing>
                                         <property name="position">1</property>
@@ -1993,6 +1647,19 @@
                                             <property name="position">7</property>
                                           </packing>
                                         </child>
+                                        <child>
+                                          <object class="GtkButton" id="button24">
+                                            <property name="label" translatable="yes">Remettre
+les valeurs
+par d&#xE9;faut</property>
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">True</property>
+                                            <property name="receives_default">True</property>
+                                          </object>
+                                          <packing>
+                                            <property name="position">8</property>
+                                          </packing>
+                                        </child>
                                       </object>
                                       <packing>
                                         <property name="position">3</property>
@@ -2021,7 +1688,7 @@
                     </child>
                     <child>
                       <object class="GtkVBox" id="vbox7">
-                        <property name="width_request">600</property>
+                        <property name="width_request">650</property>
                         <property name="visible">True</property>
                         <property name="orientation">vertical</property>
                         <child>
@@ -2096,7 +1763,7 @@
                     <child>
                       <object class="GtkTable" id="table5">
                         <property name="visible">True</property>
-                        <property name="n_rows">5</property>
+                        <property name="n_rows">6</property>
                         <property name="n_columns">2</property>
                         <child>
                           <object class="GtkLabel" id="label68">
@@ -2205,9 +1872,26 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkFixed" id="fixed20">
+                          <object class="GtkFixed" id="fixed1">
                             <property name="height_request">300</property>
                             <property name="visible">True</property>
+                          </object>
+                          <packing>
+                            <property name="left_attach">1</property>
+                            <property name="right_attach">2</property>
+                            <property name="top_attach">5</property>
+                            <property name="bottom_attach">6</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkButton" id="button53">
+                            <property name="label" translatable="yes">Remettre
+les valeurs 
+par d&#xE9;faut</property>
+                            <property name="width_request">70</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="receives_default">True</property>
                           </object>
                           <packing>
                             <property name="left_attach">1</property>
@@ -2215,6 +1899,9 @@
                             <property name="top_attach">4</property>
                             <property name="bottom_attach">5</property>
                           </packing>
+                        </child>
+                        <child>
+                          <placeholder/>
                         </child>
                         <child>
                           <placeholder/>
@@ -2297,7 +1984,7 @@
                     <child>
                       <object class="GtkTable" id="table6">
                         <property name="visible">True</property>
-                        <property name="n_rows">6</property>
+                        <property name="n_rows">7</property>
                         <property name="n_columns">2</property>
                         <child>
                           <object class="GtkEntry" id="entry44">
@@ -2434,9 +2121,25 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkFixed" id="fixed21">
+                          <object class="GtkFixed" id="fixed11">
                             <property name="height_request">300</property>
                             <property name="visible">True</property>
+                          </object>
+                          <packing>
+                            <property name="left_attach">1</property>
+                            <property name="right_attach">2</property>
+                            <property name="top_attach">6</property>
+                            <property name="bottom_attach">7</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkButton" id="button54">
+                            <property name="label" translatable="yes">Remettre 
+les valeurs 
+par d&#xE9;faut</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="receives_default">True</property>
                           </object>
                           <packing>
                             <property name="left_attach">1</property>
@@ -2444,6 +2147,9 @@
                             <property name="top_attach">5</property>
                             <property name="bottom_attach">6</property>
                           </packing>
+                        </child>
+                        <child>
+                          <placeholder/>
                         </child>
                         <child>
                           <placeholder/>
@@ -2627,13 +2333,22 @@
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkLabel" id="label40">
+                              <object class="GtkLabel" id="label5">
                                 <property name="visible">True</property>
-                                <property name="xalign">0</property>
-                                <property name="label" translatable="yes">/0</property>
+                                <property name="label" translatable="yes">/</property>
                               </object>
                               <packing>
                                 <property name="position">4</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkLabel" id="label40">
+                                <property name="visible">True</property>
+                                <property name="xalign">0</property>
+                                <property name="label" translatable="yes">0</property>
+                              </object>
+                              <packing>
+                                <property name="position">5</property>
                               </packing>
                             </child>
                             <child>
@@ -2645,7 +2360,7 @@
                                 <property name="use_underline">True</property>
                               </object>
                               <packing>
-                                <property name="position">5</property>
+                                <property name="position">6</property>
                               </packing>
                             </child>
                           </object>
@@ -2916,7 +2631,7 @@
     <property name="type_hint">normal</property>
     <property name="skip_taskbar_hint">True</property>
     <property name="message_type">warning</property>
-    <property name="text" translatable="yes">Veuillez remplir les 3 chemins obligatoires (visibles dans l'onglet Param&#xE8;tres) via le Menu Simulation.</property>
+    <property name="text" translatable="yes">Veuillez renseigner le chemin de la carte &#xE0; afficher.</property>
     <child internal-child="vbox">
       <object class="GtkVBox" id="dialog-vbox8">
         <property name="visible">True</property>
@@ -2958,7 +2673,7 @@
     <property name="type_hint">normal</property>
     <property name="skip_taskbar_hint">True</property>
     <property name="message_type">warning</property>
-    <property name="text" translatable="yes">Veuillez remplir tous les champs de texte de l'onglet Acceuil et Param&#xE8;tres.</property>
+    <property name="text" translatable="yes">Veuillez remplir les deux chemins de sauvegarde</property>
     <child internal-child="vbox">
       <object class="GtkVBox" id="dialog-vbox10">
         <property name="visible">True</property>
@@ -3000,7 +2715,10 @@
     <property name="type_hint">normal</property>
     <property name="skip_taskbar_hint">True</property>
     <property name="message_type">warning</property>
-    <property name="text" translatable="yes">Veuillez renseigner le chemin de la carte &#xE0; afficher</property>
+    <property name="text" translatable="yes">Veuillez renseigner le chemin de la carte &#xE0; afficher.
+
+Si cela est d&#xE9;j&#xE0; fait, veuillez visualiser la carte ou lancer une
+simulation pour pouvoir imprimer.</property>
     <child internal-child="vbox">
       <object class="GtkVBox" id="dialog-vbox6">
         <property name="visible">True</property>
@@ -3039,8 +2757,9 @@
   </object>
   <object class="GtkFileChooserDialog" id="filechooserdialog4">
     <property name="border_width">5</property>
-    <property name="title" translatable="yes">Ouvrir Matrice des Apt&#xE8;res</property>
+    <property name="title" translatable="yes">Ouvrir Carte de France</property>
     <property name="type_hint">normal</property>
+    <property name="action">select-folder</property>
     <child internal-child="vbox">
       <object class="GtkVBox" id="dialog-vbox9">
         <property name="visible">True</property>
@@ -3054,7 +2773,7 @@
             <property name="visible">True</property>
             <property name="layout_style">end</property>
             <child>
-              <object class="GtkButton" id="button30">
+              <object class="GtkButton" id="button25">
                 <property name="label">gtk-ok</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
@@ -3069,7 +2788,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkButton" id="button31">
+              <object class="GtkButton" id="button26">
                 <property name="label" translatable="yes">_Annuler</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
@@ -3093,8 +2812,8 @@
       </object>
     </child>
     <action-widgets>
-      <action-widget response="0">button30</action-widget>
-      <action-widget response="0">button31</action-widget>
+      <action-widget response="0">button25</action-widget>
+      <action-widget response="0">button26</action-widget>
     </action-widgets>
   </object>
   <object class="GtkImage" id="image18">
@@ -3103,10 +2822,12 @@
   </object>
   <object class="GtkFileChooserDialog" id="filechooserdialog5">
     <property name="border_width">5</property>
-    <property name="title" translatable="yes">Ouvrir Matrice des Ail&#xE9;s</property>
+    <property name="title" translatable="yes">Ouvrir Carte de France</property>
     <property name="type_hint">normal</property>
+    <property name="action">select-folder</property>
+    <property name="show_hidden">True</property>
     <child internal-child="vbox">
-      <object class="GtkVBox" id="dialog-vbox11">
+      <object class="GtkVBox" id="dialog-vbox12">
         <property name="visible">True</property>
         <property name="orientation">vertical</property>
         <property name="spacing">2</property>
@@ -3114,11 +2835,11 @@
           <placeholder/>
         </child>
         <child internal-child="action_area">
-          <object class="GtkHButtonBox" id="dialog-action_area11">
+          <object class="GtkHButtonBox" id="dialog-action_area12">
             <property name="visible">True</property>
             <property name="layout_style">end</property>
             <child>
-              <object class="GtkButton" id="button32">
+              <object class="GtkButton" id="button28">
                 <property name="label">gtk-ok</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
@@ -3133,7 +2854,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkButton" id="button33">
+              <object class="GtkButton" id="button29">
                 <property name="label" translatable="yes">_Annuler</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
@@ -3157,146 +2878,24 @@
       </object>
     </child>
     <action-widgets>
-      <action-widget response="0">button32</action-widget>
-      <action-widget response="0">button33</action-widget>
+      <action-widget response="0">button28</action-widget>
+      <action-widget response="0">button29</action-widget>
     </action-widgets>
   </object>
   <object class="GtkImage" id="image19">
     <property name="visible">True</property>
     <property name="stock">gtk-cancel</property>
   </object>
-  <object class="GtkFileChooserDialog" id="filechooserdialog6">
+  <object class="GtkMessageDialog" id="messagedialog4">
     <property name="border_width">5</property>
-    <property name="title" translatable="yes">Ouvrir Matrice de la proportion de bl&#xE9;</property>
     <property name="type_hint">normal</property>
-    <child internal-child="vbox">
-      <object class="GtkVBox" id="dialog-vbox12">
-        <property name="visible">True</property>
-        <property name="orientation">vertical</property>
-        <property name="spacing">2</property>
-        <child>
-          <placeholder/>
-        </child>
-        <child internal-child="action_area">
-          <object class="GtkHButtonBox" id="dialog-action_area12">
-            <property name="visible">True</property>
-            <property name="layout_style">end</property>
-            <child>
-              <object class="GtkButton" id="button34">
-                <property name="label">gtk-ok</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
-                <property name="use_underline">True</property>
-                <property name="use_stock">True</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">False</property>
-                <property name="position">0</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkButton" id="button35">
-                <property name="label" translatable="yes">_Annuler</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
-                <property name="image">image20</property>
-                <property name="use_underline">True</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">False</property>
-                <property name="position">1</property>
-              </packing>
-            </child>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="pack_type">end</property>
-            <property name="position">0</property>
-          </packing>
-        </child>
-      </object>
-    </child>
-    <action-widgets>
-      <action-widget response="0">button34</action-widget>
-      <action-widget response="0">button35</action-widget>
-    </action-widgets>
-  </object>
-  <object class="GtkImage" id="image20">
-    <property name="visible">True</property>
-    <property name="stock">gtk-cancel</property>
-  </object>
-  <object class="GtkFileChooserDialog" id="filechooserdialog7">
-    <property name="border_width">5</property>
-    <property name="title" translatable="yes">Ouvrir Matrice eta</property>
-    <property name="type_hint">normal</property>
-    <child internal-child="vbox">
-      <object class="GtkVBox" id="dialog-vbox13">
-        <property name="visible">True</property>
-        <property name="orientation">vertical</property>
-        <property name="spacing">2</property>
-        <child>
-          <placeholder/>
-        </child>
-        <child internal-child="action_area">
-          <object class="GtkHButtonBox" id="dialog-action_area13">
-            <property name="visible">True</property>
-            <property name="layout_style">end</property>
-            <child>
-              <object class="GtkButton" id="button36">
-                <property name="label">gtk-ok</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
-                <property name="use_underline">True</property>
-                <property name="use_stock">True</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">False</property>
-                <property name="position">0</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkButton" id="button37">
-                <property name="label" translatable="yes">_Annuler</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
-                <property name="image">image21</property>
-                <property name="use_underline">True</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">False</property>
-                <property name="position">1</property>
-              </packing>
-            </child>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="pack_type">end</property>
-            <property name="position">0</property>
-          </packing>
-        </child>
-      </object>
-    </child>
-    <action-widgets>
-      <action-widget response="0">button36</action-widget>
-      <action-widget response="0">button37</action-widget>
-    </action-widgets>
-  </object>
-  <object class="GtkImage" id="image21">
-    <property name="visible">True</property>
-    <property name="stock">gtk-cancel</property>
-  </object>
-  <object class="GtkFileChooserDialog" id="filechooserdialog8">
-    <property name="border_width">5</property>
-    <property name="title" translatable="yes">Ouvrir Matrice de diffusion</property>
-    <property name="type_hint">normal</property>
+    <property name="skip_taskbar_hint">True</property>
+    <property name="message_type">warning</property>
+    <property name="text" translatable="yes">Le chemin du dossier des donn&#xE9;es n'existe pas.
+
+Veuillez s&#xE9;lectionner un autre dossier via la bouton "Changer" qui se trouve &#xE0; la ligne :
+
+"Chemin du dossier des donn&#xE9;es :"</property>
     <child internal-child="vbox">
       <object class="GtkVBox" id="dialog-vbox14">
         <property name="visible">True</property>
@@ -3308,35 +2907,19 @@
         <child internal-child="action_area">
           <object class="GtkHButtonBox" id="dialog-action_area14">
             <property name="visible">True</property>
-            <property name="layout_style">end</property>
+            <property name="layout_style">center</property>
             <child>
-              <object class="GtkButton" id="button38">
-                <property name="label">gtk-ok</property>
+              <object class="GtkButton" id="button30">
+                <property name="label" translatable="yes">_OK</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
                 <property name="use_underline">True</property>
-                <property name="use_stock">True</property>
               </object>
               <packing>
                 <property name="expand">False</property>
                 <property name="fill">False</property>
                 <property name="position">0</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkButton" id="button39">
-                <property name="label" translatable="yes">_Annuler</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
-                <property name="image">image22</property>
-                <property name="use_underline">True</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">False</property>
-                <property name="position">1</property>
               </packing>
             </child>
           </object>
@@ -3349,18 +2932,19 @@
       </object>
     </child>
     <action-widgets>
-      <action-widget response="0">button38</action-widget>
-      <action-widget response="0">button39</action-widget>
+      <action-widget response="0">button30</action-widget>
     </action-widgets>
   </object>
-  <object class="GtkImage" id="image22">
-    <property name="visible">True</property>
-    <property name="stock">gtk-cancel</property>
-  </object>
-  <object class="GtkFileChooserDialog" id="filechooserdialog9">
+  <object class="GtkMessageDialog" id="messagedialog5">
     <property name="border_width">5</property>
-    <property name="title" translatable="yes">Ouvrir Matrice du vent pour le pas vertical</property>
     <property name="type_hint">normal</property>
+    <property name="skip_taskbar_hint">True</property>
+    <property name="message_type">warning</property>
+    <property name="text" translatable="yes">Le chemin du dossier des enregistrements n'existe pas.
+
+Veuillez s&#xE9;lectionner un autre dossier via la bouton "Changer" qui se trouve &#xE0; la ligne :
+
+"Chemin du dossier des enregistrements temporaires de la simulation :"</property>
     <child internal-child="vbox">
       <object class="GtkVBox" id="dialog-vbox15">
         <property name="visible">True</property>
@@ -3372,35 +2956,19 @@
         <child internal-child="action_area">
           <object class="GtkHButtonBox" id="dialog-action_area15">
             <property name="visible">True</property>
-            <property name="layout_style">end</property>
+            <property name="layout_style">center</property>
             <child>
-              <object class="GtkButton" id="button40">
-                <property name="label">gtk-ok</property>
+              <object class="GtkButton" id="button31">
+                <property name="label" translatable="yes">_OK</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
                 <property name="use_underline">True</property>
-                <property name="use_stock">True</property>
               </object>
               <packing>
                 <property name="expand">False</property>
                 <property name="fill">False</property>
                 <property name="position">0</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkButton" id="button41">
-                <property name="label" translatable="yes">_Annuler</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
-                <property name="image">image23</property>
-                <property name="use_underline">True</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">False</property>
-                <property name="position">1</property>
               </packing>
             </child>
           </object>
@@ -3413,82 +2981,14 @@
       </object>
     </child>
     <action-widgets>
-      <action-widget response="0">button40</action-widget>
-      <action-widget response="0">button41</action-widget>
+      <action-widget response="0">button31</action-widget>
     </action-widgets>
   </object>
-  <object class="GtkImage" id="image23">
-    <property name="visible">True</property>
-    <property name="stock">gtk-cancel</property>
-  </object>
-  <object class="GtkFileChooserDialog" id="filechooserdialog10">
+  <object class="GtkMessageDialog" id="messagedialog6">
     <property name="border_width">5</property>
-    <property name="title" translatable="yes">Ouvrir Matrice du vent pour le pas horizontal</property>
     <property name="type_hint">normal</property>
-    <child internal-child="vbox">
-      <object class="GtkVBox" id="dialog-vbox16">
-        <property name="visible">True</property>
-        <property name="orientation">vertical</property>
-        <property name="spacing">2</property>
-        <child>
-          <placeholder/>
-        </child>
-        <child internal-child="action_area">
-          <object class="GtkHButtonBox" id="dialog-action_area16">
-            <property name="visible">True</property>
-            <property name="layout_style">end</property>
-            <child>
-              <object class="GtkButton" id="button42">
-                <property name="label">gtk-ok</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
-                <property name="use_underline">True</property>
-                <property name="use_stock">True</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">False</property>
-                <property name="position">0</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkButton" id="button43">
-                <property name="label" translatable="yes">_Annuler</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
-                <property name="image">image24</property>
-                <property name="use_underline">True</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">False</property>
-                <property name="position">1</property>
-              </packing>
-            </child>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="pack_type">end</property>
-            <property name="position">0</property>
-          </packing>
-        </child>
-      </object>
-    </child>
-    <action-widgets>
-      <action-widget response="0">button42</action-widget>
-      <action-widget response="0">button43</action-widget>
-    </action-widgets>
-  </object>
-  <object class="GtkImage" id="image24">
-    <property name="visible">True</property>
-    <property name="stock">gtk-cancel</property>
-  </object>
-  <object class="GtkFileChooserDialog" id="filechooserdialog11">
-    <property name="border_width">5</property>
-    <property name="title" translatable="yes">Ouvrir Matrice des coordonn&#xE9;es pour les stades ph&#xE9;nologiques</property>
-    <property name="type_hint">normal</property>
+    <property name="skip_taskbar_hint">True</property>
+    <property name="message_type">warning</property>
     <child internal-child="vbox">
       <object class="GtkVBox" id="dialog-vbox17">
         <property name="visible">True</property>
@@ -3500,35 +3000,19 @@
         <child internal-child="action_area">
           <object class="GtkHButtonBox" id="dialog-action_area17">
             <property name="visible">True</property>
-            <property name="layout_style">end</property>
+            <property name="layout_style">center</property>
             <child>
-              <object class="GtkButton" id="button44">
-                <property name="label">gtk-ok</property>
+              <object class="GtkButton" id="button32">
+                <property name="label" translatable="yes">_OK</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
                 <property name="use_underline">True</property>
-                <property name="use_stock">True</property>
               </object>
               <packing>
                 <property name="expand">False</property>
                 <property name="fill">False</property>
                 <property name="position">0</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkButton" id="button45">
-                <property name="label" translatable="yes">_Annuler</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
-                <property name="image">image25</property>
-                <property name="use_underline">True</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">False</property>
-                <property name="position">1</property>
               </packing>
             </child>
           </object>
@@ -3541,204 +3025,7 @@
       </object>
     </child>
     <action-widgets>
-      <action-widget response="0">button44</action-widget>
-      <action-widget response="0">button45</action-widget>
+      <action-widget response="0">button32</action-widget>
     </action-widgets>
-  </object>
-  <object class="GtkImage" id="image25">
-    <property name="visible">True</property>
-    <property name="stock">gtk-cancel</property>
-  </object>
-  <object class="GtkFileChooserDialog" id="filechooserdialog12">
-    <property name="border_width">5</property>
-    <property name="title" translatable="yes">Ouvrir Matrice des donn&#xE9;es pour les stades ph&#xE9;nologiques</property>
-    <property name="type_hint">normal</property>
-    <child internal-child="vbox">
-      <object class="GtkVBox" id="dialog-vbox18">
-        <property name="visible">True</property>
-        <property name="orientation">vertical</property>
-        <property name="spacing">2</property>
-        <child>
-          <placeholder/>
-        </child>
-        <child internal-child="action_area">
-          <object class="GtkHButtonBox" id="dialog-action_area18">
-            <property name="visible">True</property>
-            <property name="layout_style">end</property>
-            <child>
-              <object class="GtkButton" id="button46">
-                <property name="label">gtk-ok</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
-                <property name="use_underline">True</property>
-                <property name="use_stock">True</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">False</property>
-                <property name="position">0</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkButton" id="button47">
-                <property name="label" translatable="yes">_Annuler</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
-                <property name="image">image26</property>
-                <property name="use_underline">True</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">False</property>
-                <property name="position">1</property>
-              </packing>
-            </child>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="pack_type">end</property>
-            <property name="position">0</property>
-          </packing>
-        </child>
-      </object>
-    </child>
-    <action-widgets>
-      <action-widget response="0">button46</action-widget>
-      <action-widget response="0">button47</action-widget>
-    </action-widgets>
-  </object>
-  <object class="GtkImage" id="image26">
-    <property name="visible">True</property>
-    <property name="stock">gtk-cancel</property>
-  </object>
-  <object class="GtkFileChooserDialog" id="filechooserdialog13">
-    <property name="border_width">5</property>
-    <property name="title" translatable="yes">Ouvrir Matrice des coordonn&#xE9;es pour les temp&#xE9;ratures</property>
-    <property name="type_hint">normal</property>
-    <child internal-child="vbox">
-      <object class="GtkVBox" id="dialog-vbox19">
-        <property name="visible">True</property>
-        <property name="orientation">vertical</property>
-        <property name="spacing">2</property>
-        <child>
-          <placeholder/>
-        </child>
-        <child internal-child="action_area">
-          <object class="GtkHButtonBox" id="dialog-action_area19">
-            <property name="visible">True</property>
-            <property name="layout_style">end</property>
-            <child>
-              <object class="GtkButton" id="button48">
-                <property name="label">gtk-ok</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
-                <property name="use_underline">True</property>
-                <property name="use_stock">True</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">False</property>
-                <property name="position">0</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkButton" id="button49">
-                <property name="label" translatable="yes">_Annuler</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
-                <property name="image">image27</property>
-                <property name="use_underline">True</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">False</property>
-                <property name="position">1</property>
-              </packing>
-            </child>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="pack_type">end</property>
-            <property name="position">0</property>
-          </packing>
-        </child>
-      </object>
-    </child>
-    <action-widgets>
-      <action-widget response="0">button48</action-widget>
-      <action-widget response="0">button49</action-widget>
-    </action-widgets>
-  </object>
-  <object class="GtkImage" id="image27">
-    <property name="visible">True</property>
-    <property name="stock">gtk-cancel</property>
-  </object>
-  <object class="GtkFileChooserDialog" id="filechooserdialog14">
-    <property name="border_width">5</property>
-    <property name="title" translatable="yes">Ouvrir Matrice des donn&#xE9;es pour les temp&#xE9;ratures</property>
-    <property name="type_hint">normal</property>
-    <child internal-child="vbox">
-      <object class="GtkVBox" id="dialog-vbox20">
-        <property name="visible">True</property>
-        <property name="orientation">vertical</property>
-        <property name="spacing">2</property>
-        <child>
-          <placeholder/>
-        </child>
-        <child internal-child="action_area">
-          <object class="GtkHButtonBox" id="dialog-action_area20">
-            <property name="visible">True</property>
-            <property name="layout_style">end</property>
-            <child>
-              <object class="GtkButton" id="button50">
-                <property name="label">gtk-ok</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
-                <property name="use_underline">True</property>
-                <property name="use_stock">True</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">False</property>
-                <property name="position">0</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkButton" id="button51">
-                <property name="label" translatable="yes">_Annuler</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
-                <property name="image">image28</property>
-                <property name="use_underline">True</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">False</property>
-                <property name="position">1</property>
-              </packing>
-            </child>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="pack_type">end</property>
-            <property name="position">0</property>
-          </packing>
-        </child>
-      </object>
-    </child>
-    <action-widgets>
-      <action-widget response="0">button50</action-widget>
-      <action-widget response="0">button51</action-widget>
-    </action-widgets>
-  </object>
-  <object class="GtkImage" id="image28">
-    <property name="visible">True</property>
-    <property name="stock">gtk-cancel</property>
   </object>
 </interface>

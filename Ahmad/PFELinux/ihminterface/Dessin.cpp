@@ -3,9 +3,8 @@
  * \brief fichier du contenu des méthodes de la bibliothèque gérant la zone de dessin et l'affichage de la carte
  */
 
-#include "Dessin.h"
-#include "shapelib/lect.cpp"
-#include "Includes/Lecture_Ecriture.hpp"
+#include "Includes/Dessin.h"
+
 /**
  * \fn Dessin::Dessin ()
  * \brief Constructeur de la classe Dessin
@@ -13,6 +12,7 @@
  */
 Dessin::Dessin ()
 {
+	lecture_coordonnees_points();
 
 /* Ajout d'évènements non gérés par défaut par DrawingArea */
 	this->add_events(Gdk::BUTTON_PRESS_MASK);
@@ -20,7 +20,7 @@ Dessin::Dessin ()
 	this->add_events(Gdk::BUTTON2_MOTION_MASK);
 	this->add_events(Gdk::BUTTON3_MOTION_MASK);
 	this->add_events(Gdk::BUTTON_RELEASE_MASK);
-	this->signal_event().connect(sigc::mem_fun(*this,&Dessin::on_event_happend) );
+	this->signal_event().connect(sigc::mem_fun(*this, &Dessin::on_event_happend));
 
 /* Initialisation des valeurs de la taille de la carte avec des valeurs par défaut */
 
@@ -30,9 +30,13 @@ Dessin::Dessin ()
 	decalage_x_zoom = 0;
 	decalage_y_zoom = 0;
 	
-	valeur_min = 0;
-	valeur_max = 38024;
-	matrice = Matrice(194,196);
+	matrice = Matrice(194, 196);
+	matrice = Matrice::Zero(194, 196);
+	valeur_min =  0;
+	valeur_max =  0;
+
+	actif = 0;
+	initialisation = 0;
 }
 
 /**
@@ -48,11 +52,14 @@ Dessin::~Dessin ()
  * \fn bool Dessin::on_expose_event (GdkEventExpose* event)
  * \brief Méthode gérant l'exposition de la zone de dessin
  * \param event Evénèment d'exposition ayant provoqué l'instanciation de la méthode
- * \return Indicateur de bon deroulement de la méthode
+ * \return Indicateur de bon déroulement de la méthode
  */
-bool Dessin::on_expose_event(GdkEventExpose* event)
-{
-	dessiner_carte(H_MAP,L_MAP,0,0);
+bool Dessin::on_expose_event(GdkEventExpose* event){
+	dessiner_carte(H_MAP, L_MAP, 0, 0);
+
+	actif = 1;
+
+	return 1;
 }
 
 /**
@@ -129,7 +136,6 @@ void Dessin::zoom(int abscisse, int ordonnee){
 /**
  * \fn void Dessin::dezoom ()
  * \brief Méthode gérant le dézoom sur une zone de dessin
- *
  * \return Rien
  */
 void Dessin::dezoom(){
@@ -141,7 +147,7 @@ void Dessin::dezoom(){
 	decalage_y_zoom = 0;
 	
 	cr = this->get_window()->create_cairo_context();
-	Glib::RefPtr<Gdk::Pixbuf> image = Gdk::Pixbuf::create_from_file("Images/tmp.png");
+	Glib::RefPtr<Gdk::Pixbuf> image = Gdk::Pixbuf::create_from_file("Images/tmp_" + get_titre()  + ".png");
 	Gdk::Cairo::set_source_pixbuf(cr, image, 0, 0);
 	cr->paint();
 }
@@ -165,7 +171,7 @@ void Dessin::dessiner_cadre_selection_zoom(int abscisse, int ordonnee){
 /* Utilisation de l'image temporaire au lieu de tout redessinner. L'avantage est la vitesse d'exécution (immédiat ici par rapport à quelques secondes pour */
 /* tout redessiner */
 		cr = this->get_window()->create_cairo_context();
-		Glib::RefPtr<Gdk::Pixbuf> image = Gdk::Pixbuf::create_from_file("Images/tmp.png");
+		Glib::RefPtr<Gdk::Pixbuf> image = Gdk::Pixbuf::create_from_file("Images/tmp_" + get_titre()  + ".png");
 		Gdk::Cairo::set_source_pixbuf(cr, image, 0, 0);
 /* Ne pas oublier de "peindre" l'image sinon la misa à jour de la zone de dessin n'est pas effectué*/
 		cr->paint();
@@ -173,6 +179,34 @@ void Dessin::dessiner_cadre_selection_zoom(int abscisse, int ordonnee){
 		cr->set_source_rgb(0.0, 0.0, 0.0);
 		cr->rectangle(x, y, abscisse - x, ordonnee - y);
 		cr->stroke();
+	}
+}
+
+/** \fn void Dessin::lecture_coordonnees_points()
+ *  \brief Lecture des coordonnées de chaque points de la matrice à dessiner
+ *  \return Rien
+ */
+void Dessin::lecture_coordonnees_points(){
+	Lecture_Ecriture lect;
+	Matrice mat_abs(194, 196);
+	Matrice mat_ord(194, 196);
+/* Ajout des coordonnées des points sur la carte de France */
+	lect.LectureCSV(195, 196, "donnees/abscisse.csv");
+	mat_abs = lect.get_CSV();
+
+	lect.LectureCSV(195, 196, "donnees/ordonnee.csv");
+	mat_ord = lect.get_CSV();
+	
+	abscisse_points = new double[38024];
+	ordonnee_points = new double[38024];
+
+	int f = 0;
+	for(int i = 0; i < 194; i++){
+		for(int j = 0; j < 196; j++){
+			abscisse_points[f] = mat_abs(i,j); 
+			ordonnee_points[f] = mat_ord(i,j);
+			f++;
+		}
 	}
 }
 
@@ -186,27 +220,8 @@ void Dessin::dessiner_cadre_selection_zoom(int abscisse, int ordonnee){
  * \return Rien
  */
 void Dessin::dessiner_carte(int hauteur, int largeur, int decalage_y, int decalage_x){
-Lecture_Ecriture lect;
-Matrice mat_abs(194,196);
-Matrice mat_ord(194,196);
-/* Ajout des coordonnées des points sur la carte de France */
-	lect.LectureCSV(195,196,"donnees/abscisse.csv");
-	mat_abs = lect.get_CSV();
-	lect.LectureCSV(195,196,"donnees/ordonne.csv");
-	mat_ord = lect.get_CSV();
-	double abcsisse_points[38024]={0};
-	double ordonnee_points[38024]={0};
-	int f = 0;
-	for(int i = 0;i < 194;i++){
-		for(int j = 0;j < 196;j++){
-			abcsisse_points[f] = mat_abs(i,j); 
-			ordonnee_points[f] = mat_ord(i,j);
-			f++;
-		}
-	}
-
 /* Cette variable permet la converion de nombres en lettres */
-	stringstream sstr;
+	stringstream *sstr;
 	
 /* Cette variable permet de connaitre la taille (hauteur, largeur) d'une phrase */
 	Cairo::TextExtents extents;
@@ -214,6 +229,8 @@ Matrice mat_ord(194,196);
 	double premier_point = 0;
 	double **points;
 	double **croisement;
+
+	double abscisse_tmp, ordonnee_tmp;
 
 /* Fond d'écran */	
 	cr = this->get_window()->create_cairo_context();
@@ -227,7 +244,7 @@ Matrice mat_ord(194,196);
 	
 /* Lecture du fichier contenant la carte */
 	
-	points = lire_carte(hauteur,largeur,chemin_carte);
+	points = lire_carte(hauteur, largeur, chemin_carte);
 	
 /* Gestion d'erreur de lecture du fichier SHP */
 	if(points[3][0]!=0){
@@ -250,15 +267,24 @@ Matrice mat_ord(194,196);
 	}
 	croisement = points_dans_polygone(ordonnees, chemin_carte);
 
-	valeur_min =  matrice.minCoeff();
-	valeur_max =  matrice.maxCoeff();
-	
+	if(initialisation == 1){
+		valeur_min = matrice.minCoeff();
+		valeur_max = matrice.maxCoeff();
+		initialisation = 0;
+	}
+	else{
+		if(matrice.minCoeff() < valeur_min)
+			valeur_min = matrice.minCoeff();
+		if(matrice.maxCoeff() > valeur_max)
+			valeur_max = matrice.maxCoeff();
+	}
+
 	for(int i=0; i<194; i++){
 		for(int j=0; j<196; j++){
 			int ecrire = 0;
 			for(int k=0; k<100; k++){
-				if(croisement[i][k]!=0){
-					if((abcsisse_points[(i*196)+j] >= croisement[i][k]) ){
+				if(croisement[i][k] != 0){
+					if((abscisse_points[(i*196)+j] >= croisement[i][k]) ){
 						if(ecrire == 0 )
 							ecrire = 1;
 						else
@@ -271,15 +297,14 @@ Matrice mat_ord(194,196);
 			}
 			if(ecrire == 1 ){
 				cr->set_source_rgb(gradient_couleur(valeur_min, valeur_max, matrice(i,j), 'R'), gradient_couleur(valeur_min, valeur_max, matrice(i,j), 'G'), gradient_couleur(valeur_min, valeur_max, matrice(i,j), 'B'));
-				ordonnee_points[(i*196)+j] -= (points[3][5] - points[3][3]);
-				abcsisse_points[(i*196)+j] = ((abcsisse_points[(i*196)+j] - points[3][1]) * largeur)/(points[3][2] - points[3][1]);
-				ordonnee_points[(i*196)+j] = ((ordonnee_points[(i*196)+j] - points[3][3]) * hauteur)/(points[3][4] - points[3][3]);
-				cr->arc (abcsisse_points[(i*196)+j] - decalage_x, ordonnee_points[(i*196)+j] - decalage_y, 1, 0, 2 * M_PI);
+				ordonnee_tmp = ordonnee_points[(i*196)+j] - (points[3][5] - points[3][3]);
+				abscisse_tmp = ((abscisse_points[(i*196)+j] - points[3][1]) * largeur)/(points[3][2] - points[3][1]);
+				ordonnee_tmp = ((ordonnee_tmp - points[3][3]) * hauteur)/(points[3][4] - points[3][3]);
+				cr->arc (abscisse_tmp - decalage_x, ordonnee_tmp - decalage_y, 1, 0, 2 * M_PI);
 				cr->fill();
 			}
 		}
 	}
-	cr->set_source_rgb(0.0, 0.0, 0.0);
 	
 /* Insertion de texte pour mettre un titre à la carte */
 /* Le titre est écrit en noir */
@@ -287,14 +312,14 @@ Matrice mat_ord(194,196);
 /* Les lettres font 15 pixels de hauteur */
 	cr->set_font_size(15);
 /* Sélection de la police */
-	cr->select_font_face("Sans",Cairo::FONT_SLANT_NORMAL,Cairo::FONT_WEIGHT_BOLD);
-/* Récupération de la taille du titre (hauteur et largeur) */
-	cr->get_text_extents(titre.c_str(), extents);
-/* Positionnement du titre */
+	cr->select_font_face("Sans", Cairo::FONT_SLANT_NORMAL, Cairo::FONT_WEIGHT_BOLD);
+	string deb_titre("Carte ");
+	cr->get_text_extents(deb_titre + titre.c_str(), extents);
+	/* Positionnement du titre */
 	cr->move_to((L_MAP/2) - (extents.width/2), H_MAP - 20);
-/* Ecriture du titre */
-	cr->show_text(titre.c_str());	
-	
+	/* Ecriture du titre */
+	cr->show_text(deb_titre + titre.c_str());	
+
 /* Dessin du gradient de couleur */
 /* Création d'un gradient le long de la ligne définie par (L_MAP - 50, 50) et (L_MAP - 50, H_MAP - 100)  */
 	Cairo::RefPtr< Cairo::LinearGradient > gradient = Cairo::LinearGradient::create(L_MAP - 50, 50, L_MAP - 50, H_MAP - 100);
@@ -315,58 +340,56 @@ Matrice mat_ord(194,196);
 	cr->fill();  
 	
 /* Conversion du minimum de la matrice en lettres (pour afficher ce que représente la valeur du minimum du gradient)*/
-    sstr << valeur_min;
+    sstr = new stringstream();
+	*sstr << valeur_min;
 	
 /* Le titre est écrit en noir */
 	cr->set_source_rgb(0, 0, 0);
 /* Les lettres font 10 pixels de hauteur */
 	cr->set_font_size(10);
 /* Sélection de la police */
-	cr->select_font_face("Sans",Cairo::FONT_SLANT_NORMAL,Cairo::FONT_WEIGHT_BOLD);
+	cr->select_font_face("Sans", Cairo::FONT_SLANT_NORMAL, Cairo::FONT_WEIGHT_BOLD);
 /* Récupération de la taille la valeur min(hauteur et largeur) */
-	cr->get_text_extents((sstr.str()).c_str(), extents);
+	cr->get_text_extents((sstr->str()).c_str(), extents);
 /* Positionnement du texte */
 	cr->move_to((L_MAP - 45) - (extents.width/2), 50 - 5);
 /* Ecriture du titre */
-	cr->show_text((sstr.str()).c_str());	
-	
-/* Vidage du stringstream */
-	sstr.str(string());
+	cr->show_text((sstr->str()).c_str());	
 	
 /* Conversion du maximum de la matrice en lettres (pour afficher ce que représente la valeur du maximum du gradient)*/
-    sstr << valeur_max;
+    sstr = new stringstream();
+	*sstr << valeur_max;
 	
 /* Récupération de la taille la valeur max(hauteur et largeur) */
-	cr->get_text_extents((sstr.str()).c_str(), extents);
+	cr->get_text_extents((sstr->str()).c_str(), extents);
 /* Positionnement du texte */
 	cr->move_to((L_MAP - 45) - (extents.width/2), H_MAP - 50 + extents.height + 5);
 /* Ecriture du titre */
-	cr->show_text((sstr.str()).c_str());
+	cr->show_text((sstr->str()).c_str());
 	
 /* Vidage du stringstream */
-	sstr.str(string());
-
 	if(zoom_actif == 0)
 		get_gdk_pixbuf();
 }
 
-/**\fn double** Dessin::lire_carte (int hauteur, int largeur, string chemin)
- * \brief Méthode lisant la carte de france d'un fichier SHP et redimenssionnant cette dernière pour correspondre à la zone de dessin
- * \param hauteur Hauteur que doit faire la carte
- * \param largeur Largeur que doit faire la carte
- * \return points Tableau contenant les coordonnées des points de la carte adaptées a la hauteur et largeur de la zone de dessin
+/** \fn double** Dessin::lire_carte (int hauteur, int largeur, string chemin)
+ *  \brief Méthode lisant la carte de france d'un fichier SHP et redimenssionant cette dernière pour correspondre à la zone de dessin
+ *  \param hauteur Hauteur que doit faire la carte
+ *  \param largeur Largeur que doit faire la carte
+ *  \return points Tableau contenant les coordonnées des points de la carte adaptées à la hauteur et largeur de la zone de dessin
  */
 double **Dessin::lire_carte(int hauteur, int largeur, string chemin){
+	Lecture_Ecriture lect;
 /* Lecture de tous les points de tous les polygones */
-	double **points = lecture_SHP(chemin);
+	double **points = lect.lecture_SHP(chemin);
 
 /* Gestion d'erreur de lecture de fichier */
 	if(points[3][0] == 0)
 		return points;
 
-	for(int j=0; j < points[3][0];j++){
-		points[0][j] = ((double)(points[0][j]-points[3][1])*largeur)/(points[3][2]-points[3][1]);
-		points[1][j] = hauteur-(((double)(points[1][j]-points[3][3])*hauteur)/(points[3][4]-points[3][3]));
+	for(int j=0; j < points[3][0]; j++){
+		points[0][j] = ((double)(points[0][j]-points[3][1]) * largeur)/(points[3][2] - points[3][1]);
+		points[1][j] = hauteur-(((double)(points[1][j]-points[3][3]) * hauteur)/(points[3][4] - points[3][3]));
 	}
 	
 	return points;
@@ -381,6 +404,7 @@ double **Dessin::lire_carte(int hauteur, int largeur, string chemin){
  *  \return abscisse_croisement Abscisse des points d'intersection entre la carte de France et les lignes des points de la matrice
  */
 double **Dessin::points_dans_polygone(int ordonnees[194], string chemin){
+	Lecture_Ecriture lect;
 	int polygone = -1;
 	int x_prec, y_prec;
 	double coef_dir;
@@ -403,7 +427,7 @@ double **Dessin::points_dans_polygone(int ordonnees[194], string chemin){
 		}
 	}
 
-	double **points = lecture_SHP(chemin);
+	double **points = lect.lecture_SHP(chemin);
 	
 /* Gestion d'erreur de lecture de fichier */
 	if(points[3][0] == 0)
@@ -429,12 +453,12 @@ double **Dessin::points_dans_polygone(int ordonnees[194], string chemin){
 /* Il y a 2 calculs de coefficients directeur car la droite peut être orientée du haut à gauche vers le bas à droite ou */
 /* du bas à gauche vers le haut à droite*/
 					if(ordonnees[k] >= y_prec)
-						coef_dir = (points[1][i]-points[3][3]- y_prec)/(points[0][i] - x_prec);
+						coef_dir = (points[1][i]-points[3][3] - y_prec)/(points[0][i] - x_prec);
 					else
-						coef_dir = (y_prec-points[1][i]-points[3][3])/(x_prec-points[0][i] );
+						coef_dir = (y_prec-points[1][i]-points[3][3])/(x_prec-points[0][i]);
 					
-					if(coef_dir !=0){
-						if((ordonnees[k]==y_prec) || (ordonnees[k] == points[1][i]-points[3][3])){
+					if(coef_dir != 0){
+						if((ordonnees[k] == y_prec) || (ordonnees[k] == points[1][i]-points[3][3])){
 							if (ordonnees[k] == points[1][i]-points[3][3]){
 								abscisse_croisement[k][indice[k]] = points[0][i];
 								num_points[k][indice[k]] = i;
@@ -447,7 +471,7 @@ double **Dessin::points_dans_polygone(int ordonnees[194], string chemin){
 							else
 								abscisse_croisement[k][indice[k]] = ((double)(ordonnees[k]-points[1][i])/coef_dir) + points[0][i];
 							
-							num_points[k][indice[k]]=i;	
+							num_points[k][indice[k]] = i;	
 							indice[k]++;
 						}
 					}
@@ -513,7 +537,7 @@ double Dessin::gradient_couleur(double min, double max, double val, char composa
 	int indice;
 	
 /* Tableau des valeurs d'un gradient de couleur allant du vert au rouge (20 valeurs => 5% de valeurs par pas  */
-	double couleur[20][3]={{0,1,0},{0.050980392,0.945098039,0},{0.101960784,0.894117647,0},{0.156862745,0.839215686,0},{0.207843137,0.788235294,0},
+	double couleur[20][3] = {{0,1,0},{0.050980392,0.945098039,0},{0.101960784,0.894117647,0},{0.156862745,0.839215686,0},{0.207843137,0.788235294,0},
 	{0.262745098,0.733333333,0},{0.31372549,0.682352941,0},{0.364705882,0.631372549,0},{0.419607843,0.576470588,0},{0.470588235,0.525490196,0},
 	{0.525490196,0.470588235,0},{0.576470588,0.419607843,0},{0.631372549,0.364705882,0},{0.682352941,0.31372549,0},{0.733333333,0.262745098,0},
 	{0.788235294,0.207843137,0},{0.839215686,0.156862745,0},{0.894117647,0.101960784,0},{0.945098039,0.050980392,0},{1,0,0}};
@@ -550,10 +574,37 @@ double Dessin::gradient_couleur(double min, double max, double val, char composa
 Glib::RefPtr<Gdk::Pixbuf> Dessin::get_gdk_pixbuf(){
 	Glib::RefPtr<Gdk::Drawable> drawable = static_cast<Glib::RefPtr<Gdk::Drawable> >(this->get_window());
 	
-    pixbuf = Gdk::Pixbuf::create(drawable,0, 0, L_MAP - 10, H_MAP - 15);
-
-    pixbuf->save("Images/tmp.png", "png"); 
+    pixbuf = Gdk::Pixbuf::create(drawable, 0, 0, L_MAP - 10, H_MAP - 15);
+	
+    pixbuf->save("Images/tmp_" + get_titre()  + ".png", "png"); 
 	return pixbuf;
+}
+
+/** \fn string Dessin::enregistrement(int num, string chemin)
+ *  \brief Méthode effectuant un enregistrement automatique d'une image de la zone de dessin à chaque itération de la simulation.
+ *  \param num Numéro de l'enregistrement courant
+ *  \return chemin Chemin du dossier d'enregistrement 
+ */
+string Dessin::enregistrement(int num, string chemin){
+	stringstream *sstr = new stringstream();
+	Lecture_Ecriture lect;
+
+	*sstr << chemin << "/" << titre << "_" << num << ".png";
+	Glib::RefPtr<Gdk::Drawable> drawable = static_cast<Glib::RefPtr<Gdk::Drawable> >(this->get_window());
+	Glib::RefPtr<Gdk::Pixbuf> pix = Gdk::Pixbuf::create(drawable, 0, 0, L_MAP - 10, H_MAP - 15);
+	pixbuf->save((sstr->str()).c_str(), "png"); 
+	sstr->str(string());
+
+	*sstr << chemin << "/" << titre << "_" << num << ".csv";
+	return (sstr->str()).c_str();
+}
+
+/** \fn void Dessin::init()
+ *  \brief Méthode définissant l'initialisation de la simulation. Cette méthode est utile pour définir le minimum et le maximum de l'échelle du gradient de couleur.
+ *  \return Rien
+ */
+void Dessin::init(){
+	initialisation = 1;
 }
 
 /** \fn void Dessin::set_chemin_carte(string path)
@@ -590,18 +641,51 @@ int Dessin::get_largeur(){
 	return L_MAP;
 }
 
+/** \fn double Dessin::get_valeur_min()
+ *  \brief Méthode retournant la valeur minimum de l'échelle du gradient de couleur
+ *  \return valeur_min Valeur minimum de l'échelle du gradient de couleur
+ */
 double Dessin::get_valeur_min(){
 	return valeur_min;
 }
 
+/** \fn double Dessin::get_valeur_max()
+ *  \brief Méthode retournant la valeur maximum de l'échelle du gradient de couleur
+ *  \return valeur_max Valeur maximum de l'échelle du gradient de couleur
+ */
 double Dessin::get_valeur_max(){
 	return valeur_max;
 }
 
+/** \fn void Dessin::set_matrice(Matrice mat)
+ *  \brief Méthode mettant à jour la matrice à dessiner sur la zone de dessin
+ *  \param mat Matrice de mise à jour
+ *  \return Rien
+ */
 void Dessin::set_matrice(Matrice mat){
 	matrice = mat;
 }
 
+/** \fn Matrice Dessin::get_matrice()
+ *  \brief Méthode retournant la matrice à dessiner sur la zone de dessin
+ *  \return matrice Matrice à dessiner sur la zone de dessin
+ */
 Matrice Dessin::get_matrice(){
 	return matrice;
+}
+
+/** \fn string Dessin::get_titre()
+ *  \brief Méthode retournant le titre de la zone de dessin
+ *  \return titre Titre de la zone de dessin
+ */
+string Dessin::get_titre(){
+	return titre;
+}
+
+/** \fn bool Dessin::get_activation()
+ *  \brief Méthode retournant la valeur qui permet de savoir si la zone de dessin a été activée ou non.
+ *  \return actif Variable permettant de savoir si la zone de dessin a été activée 
+ */
+bool Dessin::get_activation(){
+	return actif;
 }

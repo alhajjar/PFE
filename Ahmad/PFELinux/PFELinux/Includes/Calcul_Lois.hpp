@@ -15,32 +15,33 @@
 class Calcul_Lois
 {
 public :
-	Calcul_Lois();
-	~Calcul_Lois();
+	  Calcul_Lois();
+	 ~Calcul_Lois();
 
-	void calcul_taux_accroissement(Matrice theta, Matrice stades);
-	void calcul_coeffdepot1(Matrice p, Matrice eta);
-	void calcul_coeffdepot2(Matrice p, Matrice eta);
-	void calcul_coeffdepot3(Matrice p, Matrice eta);
-	void calcul_coeffdepot4(Matrice p, Matrice eta);
-	void calcul_coeffdepot5(Matrice p, Matrice eta);
-	void calcul_coeff_envol(Matrice A,Matrice stades,Matrice theta);
+	 void calcul_taux_accroissement(Matrice theta, Matrice stades, int choix_meteo, int choix_pression);
+	 void calcul_coeffdepot1(Matrice p, Matrice eta);
+	 void calcul_coeffdepot2(Matrice p, Matrice eta);
+	 void calcul_coeffdepot3(Matrice p, Matrice eta);
+	 void calcul_coeffdepot4(Matrice p, Matrice eta);
+	 void calcul_coeffdepot5(Matrice p, Matrice eta);
+	 void calcul_coeff_envol(Matrice A,Matrice stades,Matrice theta);
 		
-	void  set_constantes_taux_accroissement(double sm, double b, double k, double a1, double a2);
-	void  set_constantes_coeffdepot1( double a, double a1, double a2, double k);
-	void  set_constantes_coeffdepot2(double a1, double a2, double a3, double a4, double a5, double k);
-	void  set_constantes_coeffdepot3(double a1, double a2, double a3, double k);
-	void  set_constantes_coeffdepot4( double a1, double a2, double a3, double k);
-	void  set_constantes_coeffdepot5(double a1, double a2, double a3, double k);
-	void  set_constantes_coeff_envol( double a, double a0, double a1, double a2);
+	 void  set_constantes_taux_accroissement(double sm, double b, double k, double a1, double a2);
+	 void  set_constantes_coeffdepot1( double a, double a1, double a2, double k);
+	 void  set_constantes_coeffdepot2(double a1, double a2, double a3, double a4, double a5, double k);
+	 void  set_constantes_coeffdepot3(double a1, double a2, double a3, double k);
+	 void  set_constantes_coeffdepot4( double a1, double a2, double a3, double k);
+	 void  set_constantes_coeffdepot5_inf(double a1, double a2, double a3, double k);
+	 void  set_constantes_coeffdepot5_sup(double a1, double a2, double a3, double k);
+	 void  set_constantes_coeff_envol( double a, double a0, double a1, double a2);
 		
-	Matrice  get_taux_accroissement();
-	Matrice  get_coeffdepot1();
-	Matrice  get_coeffdepot2();
-	Matrice  get_coeffdepot3();
-	Matrice  get_coeffdepot4();
-	Matrice  get_coeffdepot5();
-	Matrice  get_coeff_envol();
+	 Matrice  get_taux_accroissement();
+	 Matrice  get_coeffdepot1();
+	 Matrice  get_coeffdepot2();
+	 Matrice  get_coeffdepot3();
+	 Matrice  get_coeffdepot4();
+	 Matrice  get_coeffdepot5();
+	 Matrice  get_coeff_envol();
 	
 private :
 	Matrice taux_accroissement;
@@ -79,11 +80,16 @@ private :
     double cd4_a2;
     double cd4_a3;
     double cd4_k;
-/* Constantes coefficient dépôt 5 */	
-	double cd5_a1;
-    double cd5_a2;
-    double cd5_a3;
-    double cd5_k;
+/* Constantes coefficient dépôt 5 avec p < 0.5 */	
+	double cd5_inf_a1;
+    double cd5_inf_a2;
+    double cd5_inf_a3;
+    double cd5_inf_k;
+/* Constantes coefficient dépôt 5 avec p >= 0.5 */	
+	double cd5_sup_a1;
+    double cd5_sup_a2;
+    double cd5_sup_a3;
+    double cd5_sup_k;
 /* Constantes coefficient d'envol */	
 	double ce_a;
     double ce_a0;
